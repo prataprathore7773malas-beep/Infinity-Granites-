@@ -3050,155 +3050,681 @@ h3 em {
   text-transform: uppercase;
 }
 
-
 /* =========================================================
-   20 — FOOTER
+   PREMIUM FOOTER — NEW DESIGN
 ========================================================= */
 
 .site-footer {
+  position: relative;
+
   color: var(--sand-100);
-  background: #120e0a;
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(209,163,75,.10),
+      transparent 35%
+    ),
+    #120e0a;
+
+  border-top: 1px solid rgba(255,255,255,.08);
 }
 
-.footer-main {
-  display: grid;
-  grid-template-columns: 1.6fr .65fr .75fr 1fr;
-  gap: 50px;
 
-  width: min(1400px,90%);
+/* MAIN WRAPPER */
+
+.footer-premium {
+  width: min(1150px, 92%);
   margin: auto;
-  padding: 90px 0 70px;
+  padding: 75px 0 25px;
 }
 
-.footer-brand img {
-  width: 65px;
-  height: 65px;
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.footer-brand-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 22px;
+
+  text-align: center;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 76px;
+  height: 76px;
+
+  flex-shrink: 0;
+}
+
+.footer-logo img {
+  width: 100%;
+  height: 100%;
+
   object-fit: contain;
 }
 
-.footer-brand h2 {
-  margin: 30px 0 20px;
-
-  font-family: "Playfair Display", serif;
-  font-size: clamp(2.8rem,5vw,5rem);
-  font-weight: 500;
-  line-height: .88;
-  letter-spacing: -.05em;
-}
-
-.footer-brand h2 em {
-  color: var(--yellow-light);
-}
-
-.footer-brand p {
-  max-width: 300px;
-
-  margin: 0;
-
-  color: rgba(255,255,255,.4);
-  font-size: .7rem;
-  line-height: 1.8;
-}
-
-.footer-column {
+.footer-brand-copy {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 13px;
+
+  text-align: left;
 }
 
-.footer-column > span,
-.footer-social > span {
-  margin-bottom: 12px;
+.footer-brand-copy > span {
+  margin-bottom: 7px;
 
-  font-size: .52rem;
+  font-size: .48rem;
   font-weight: 700;
-  letter-spacing: .18em;
+
+  letter-spacing: .27em;
+
   color: var(--yellow-light);
 }
 
-.footer-column a {
+.footer-brand-copy h2 {
+  margin: 0;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: clamp(2rem,4vw,3.7rem);
+
+  font-weight: 500;
+  line-height: .9;
+
+  letter-spacing: -.045em;
+}
+
+.footer-brand-copy h2 em {
+  color: var(--yellow-light);
+  font-style: italic;
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.footer-stats {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+
+  margin-top: 45px;
+
+  border-top: 1px solid rgba(255,255,255,.1);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+
+.footer-stat {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 26px 15px;
+
+  text-align: center;
+}
+
+.footer-stat + .footer-stat {
+  border-left: 1px solid rgba(255,255,255,.1);
+}
+
+.footer-stat-icon {
+  margin-bottom: 7px;
+
+  color: var(--yellow-light);
+
   font-size: .65rem;
-  color: rgba(255,255,255,.55);
-
-  transition:
-    color .3s,
-    transform .3s;
 }
 
-.footer-column a:hover {
+.footer-stat strong {
+  font-family: "Playfair Display", serif;
+
+  font-size: 1.75rem;
+  font-weight: 500;
+
   color: var(--sand-100);
-  transform: translateX(5px);
 }
 
-.footer-contact p {
-  margin: 10px 0 0;
+.footer-stat small {
+  margin-top: 5px;
 
-  color: rgba(255,255,255,.35);
-  font-size: .6rem;
-  line-height: 1.8;
+  font-size: .48rem;
+  font-weight: 700;
+
+  letter-spacing: .13em;
+
+  color: rgba(255,255,255,.42);
+
+  text-transform: uppercase;
 }
 
-.footer-social {
+
+/* =========================================================
+   CONTACT PANEL
+========================================================= */
+
+.footer-contact-panel {
+  display: grid;
+
+  grid-template-columns:
+    .8fr 1.5fr 1fr 1fr;
+
+  gap: 0;
+
+  margin-top: 35px;
+
+  border: 1px solid rgba(255,255,255,.10);
+
+  border-radius: 20px;
+
+  overflow: hidden;
+
+  background:
+    rgba(255,255,255,.025);
+}
+
+.footer-contact-item {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 13px;
+
+  min-height: 145px;
+
+  padding: 25px 20px;
+}
+
+.footer-contact-item + .footer-contact-item {
+  border-left: 1px solid rgba(255,255,255,.08);
+}
+
+
+.footer-contact-icon {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 
-  width: min(1400px,90%);
-  margin: auto;
+  width: 36px;
+  height: 36px;
 
-  padding: 22px 0;
+  flex-shrink: 0;
 
-  border-top: 1px solid rgba(255,255,255,.08);
-  border-bottom: 1px solid rgba(255,255,255,.08);
+  color: var(--yellow-light);
+
+  border: 1px solid rgba(209,163,75,.3);
+
+  border-radius: 50%;
+
+  background: rgba(209,163,75,.04);
 }
 
-.footer-social > span {
-  margin: 0;
+.footer-contact-icon svg {
+  width: 17px;
+  height: 17px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 1.6;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-.footer-social > div {
+
+.footer-contact-content {
+  min-width: 0;
+}
+
+.footer-contact-content > span {
+  display: block;
+
+  margin-bottom: 9px;
+
+  font-size: .47rem;
+  font-weight: 700;
+
+  letter-spacing: .17em;
+
+  color: var(--yellow-light);
+
+  text-transform: uppercase;
+}
+
+
+.footer-contact-content strong,
+.footer-contact-content address,
+.footer-contact-content a {
+  font-size: .66rem;
+}
+
+
+.footer-contact-content address {
+  color: rgba(255,255,255,.48);
+
+  font-style: normal;
+
+  line-height: 1.75;
+}
+
+
+.footer-hours {
+  align-items: center;
+}
+
+.footer-hours .footer-contact-content strong {
+  display: block;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 1rem;
+
+  font-weight: 500;
+
+  color: var(--sand-100);
+}
+
+
+/* PHONE */
+
+.footer-phone-row {
   display: flex;
-  gap: 25px;
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  gap: 9px;
 }
 
-.footer-social a {
-  font-size: .58rem;
-  letter-spacing: .08em;
-  color: rgba(255,255,255,.55);
+.footer-phone {
+  color: var(--sand-100);
+
+  font-family: "Playfair Display", serif;
+
+  font-size: .98rem !important;
 
   transition: color .3s;
 }
 
-.footer-social a:hover {
+.footer-phone:hover,
+.footer-email:hover {
   color: var(--yellow-light);
 }
 
-.footer-bottom {
+
+/* EMAIL */
+
+.footer-email {
+  display: inline-block;
+
+  color: rgba(255,255,255,.58);
+
+  line-height: 1.5;
+
+  word-break: break-word;
+
+  transition: color .3s;
+}
+
+
+/* =========================================================
+   FOOTER BUTTONS
+========================================================= */
+
+.footer-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  padding: 9px 13px;
+
+  color: var(--wood-950) !important;
+
+  background: var(--yellow);
+
+  border-radius: 100px;
+
+  font-size: .48rem !important;
+  font-weight: 700;
+
+  letter-spacing: .08em;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
+
+  transition:
+    background .3s var(--ease),
+    transform .3s var(--ease);
+}
+
+.footer-action-btn:hover {
+  color: var(--wood-950) !important;
+
+  background: var(--yellow-light);
+
+  transform: translateY(-2px);
+}
+
+.footer-action-btn span {
+  font-size: .8rem;
+}
+
+.footer-map-btn {
+  margin-top: 13px;
+}
+
+
+/* =========================================================
+   SOCIAL
+========================================================= */
+
+.footer-social-bar {
   display: flex;
+
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
+
+  margin-top: 30px;
+
+  padding: 16px 0;
+
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.footer-social-bar > span {
+  font-size: .48rem;
+
+  font-weight: 700;
+
+  letter-spacing: .18em;
+
+  color: rgba(255,255,255,.38);
+
+  text-transform: uppercase;
+}
+
+.footer-social-icons {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+}
+
+.footer-social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 35px;
+  height: 35px;
+
+  color: rgba(255,255,255,.62);
+
+  border: 1px solid rgba(255,255,255,.12);
+
+  border-radius: 50%;
+
+  transition:
+    color .3s,
+    background .3s,
+    border-color .3s,
+    transform .3s;
+}
+
+.footer-social-icons a:hover {
+  color: var(--wood-950);
+
+  background: var(--yellow);
+
+  border-color: var(--yellow);
+
+  transform: translateY(-3px);
+}
+
+.footer-social-icons svg {
+  width: 15px;
+  height: 15px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 1.8;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.footer-social-icons svg .icon-fill {
+  fill: currentColor;
+  stroke: none;
+}
+
+
+/* =========================================================
+   BOTTOM
+========================================================= */
+
+.footer-bottom-new {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
   gap: 15px;
 
-  width: min(1400px,90%);
-  margin: auto;
+  padding-top: 22px;
 
-  padding: 25px 0;
+  font-size: .47rem;
 
-  font-size: .5rem;
-  color: rgba(255,255,255,.3);
+  color: rgba(255,255,255,.28);
+
   letter-spacing: .04em;
 }
 
-.footer-bottom a {
+.made-by-new strong {
   color: var(--yellow-light);
 }
 
-.made-by strong {
-  color: var(--yellow-light);
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+
+  .footer-contact-panel {
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .footer-contact-item:nth-child(3) {
+    border-left: 0;
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+
+  .footer-contact-item:nth-child(4) {
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+
 }
 
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .footer-premium {
+    width: 92%;
+
+    padding: 55px 0 20px;
+  }
+
+
+  /* BRAND */
+
+  .footer-brand-strip {
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .footer-logo {
+    width: 58px;
+    height: 58px;
+  }
+
+  .footer-brand-copy {
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .footer-brand-copy h2 {
+    font-size: 2.25rem;
+
+    line-height: .95;
+  }
+
+
+  /* STATS */
+
+  .footer-stats {
+    margin-top: 30px;
+  }
+
+  .footer-stat {
+    padding: 18px 7px;
+  }
+
+  .footer-stat strong {
+    font-size: 1.28rem;
+  }
+
+  .footer-stat small {
+    font-size: .39rem;
+    line-height: 1.4;
+  }
+
+
+  /* CONTACT */
+
+  .footer-contact-panel {
+    grid-template-columns: 1fr;
+
+    margin-top: 25px;
+
+    border-radius: 16px;
+  }
+
+  .footer-contact-item {
+    min-height: auto;
+
+    padding: 20px 17px;
+  }
+
+  .footer-contact-item + .footer-contact-item,
+  .footer-contact-item:nth-child(3),
+  .footer-contact-item:nth-child(4) {
+    border-left: 0;
+
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+
+
+  .footer-contact-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+
+  .footer-contact-content > span {
+    margin-bottom: 6px;
+  }
+
+
+  .footer-phone-row {
+    align-items: center;
+  }
+
+
+  .footer-phone {
+    font-size: .92rem !important;
+  }
+
+
+  .footer-action-btn {
+    padding: 8px 12px;
+  }
+
+
+  /* SOCIAL */
+
+  .footer-social-bar {
+    align-items: center;
+
+    flex-direction: column;
+
+    gap: 14px;
+  }
+
+
+  /* BOTTOM */
+
+  .footer-bottom-new {
+    flex-direction: column;
+
+    align-items: center;
+
+    text-align: center;
+
+    line-height: 1.6;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .footer-brand-copy h2 {
+    font-size: 2rem;
+  }
+
+  .footer-stats {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .footer-stat strong {
+    font-size: 1.1rem;
+  }
+
+  .footer-stat small {
+    letter-spacing: .05em;
+  }
+
+}
 
 /* =========================================================
    21 — FLOATING BUTTONS
