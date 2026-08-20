@@ -1,2951 +1,2090 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-<title>Infinity Granites | From Mines to Marvels</title>
-
-<meta name="description"
-content="Infinity Granites — Premium natural granite from Kishangarh. Wholesale granite, architectural stone and all India delivery. Since 1999.">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-
-<style>
-:root{
-  --brown:#704b28;
-  --brown2:#4b301a;
-  --deep:#2c1d12;
-  --sand:#b38b51;
-  --gold:#d5b36b;
-  --cream:#f5efe3;
-  --ivory:#fcfaf5;
-  --white:#fff;
-  --text:#30251b;
-  --muted:#766b5d;
-  --line:rgba(92,65,34,.18);
-  --serif:"Playfair Display",Georgia,serif;
-  --sans:"DM Sans",Arial,sans-serif;
-  --ease:cubic-bezier(.22,.61,.36,1);
-}
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  background:var(--ivory);
-  color:var(--text);
-  font-family:var(--sans);
-  overflow-x:hidden;
-}
-
-body.menu-open{
-  overflow:hidden;
-}
-
-img{
-  display:block;
-  max-width:100%;
-}
-
-a{
-  color:inherit;
-  text-decoration:none;
-}
-
-button,
-input,
-textarea,
-select{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-.container{
-  width:min(1240px,calc(100% - 80px));
-  margin:auto;
-}
-
-.eyebrow{
-  display:flex;
-  align-items:center;
-  gap:13px;
-  color:var(--sand);
-  text-transform:uppercase;
-  letter-spacing:.25em;
-  font-size:10px;
-  font-weight:600;
-}
-
-.eyebrow:before{
-  content:"";
-  width:35px;
-  height:1px;
-  background:currentColor;
-}
-
-.title{
-  font-family:var(--serif);
-  font-size:clamp(42px,5vw,72px);
-  line-height:1;
-  font-weight:400;
-  letter-spacing:-.035em;
-}
-
-.title em{
-  color:var(--brown);
-}
-
-.copy{
-  max-width:650px;
-  color:var(--muted);
-  font-size:14px;
-  line-height:1.9;
-}
-
-.btn{
-  min-height:52px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:15px;
-  padding:0 25px;
-  border:1px solid rgba(211,179,107,.65);
-  color:inherit;
-  background:transparent;
-  text-transform:uppercase;
-  letter-spacing:.16em;
-  font-size:10px;
-  transition:.4s var(--ease);
-}
-
-.btn:hover{
-  background:var(--gold);
-  color:var(--deep);
-  border-color:var(--gold);
-}
-
-.reveal{
-  opacity:0;
-  transform:translateY(35px);
-  transition:opacity .9s var(--ease),transform .9s var(--ease);
-}
-
-.reveal.visible{
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* =========================
-   PRELOADER
-========================= */
-
-.preloader{
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  background:var(--deep);
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:.8s ease;
-}
-
-.preloader.hide{
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-}
-
-.loader{
-  text-align:center;
-}
-
-.loader-mark{
-  font-family:var(--serif);
-  font-style:italic;
-  font-size:55px;
-  color:var(--gold);
-}
-
-.loader-name{
-  margin-top:10px;
-  font-size:9px;
-  letter-spacing:.38em;
-  text-transform:uppercase;
-}
-
-.loader-line{
-  width:150px;
-  height:1px;
-  margin:25px auto 0;
-  background:rgba(255,255,255,.15);
-  overflow:hidden;
-}
-
-.loader-line span{
-  display:block;
-  width:45%;
-  height:100%;
-  background:var(--gold);
-  animation:load 1.5s infinite;
-}
-
-@keyframes load{
-  from{transform:translateX(-150%)}
-  to{transform:translateX(330%)}
-}
-
-/* =========================
-   HEADER
-========================= */
-
-header{
-  position:fixed;
-  left:0;
-  top:0;
-  width:100%;
-  z-index:1000;
-  color:#fff;
-  border-bottom:1px solid rgba(255,255,255,.12);
-  transition:.5s var(--ease);
-}
-
-header.scrolled{
-  background:rgba(47,30,17,.94);
-  backdrop-filter:blur(18px);
-  border-color:rgba(213,179,107,.2);
-}
-
-.nav{
-  min-height:88px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:25px;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:13px;
-}
-
-.brand img{
-  width:49px;
-  height:49px;
-  object-fit:contain;
-}
-
-.brand-name{
-  font-family:var(--serif);
-  font-size:21px;
-}
-
-.brand-sub{
-  font-size:7px;
-  letter-spacing:.32em;
-  text-transform:uppercase;
-  opacity:.7;
-}
-
-.nav-links{
-  display:flex;
-  align-items:center;
-  gap:23px;
-}
-
-.nav-links a{
-  position:relative;
-  font-size:9px;
-  text-transform:uppercase;
-  letter-spacing:.13em;
-  opacity:.9;
-  transition:.3s;
-}
-
-.nav-links a:hover{
-  color:var(--gold);
-}
-
-.nav-links a:after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:-8px;
-  width:0;
-  height:1px;
-  background:var(--gold);
-  transition:.3s;
-}
-
-.nav-links a:hover:after{
-  width:100%;
-}
-
-.menu-btn{
-  display:none;
-  width:44px;
-  height:44px;
-  border:1px solid rgba(255,255,255,.35);
-  background:transparent;
-  color:white;
-}
-
-.menu-btn span,
-.menu-btn span:before,
-.menu-btn span:after{
-  display:block;
-  width:20px;
-  height:1px;
-  background:currentColor;
-  position:relative;
-  margin:auto;
-}
-
-.menu-btn span:before,
-.menu-btn span:after{
-  content:"";
-  position:absolute;
-  left:0;
-}
-
-.menu-btn span:before{top:-7px}
-.menu-btn span:after{top:7px}
-
-.mobile-menu{
-  position:fixed;
-  inset:0;
-  z-index:999;
-  background:var(--deep);
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transform:translateX(100%);
-  transition:.6s var(--ease);
-}
-
-.mobile-menu.open{
-  transform:translateX(0);
-}
-
-.mobile-inner{
-  width:min(88%,500px);
-}
-
-.mobile-inner a{
-  display:block;
-  padding:13px 0;
-  border-bottom:1px solid rgba(255,255,255,.13);
-  font-family:var(--serif);
-  font-size:30px;
-}
-
-/* =========================
-   HERO VIDEO
-========================= */
-
-.hero{
-  height:100svh;
-  min-height:680px;
-  position:relative;
-  overflow:hidden;
-  background:var(--deep);
-  color:#fff;
-}
-
-.hero-video{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.hero-overlay{
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(90deg,rgba(34,22,12,.78),rgba(51,34,17,.35),rgba(30,18,9,.3)),
-    linear-gradient(0deg,rgba(25,15,8,.7),transparent 55%);
-}
-
-.hero-content{
-  position:relative;
-  z-index:2;
-  height:100%;
-  display:flex;
-  align-items:center;
-}
-
-.hero-copy{
-  max-width:850px;
-  padding-top:55px;
-}
-
-.hero-kicker{
-  display:flex;
-  align-items:center;
-  gap:15px;
-  color:var(--gold);
-  font-size:10px;
-  letter-spacing:.35em;
-  text-transform:uppercase;
-  margin-bottom:27px;
-}
-
-.hero-kicker:before{
-  content:"";
-  width:50px;
-  height:1px;
-  background:var(--gold);
-}
-
-.hero h1{
-  font-family:var(--serif);
-  font-size:clamp(58px,8vw,115px);
-  line-height:.88;
-  font-weight:400;
-  letter-spacing:-.055em;
-}
-
-.hero h1 em{
-  display:block;
-  margin-left:7vw;
-  color:var(--gold);
-}
-
-.hero-text{
-  max-width:550px;
-  margin:35px 0 38px;
-  color:rgba(255,255,255,.8);
-  line-height:1.85;
-  font-size:14px;
-}
-
-.hero-actions{
-  display:flex;
-  gap:13px;
-  flex-wrap:wrap;
-}
-
-.hero-bottom{
-  position:absolute;
-  z-index:3;
-  bottom:28px;
-  left:0;
-  right:0;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.scroll-label{
-  display:flex;
-  gap:12px;
-  align-items:center;
-  font-size:9px;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  opacity:.7;
-}
-
-.scroll-line{
-  width:50px;
-  height:1px;
-  background:rgba(255,255,255,.5);
-}
-
-.cursor-light{
-  position:absolute;
-  width:250px;
-  height:250px;
-  border-radius:50%;
-  pointer-events:none;
-  background:radial-gradient(circle,rgba(213,179,107,.09),transparent 68%);
-  transform:translate(-50%,-50%);
-  z-index:1;
-}
-
-/* =========================
-   BEHIND THE VISION
-========================= */
-
-.vision{
-  padding:135px 0;
-  background:var(--ivory);
-}
-
-.vision-grid{
-  display:grid;
-  grid-template-columns:.95fr 1.05fr;
-  gap:90px;
-  align-items:center;
-}
-
-.vision-image{
-  position:relative;
-}
-
-.vision-image img{
-  width:100%;
-  height:610px;
-  object-fit:cover;
-}
-
-.vision-image:after{
-  content:"";
-  position:absolute;
-  right:-20px;
-  bottom:-20px;
-  width:52%;
-  height:50%;
-  border-right:1px solid var(--gold);
-  border-bottom:1px solid var(--gold);
-  pointer-events:none;
-}
-
-.vision-content .title{
-  margin:22px 0 30px;
-}
-
-.vision-quote{
-  font-family:var(--serif);
-  font-size:25px;
-  line-height:1.45;
-  margin:30px 0;
-  color:var(--brown);
-}
-
-.vision-points{
-  margin-top:35px;
-  border-top:1px solid var(--line);
-}
-
-.vision-point{
-  display:flex;
-  justify-content:space-between;
-  gap:20px;
-  padding:17px 0;
-  border-bottom:1px solid var(--line);
-  font-size:11px;
-}
-
-.vision-point span:last-child{
-  color:var(--muted);
-  text-align:right;
-}
-
-/* =========================
-   OUR STORY
-========================= */
-
-.story{
-  position:relative;
-  min-height:700px;
-  display:flex;
-  align-items:center;
-  overflow:hidden;
-  color:white;
-  background:var(--deep);
-}
-
-.story-bg{
-  position:absolute;
-  inset:0;
-}
-
-.story-bg img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-  transform:none !important;
-}
-
-.story-overlay{
-  position:absolute;
-  inset:0;
-  background:linear-gradient(90deg,rgba(40,25,13,.9),rgba(53,34,17,.55),rgba(30,18,9,.3));
-}
-
-.story-content{
-  position:relative;
-  z-index:2;
-  max-width:760px;
-  padding:130px 0;
-}
-
-.story .title{
-  margin:25px 0;
-}
-
-.story .title em{
-  color:var(--gold);
-}
-
-.story .copy{
-  color:rgba(255,255,255,.72);
-}
-
-.story-meta{
-  display:flex;
-  flex-wrap:wrap;
-  gap:35px;
-  margin-top:45px;
-}
-
-.story-meta strong{
-  display:block;
-  font-family:var(--serif);
-  font-size:35px;
-  font-weight:400;
-  color:var(--gold);
-}
-
-.story-meta span{
-  display:block;
-  margin-top:5px;
-  font-size:8px;
-  text-transform:uppercase;
-  letter-spacing:.18em;
-}
-
-/* =========================
-   COLLECTION
-========================= */
-
-.collection{
-  padding:135px 0 125px;
-  overflow:hidden;
-  background:var(--cream);
-}
-
-.collection-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  gap:40px;
-  margin-bottom:60px;
-}
-
-.collection-head .copy{
-  margin-top:23px;
-}
-
-.collection-note{
-  font-size:9px;
-  text-transform:uppercase;
-  letter-spacing:.2em;
-  color:var(--muted);
-}
-
-.collection-note span{
-  color:var(--gold);
-  font-size:17px;
-  margin-right:8px;
-}
-
-.collection-wrap{
-  overflow:hidden;
-  cursor:grab;
-  margin-right:-20vw;
-}
-
-.collection-wrap.dragging{
-  cursor:grabbing;
-}
-
-.collection-track{
-  display:flex;
-  gap:24px;
-  width:max-content;
-  will-change:transform;
-}
-
-.stone-card{
-  width:min(520px,42vw);
-  min-width:390px;
-  flex:none;
-}
-
-.stone-image{
-  position:relative;
-  height:410px;
-  overflow:hidden;
-  background:#ddd;
-  border:1px solid rgba(96,68,35,.2);
-}
-
-.stone-image img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  transition:1s var(--ease);
-}
-
-.stone-card:hover .stone-image img{
-  transform:scale(1.045);
-}
-
-.stone-image:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(0deg,rgba(35,22,11,.65),transparent 50%);
-}
-
-.stone-index{
-  position:absolute;
-  z-index:2;
-  left:20px;
-  top:17px;
-  color:white;
-  font-family:var(--serif);
-  font-size:14px;
-}
-
-.stone-finish{
-  position:absolute;
-  z-index:2;
-  right:20px;
-  bottom:20px;
-  color:white;
-  font-size:8px;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-}
-
-.stone-info{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:20px;
-  padding:19px 4px 0;
-}
-
-.stone-name{
-  font-family:var(--serif);
-  font-size:25px;
-}
-
-.stone-desc{
-  margin-top:6px;
-  color:var(--muted);
-  font-size:9px;
-  text-transform:uppercase;
-  letter-spacing:.14em;
-}
-
-.stone-arrow{
-  font-family:var(--serif);
-  font-size:23px;
-  color:var(--gold);
-}
-
-/* =========================
-   FINDER
-========================= */
-
-.finder{
-  padding:130px 0;
-  background:var(--brown2);
-  color:white;
-  position:relative;
-  overflow:hidden;
-}
-
-.finder:before{
-  content:"";
-  position:absolute;
-  width:550px;
-  height:550px;
-  right:-250px;
-  top:-250px;
-  border:1px solid rgba(213,179,107,.14);
-  border-radius:50%;
-}
-
-.finder-grid{
-  display:grid;
-  grid-template-columns:.8fr 1.2fr;
-  gap:90px;
-  align-items:center;
-}
-
-.finder .title{
-  margin:23px 0;
-}
-
-.finder .title em{
-  color:var(--gold);
-}
-
-.finder .copy{
-  color:rgba(255,255,255,.68);
-}
-
-.progress{
-  display:flex;
-  gap:7px;
-  margin-top:35px;
-}
-
-.progress span{
-  width:45px;
-  height:2px;
-  background:rgba(255,255,255,.2);
-  transition:.3s;
-}
-
-.progress span.active{
-  background:var(--gold);
-}
-
-.finder-box{
-  min-height:450px;
-  padding:52px;
-  border:1px solid rgba(213,179,107,.24);
-  background:rgba(255,255,255,.045);
-}
-
-.finder-step{
-  display:none;
-}
-
-.finder-step.active{
-  display:block;
-  animation:step .45s ease;
-}
-
-@keyframes step{
-  from{opacity:0;transform:translateX(20px)}
-  to{opacity:1;transform:translateX(0)}
-}
-
-.step-label{
-  color:var(--gold);
-  text-transform:uppercase;
-  letter-spacing:.2em;
-  font-size:9px;
-}
-
-.question{
-  font-family:var(--serif);
-  font-size:38px;
-  font-weight:400;
-  margin:18px 0 30px;
-}
-
-.options{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.option{
-  padding:17px;
-  text-align:left;
-  color:white;
-  background:transparent;
-  border:1px solid rgba(255,255,255,.16);
-  transition:.3s;
-  font-size:11px;
-}
-
-.option:hover,
-.option.selected{
-  border-color:var(--gold);
-  background:rgba(213,179,107,.1);
-}
-
-.finder-next{
-  margin-top:27px;
-  min-height:49px;
-  padding:0 24px;
-  border:0;
-  background:var(--gold);
-  color:var(--deep);
-  text-transform:uppercase;
-  letter-spacing:.15em;
-  font-size:9px;
-}
-
-.finder-result{
-  display:none;
-}
-
-.finder-result.show{
-  display:block;
-  animation:step .5s ease;
-}
-
-.result-label{
-  color:var(--gold);
-  font-size:9px;
-  text-transform:uppercase;
-  letter-spacing:.2em;
-}
-
-.result-name{
-  margin:13px 0;
-  font-family:var(--serif);
-  font-size:45px;
-  color:var(--gold);
-}
-
-.result-text{
-  color:rgba(255,255,255,.7);
-  line-height:1.8;
-  font-size:13px;
-}
-
-.result-actions{
-  margin-top:30px;
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-}
-
-/* =========================
-   APPLICATIONS
-========================= */
-
-.applications{
-  padding:135px 0;
-  background:var(--ivory);
-}
-
-.app-head{
-  display:flex;
-  justify-content:space-between;
-  gap:50px;
-  align-items:end;
-  margin-bottom:60px;
-}
-
-.app-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
-}
-
-.app-card{
-  position:relative;
-  height:170px;
-  overflow:hidden;
-  background:var(--brown2);
-}
-
-.app-card:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(0deg,rgba(29,18,9,.82),transparent 55%);
-}
-
-.app-card .app-placeholder{
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(135deg,rgba(179,139,81,.35),rgba(49,31,16,.8)),
-    repeating-linear-gradient(120deg,rgba(255,255,255,.05) 0 2px,transparent 2px 14px);
-  transition:.8s var(--ease);
-}
-
-.app-card:hover .app-placeholder{
-  transform:scale(1.06);
-}
-
-.app-content{
-  position:absolute;
-  z-index:2;
-  left:22px;
-  right:22px;
-  bottom:23px;
-  color:white;
-}
-
-.app-number{
-  color:var(--gold);
-  font-family:var(--serif);
-  font-size:13px;
-}
-
-.app-content h3{
-  margin-top:7px;
-  font-family:var(--serif);
-  font-size:25px;
-  font-weight:400;
-}
-
-.app-content p{
-  margin-top:7px;
-  color:rgba(255,255,255,.65);
-  font-size:10px;
-  line-height:1.6;
-}
-
-/* =========================
-   WHY INFINITY
-========================= */
-
-.why{
-  padding:135px 0;
-  background:var(--brown2);
-  color:white;
-}
-
-.why-head{
-  max-width:700px;
-}
-
-.why .title{
-  margin:24px 0;
-}
-
-.why .title em{
-  color:var(--gold);
-}
-
-.why .copy{
-  color:rgba(255,255,255,.68);
-}
-
-.why-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  margin-top:65px;
-  border-top:1px solid rgba(255,255,255,.13);
-  border-left:1px solid rgba(255,255,255,.13);
-}
-
-.why-item{
-  padding:35px;
-  min-height:190px;
-  border-right:1px solid rgba(255,255,255,.13);
-  border-bottom:1px solid rgba(255,255,255,.13);
-}
-
-.why-number{
-  color:var(--gold);
-  font-family:var(--serif);
-  font-size:15px;
-}
-
-.why-item h3{
-  margin:20px 0 10px;
-  font-family:var(--serif);
-  font-size:23px;
-  font-weight:400;
-}
-
-.why-item p{
-  color:rgba(255,255,255,.6);
-  font-size:11px;
-  line-height:1.7;
-}
-
-/* =========================
-   SELECTION GUIDE GAME
-========================= */
-
-.guide{
-  padding:135px 0;
-  background:var(--cream);
-}
-
-.guide-head{
-  text-align:center;
-  max-width:700px;
-  margin:auto;
-}
-
-.guide-head .copy{
-  margin:25px auto 0;
-}
-
-.game{
-  max-width:900px;
-  margin:65px auto 0;
-  padding:45px;
-  position:relative;
-  overflow:hidden;
-  background:
-    radial-gradient(circle at 20% 20%,rgba(213,179,107,.13),transparent 25%),
-    radial-gradient(circle at 80% 70%,rgba(112,75,40,.12),transparent 25%),
-    var(--brown2);
-  color:white;
-  border:1px solid rgba(213,179,107,.35);
-  box-shadow:0 25px 70px rgba(47,30,17,.18);
-}
-
-.game:before,
-.game:after{
-  content:"";
-  position:absolute;
-  width:100px;
-  height:100px;
-  border:1px solid rgba(213,179,107,.25);
-  border-radius:50%;
-}
-
-.game:before{
-  left:-45px;
-  top:-45px;
-}
-
-.game:after{
-  right:-45px;
-  bottom:-45px;
-}
-
-.game-top{
-  position:relative;
-  z-index:2;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:30px;
-}
-
-.game-level{
-  color:var(--gold);
-  font-size:9px;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-}
-
-.game-score{
-  font-family:var(--serif);
-  font-size:18px;
-}
-
-.game-question{
-  position:relative;
-  z-index:2;
-  text-align:center;
-  font-family:var(--serif);
-  font-size:35px;
-  font-weight:400;
-  margin-bottom:35px;
-}
-
-.game-options{
-  position:relative;
-  z-index:2;
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:13px;
-}
-
-.game-option{
-  min-height:90px;
-  border:1px solid rgba(255,255,255,.16);
-  background:rgba(255,255,255,.035);
-  color:white;
-  position:relative;
-  overflow:hidden;
-  transition:.35s var(--ease);
-}
-
-.game-option span{
-  position:relative;
-  z-index:2;
-  font-family:var(--serif);
-  font-size:19px;
-}
-
-.game-option:before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(135deg,rgba(213,179,107,.25),transparent);
-  transform:translateX(-100%);
-  transition:.4s;
-}
-
-.game-option:hover{
-  transform:translateY(-5px) rotate(-1deg);
-  border-color:var(--gold);
-  box-shadow:0 12px 30px rgba(0,0,0,.2);
-}
-
-.game-option:hover:before{
-  transform:translateX(0);
-}
-
-.game-option.correct{
-  border-color:var(--gold);
-  background:rgba(213,179,107,.2);
-  animation:pop .45s ease;
-}
-
-.game-option.wrong{
-  animation:shake .35s ease;
-}
-
-@keyframes pop{
-  50%{transform:scale(1.05) rotate(1deg)}
-}
-
-@keyframes shake{
-  25%{transform:translateX(-8px)}
-  50%{transform:translateX(8px)}
-  75%{transform:translateX(-5px)}
-}
-
-.game-progress{
-  position:relative;
-  z-index:2;
-  height:2px;
-  background:rgba(255,255,255,.13);
-  margin-top:30px;
-}
-
-.game-progress span{
-  display:block;
-  width:0;
-  height:100%;
-  background:var(--gold);
-  transition:.5s;
-}
-
-.game-result{
-  display:none;
-  text-align:center;
-  position:relative;
-  z-index:2;
-}
-
-.game-result.show{
-  display:block;
-  animation:step .5s ease;
-}
-
-.game-result small{
-  color:var(--gold);
-  letter-spacing:.2em;
-  text-transform:uppercase;
-}
-
-.game-result h3{
-  margin:15px 0;
-  font-family:var(--serif);
-  font-size:42px;
-  color:var(--gold);
-  font-weight:400;
-}
-
-.game-result p{
-  max-width:550px;
-  margin:auto;
-  color:rgba(255,255,255,.68);
-  line-height:1.8;
-  font-size:13px;
-}
-
-.game-result .btn{
-  margin-top:28px;
-}
-
-/* =========================
-   PROFESSIONAL / B2B
-========================= */
-
-.professional{
-  padding:135px 0;
-  background:var(--ivory);
-}
-
-.professional-grid{
-  display:grid;
-  grid-template-columns:.85fr 1.15fr;
-  gap:90px;
-  align-items:center;
-}
-
-.professional-image{
-  width:min(420px,100%);
-  margin:auto;
-  position:relative;
-}
-
-.professional-image img{
-  width:100%;
-  height:510px;
-  object-fit:contain;
-  object-position:center;
-}
-
-.professional-image:after{
-  content:"";
-  position:absolute;
-  right:-15px;
-  bottom:25px;
-  width:65%;
-  height:45%;
-  border-right:1px solid var(--gold);
-  border-bottom:1px solid var(--gold);
-  pointer-events:none;
-}
-
-.professional-content .title{
-  margin:22px 0 28px;
-}
-
-.professional-content .copy{
-  margin-bottom:30px;
-}
-
-.professional-list{
-  border-top:1px solid var(--line);
-}
-
-.professional-list div{
-  padding:16px 0;
-  border-bottom:1px solid var(--line);
-  display:flex;
-  justify-content:space-between;
-  font-size:11px;
-}
-
-.professional-list span:last-child{
-  color:var(--muted);
-}
-
-/* =========================
-   COMPARISON
-========================= */
-
-.comparison{
-  padding:130px 0;
-  background:var(--cream);
-}
-
-.compare-wrap{
-  margin-top:55px;
-  overflow:auto;
-  border:1px solid var(--line);
-}
-
-.compare-table{
-  width:100%;
-  min-width:760px;
-  border-collapse:collapse;
-}
-
-.compare-table th,
-.compare-table td{
-  padding:20px;
-  border-right:1px solid var(--line);
-  border-bottom:1px solid var(--line);
-  text-align:left;
-  font-size:11px;
-}
-
-.compare-table th{
-  font-family:var(--serif);
-  font-size:18px;
-  font-weight:400;
-  background:rgba(112,75,40,.05);
-}
-
-.compare-table td:first-child{
-  font-weight:600;
-  color:var(--brown);
-}
-
-/* =========================
-   REVIEWS
-========================= */
-
-.reviews{
-  padding:130px 0;
-  background:var(--brown2);
-  color:white;
-}
-
-.review-head{
-  text-align:center;
-}
-
-.review-head .title em{
-  color:var(--gold);
-}
-
-.review-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-  margin-top:60px;
-}
-
-.review{
-  padding:35px;
-  border:1px solid rgba(213,179,107,.2);
-  background:rgba(255,255,255,.035);
-}
-
-.stars{
-  color:var(--gold);
-  letter-spacing:.15em;
-  font-size:12px;
-}
-
-.review p{
-  margin:23px 0;
-  color:rgba(255,255,255,.72);
-  line-height:1.8;
-  font-size:12px;
-}
-
-.review strong{
-  font-family:var(--serif);
-  font-size:18px;
-  font-weight:400;
-}
-
-.review small{
-  display:block;
-  margin-top:4px;
-  color:rgba(255,255,255,.4);
-  font-size:9px;
-  text-transform:uppercase;
-  letter-spacing:.12em;
-}
-
-/* =========================
-   FAQ
-========================= */
-
-.faq{
-  padding:135px 0;
-  background:var(--ivory);
-}
-
-.faq-grid{
-  display:grid;
-  grid-template-columns:.75fr 1.25fr;
-  gap:90px;
-}
-
-.faq-list{
-  border-top:1px solid var(--line);
-}
-
-.faq-item{
-  border-bottom:1px solid var(--line);
-}
-
-.faq-question{
-  width:100%;
-  border:0;
-  background:none;
-  padding:22px 0;
-  display:flex;
-  justify-content:space-between;
-  gap:20px;
-  text-align:left;
-  color:var(--text);
-  font-family:var(--serif);
-  font-size:20px;
-}
-
-.faq-icon{
-  color:var(--gold);
-  font-family:var(--sans);
-  transition:.3s;
-}
-
-.faq-answer{
-  max-height:0;
-  overflow:hidden;
-  transition:.4s ease;
-}
-
-.faq-answer p{
-  padding:0 30px 22px 0;
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.8;
-}
-
-.faq-item.open .faq-answer{
-  max-height:200px;
-}
-
-.faq-item.open .faq-icon{
-  transform:rotate(45deg);
-}
-
-/* =========================
-   CONTACT
-========================= */
-
-.contact{
-  padding:130px 0;
-  background:var(--cream);
-}
-
-.contact-grid{
-  display:grid;
-  grid-template-columns:.85fr 1.15fr;
-  gap:90px;
-}
-
-.contact-left .title{
-  margin:23px 0;
-}
-
-.contact-details{
-  margin-top:40px;
-}
-
-.contact-detail{
-  padding:18px 0;
-  border-top:1px solid var(--line);
-}
-
-.contact-detail span{
-  display:block;
-  color:var(--muted);
-  font-size:8px;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  margin-bottom:7px;
-}
-
-.contact-detail strong{
-  font-family:var(--serif);
-  font-size:20px;
-  font-weight:400;
-}
-
-.form{
-  padding:45px;
-  background:white;
-  border:1px solid var(--line);
-}
-
-.form-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:18px;
-}
-
-.field{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-
-.field.full{
-  grid-column:1/-1;
-}
-
-.field label{
-  font-size:8px;
-  text-transform:uppercase;
-  letter-spacing:.15em;
-  color:var(--muted);
-}
-
-.field input,
-.field textarea,
-.field select{
-  width:100%;
-  border:0;
-  border-bottom:1px solid var(--line);
-  background:transparent;
-  padding:12px 0;
-  outline:none;
-  color:var(--text);
-}
-
-.field textarea{
-  min-height:100px;
-  resize:vertical;
-}
-
-.form .btn{
-  margin-top:25px;
-  background:var(--brown);
-  color:white;
-}
-
-/* =========================
-   MAP
-========================= */
-
-.map{
-  height:440px;
-  background:#ded6c8;
-}
-
-.map iframe{
-  width:100%;
-  height:100%;
-  border:0;
-  filter:saturate(.65) sepia(.12);
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-footer{
-  padding:75px 0 30px;
-  background:var(--deep);
-  color:white;
-}
-
-.footer-top{
-  display:grid;
-  grid-template-columns:1.3fr .7fr .7fr .8fr;
-  gap:50px;
-  padding-bottom:55px;
-  border-bottom:1px solid rgba(255,255,255,.13);
-}
-
-.footer-brand img{
-  width:58px;
-  height:58px;
-  object-fit:contain;
-}
-
-.footer-brand h3{
-  margin:17px 0 7px;
-  font-family:var(--serif);
-  font-size:27px;
-  font-weight:400;
-}
-
-.footer-brand p{
-  color:rgba(255,255,255,.52);
-  font-size:11px;
-  line-height:1.8;
-  max-width:310px;
-}
-
-.footer-heading{
-  color:var(--gold);
-  font-size:9px;
-  text-transform:uppercase;
-  letter-spacing:.2em;
-  margin-bottom:20px;
-}
-
-.footer-links a{
-  display:block;
-  margin-bottom:11px;
-  color:rgba(255,255,255,.62);
-  font-size:11px;
-  transition:.3s;
-}
-
-.footer-links a:hover{
-  color:var(--gold);
-  transform:translateX(4px);
-}
-
-.socials{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-.social{
-  width:39px;
-  height:39px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border:1px solid rgba(255,255,255,.2);
-  transition:.3s;
-}
-
-.social:hover{
-  border-color:var(--gold);
-  background:var(--gold);
-  color:var(--deep);
-  transform:translateY(-4px);
-}
-
-.social svg{
-  width:17px;
-  height:17px;
-  fill:currentColor;
-}
-
-.footer-bottom{
-  padding-top:25px;
-  display:flex;
-  justify-content:space-between;
-  gap:20px;
-  color:rgba(255,255,255,.38);
-  font-size:9px;
-  letter-spacing:.05em;
-}
-
-/* =========================
-   FLOATING BUTTONS
-========================= */
-
-.float-actions{
-  position:fixed;
-  right:22px;
-  bottom:22px;
-  z-index:900;
-  display:flex;
-  flex-direction:column;
-  gap:9px;
-}
-
-.float-btn{
-  width:48px;
-  height:48px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:white;
-  box-shadow:0 8px 25px rgba(0,0,0,.2);
-}
-
-.float-btn svg{
-  width:20px;
-  height:20px;
-  fill:currentColor;
-}
-
-.call{
-  background:var(--brown);
-}
-
-.whatsapp{
-  background:#287c4b;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media(max-width:1050px){
-
-  .container{
-    width:min(100% - 45px,900px);
-  }
-
-  .nav-links{
-    display:none;
-  }
-
-  .menu-btn{
-    display:block;
-  }
-
-  .vision-grid,
-  .finder-grid,
-  .professional-grid,
-  .contact-grid,
-  .faq-grid{
-    grid-template-columns:1fr;
-    gap:55px;
-  }
-
-  .vision-image{
-    max-width:650px;
-  }
-
-  .app-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .why-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .review-grid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .footer-top{
-    grid-template-columns:1.4fr 1fr 1fr;
-  }
-}
-
-@media(max-width:700px){
-
-  .container{
-    width:calc(100% - 32px);
-  }
-
-  .hero{
-    min-height:650px;
-  }
-
-  .hero h1{
-    font-size:55px;
-  }
-
-  .hero h1 em{
-    margin-left:0;
-  }
-
-  .hero-text{
-    font-size:12px;
-  }
-
-  .hero-bottom{
-    bottom:20px;
-  }
-
-  .vision,
-  .collection,
-  .finder,
-  .applications,
-  .why,
-  .guide,
-  .professional,
-  .comparison,
-  .reviews,
-  .faq,
-  .contact{
-    padding:90px 0;
-  }
-
-  .vision-image img{
-    height:480px;
-  }
-
-  .story{
-    min-height:620px;
-  }
-
-  .story-content{
-    padding:100px 0;
-  }
-
-  .story-meta{
-    gap:20px;
-  }
-
-  .collection-head,
-  .app-head{
-    display:block;
-  }
-
-  .collection-note{
-    margin-top:25px;
-  }
-
-  .collection-wrap{
-    margin-right:-10px;
-  }
-
-  .stone-card{
-    width:82vw;
-    min-width:82vw;
-  }
-
-  .stone-image{
-    height:360px;
-  }
-
-  .finder-box{
-    padding:28px 22px;
-  }
-
-  .options{
-    grid-template-columns:1fr;
-  }
-
-  .question{
-    font-size:29px;
-  }
-
-  .app-grid{
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-  }
-
-  .app-card{
-    height:290px;
-  }
-
-  .why-grid{
-    grid-template-columns:1fr;
-  }
-
-  .why-item{
-    min-height:auto;
-  }
-
-  .game{
-    padding:25px 17px;
-  }
-
-  .game-options{
-    grid-template-columns:1fr;
-  }
-
-  .game-question{
-    font-size:28px;
-  }
-
-  .professional-image img{
-    height:400px;
-  }
-
-  .review-grid{
-    grid-template-columns:1fr;
-  }
-
-  .form{
-    padding:28px 20px;
-  }
-
-  .form-grid{
-    grid-template-columns:1fr;
-  }
-
-  .field.full{
-    grid-column:auto;
-  }
-
-  .footer-top{
-    grid-template-columns:1fr 1fr;
-    gap:35px;
-  }
-
-  .footer-brand{
-    grid-column:1/-1;
-  }
-
-  .footer-bottom{
-    display:block;
-    line-height:1.8;
-  }
-}
-
-@media(max-width:430px){
-
-  .hero h1{
-    font-size:48px;
-  }
-
-  .app-grid{
-    grid-template-columns:1fr;
-  }
-
-  .app-card{
-    height:330px;
-  }
-
-  .footer-top{
-    grid-template-columns:1fr;
-  }
-
-  .footer-brand{
-    grid-column:auto;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Infinity Granites | From Mines to Marvels</title>
+  <meta
+    name="description"
+    content="Infinity Granites — premium granite sourcing and wholesale supply from Kishangarh, Rajasthan. From Mines to Marvels."
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- PRELOADER -->
-<div class="preloader" id="preloader">
-  <div class="loader">
+  <!-- =========================================================
+       PAGE LOADER
+  ========================================================== -->
+  <div class="page-loader" id="pageLoader">
     <div class="loader-mark">∞</div>
-    <div class="loader-name">Infinity Granites</div>
-    <div class="loader-line"><span></span></div>
+    <span>INFINITY GRANITES</span>
+    <div class="loader-line">
+      <i></i>
+    </div>
   </div>
-</div>
 
-<!-- HEADER -->
-<header id="header">
-  <div class="container nav">
 
-    <a href="#home" class="brand">
-      <img src="logo.JPEG" alt="Infinity Granites Logo">
-      <div>
-        <div class="brand-name">Infinity Granites</div>
-        <div class="brand-sub">From Mines to Marvels</div>
+  <!-- =========================================================
+       HEADER
+  ========================================================== -->
+  <header class="site-header" id="siteHeader">
+
+    <div class="header-inner">
+
+      <a href="#home" class="brand">
+        <img src="logo.png" alt="Infinity Granites Logo">
+        <div class="brand-copy">
+          <strong>Infinity Granites</strong>
+          <span>From Mines to Marvels</span>
+        </div>
+      </a>
+
+      <nav class="desktop-nav" aria-label="Main Navigation">
+        <a href="#home">Home</a>
+        <a href="#story">Story</a>
+        <a href="#collection">Collection</a>
+        <a href="#discover">Discover</a>
+        <a href="#why-infinity">Why Infinity</a>
+        <a href="#professionals">Professionals</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <a href="#contact" class="header-cta">
+        Enquire
+        <span>↗</span>
+      </a>
+
+      <button
+        class="menu-toggle"
+        id="menuToggle"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+      >
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+
+      <div class="mobile-menu-inner">
+
+        <div class="mobile-menu-top">
+          <span>MENU</span>
+          <span>∞</span>
+        </div>
+
+        <nav class="mobile-nav">
+          <a href="#home">01 <span>Home</span></a>
+          <a href="#story">02 <span>Our Story</span></a>
+          <a href="#collection">03 <span>Collection</span></a>
+          <a href="#discover">04 <span>Discover Your Stone</span></a>
+          <a href="#why-infinity">05 <span>Why Infinity</span></a>
+          <a href="#professionals">06 <span>Professionals</span></a>
+          <a href="#projects">07 <span>Projects</span></a>
+          <a href="#reviews">08 <span>Reviews</span></a>
+          <a href="#contact">09 <span>Contact</span></a>
+        </nav>
+
+        <div class="mobile-menu-contact">
+          <a href="tel:+919462761833">+91 94627 61833</a>
+          <a href="mailto:granitesinfinity@gmail.com">
+            granitesinfinity@gmail.com
+          </a>
+        </div>
+
       </div>
-    </a>
 
-    <nav class="nav-links">
-      <a href="#home">Home</a>
-      <a href="#vision">About</a>
-      <a href="#collection">Collection</a>
-      <a href="#finder">Finder</a>
-      <a href="#applications">Applications</a>
-      <a href="#guide">Selection Guide</a>
-      <a href="#professional">Professionals</a>
-      <a href="#reviews">Reviews</a>
-      <a href="#faq">FAQ</a>
-      <a href="#contact">Contact</a>
-    </nav>
+    </div>
 
-    <button class="menu-btn" id="menuBtn" aria-label="Open menu">
-      <span></span>
-    </button>
+  </header>
 
-  </div>
-</header>
 
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-  <div class="mobile-inner">
 
-    <a href="#home">Home</a>
-    <a href="#vision">About</a>
-    <a href="#collection">Collection</a>
-    <a href="#finder">Finder</a>
-    <a href="#applications">Applications</a>
-    <a href="#guide">Selection Guide</a>
-    <a href="#professional">Professionals</a>
-    <a href="#reviews">Reviews</a>
-    <a href="#faq">FAQ</a>
-    <a href="#contact">Contact</a>
+  <main>
 
-  </div>
-</div>
 
-<!-- HERO -->
-<section class="hero" id="home">
+    <!-- =========================================================
+         HERO
+    ========================================================== -->
+    <section class="hero" id="home">
 
-  <video
-    class="hero-video"
-    autoplay
-    muted
-    loop
-    playsinline
-    preload="auto">
-    <source src="hero.mp4" type="video/mp4">
-  </video>
+      <div class="hero-slides">
 
-  <div class="hero-overlay"></div>
+        <div class="hero-slide active">
+          <img src="h1.png" alt="Premium Granite">
+        </div>
 
-  <div class="cursor-light" id="cursorLight"></div>
+        <div class="hero-slide">
+          <img src="h2.png" alt="Natural Granite Stone">
+        </div>
 
-  <div class="container hero-content">
-    <div class="hero-copy reveal">
+        <div class="hero-slide">
+          <img src="h3.png" alt="Luxury Granite Surface">
+        </div>
 
-      <div class="hero-kicker">
-        Premium Natural Stone · Since 1999
+        <div class="hero-slide">
+          <img src="h4.png" alt="Granite Architecture">
+        </div>
+
+        <div class="hero-slide">
+          <img src="h5.png" alt="Premium Natural Stone">
+        </div>
+
+        <div class="hero-slide">
+          <img src="h6.png" alt="Infinity Granites Collection">
+        </div>
+
       </div>
 
-      <h1>
-        From Mines
-        <em>to Marvels.</em>
-      </h1>
+      <div class="hero-overlay"></div>
+      <div class="hero-grain"></div>
 
-      <p class="hero-text">
-        Premium granite from Kishangarh, carefully selected for
-        architects, designers, builders and businesses across India.
-      </p>
+      <div class="hero-content">
 
-      <div class="hero-actions">
-        <a href="#collection" class="btn">
-          Explore Collection →
+        <div class="hero-kicker">
+          <span></span>
+          Kishangarh · Rajasthan · Since 1999
+        </div>
+
+        <h1>
+          From
+          <span>Mines</span>
+          <em>to</em>
+          Marvels.
+        </h1>
+
+        <p>
+          Natural granite selected for spaces that deserve
+          character, permanence and presence.
+        </p>
+
+        <div class="hero-actions">
+
+          <a href="#collection" class="btn btn-light">
+            Explore Collection
+            <span>↗</span>
+          </a>
+
+          <a href="#discover" class="text-link">
+            Find your stone
+            <span>↓</span>
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <div class="hero-bottom">
+
+        <div class="hero-location">
+          <span>01</span>
+          <p>Kishangarh<br>Rajasthan</p>
+        </div>
+
+        <div class="hero-scroll">
+          <span>Scroll to explore</span>
+          <i></i>
+        </div>
+
+        <div class="hero-counter">
+          <strong id="heroCurrent">01</strong>
+          <span>/</span>
+          <span>06</span>
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         INTRO / BRAND STATEMENT
+    ========================================================== -->
+    <section class="intro-section">
+
+      <div class="section-number">01</div>
+
+      <div class="intro-wrap">
+
+        <div class="eyebrow">
+          <span></span>
+          Natural stone, thoughtfully sourced
+        </div>
+
+        <h2 class="display-title">
+          Stone has a way of
+          <br>
+          <em>changing a space.</em>
+        </h2>
+
+        <div class="intro-bottom">
+
+          <p class="intro-copy">
+            Infinity Granites brings together distinctive natural
+            granite from Kishangarh, Rajasthan for residential,
+            commercial and architectural projects.
+          </p>
+
+          <a href="#story" class="circle-link">
+            <span>Our<br>Story</span>
+            <b>↘</b>
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         BEHIND THE VISION
+    ========================================================== -->
+    <section class="vision-section" id="vision">
+
+      <div class="vision-image reveal">
+        <img
+          src="owner.jpeg"
+          alt="Infinity Granites"
+          loading="lazy"
+        >
+      </div>
+
+      <div class="vision-content">
+
+        <div class="eyebrow">
+          <span></span>
+          Behind the vision
+        </div>
+
+        <h2>
+          Built around
+          <em>stone.</em>
+        </h2>
+
+        <p>
+          Infinity Granites is focused on premium granite sourcing
+          and wholesale supply, with a simple belief — the right
+          stone should bring character to the space it becomes part of.
+        </p>
+
+        <div class="vision-meta">
+
+          <div>
+            <strong>1999</strong>
+            <span>Since</span>
+          </div>
+
+          <div>
+            <strong>∞</strong>
+            <span>Possibilities</span>
+          </div>
+
+          <div>
+            <strong>01</strong>
+            <span>Purpose</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         OUR STORY
+    ========================================================== -->
+    <section class="story-section" id="story">
+
+      <div class="story-image reveal">
+        <img
+          src="about.jpeg"
+          alt="Infinity Granites Story"
+          loading="lazy"
+        >
+      </div>
+
+      <div class="story-content">
+
+        <div class="section-number">02</div>
+
+        <div class="eyebrow">
+          <span></span>
+          Our Story
+        </div>
+
+        <h2>
+          From the earth.
+          <br>
+          <em>Into your vision.</em>
+        </h2>
+
+        <p>
+          Based in Kishangarh, Rajasthan, Infinity Granites works
+          with natural stone for clients looking for dependable
+          wholesale sourcing and distinctive granite.
+        </p>
+
+        <p>
+          From selecting the right character to discussing project
+          requirements, the focus stays on practical sourcing,
+          consistent communication and stones that make an impact.
+        </p>
+
+        <a href="#contact" class="btn btn-dark">
+          Start a Conversation
+          <span>↗</span>
         </a>
 
-        <a href="#contact" class="btn">
-          Request a Quote
-        </a>
       </div>
 
-    </div>
-  </div>
+    </section>
 
-  <div class="container hero-bottom">
-    <div class="scroll-label">
-      <span class="scroll-line"></span>
-      Scroll to explore
-    </div>
 
-    <div style="font-family:var(--serif);font-size:17px;">
-      1999
-    </div>
-  </div>
 
-</section>
+    <!-- =========================================================
+         COLLECTION
+    ========================================================== -->
+    <section class="collection-section" id="collection">
 
-<!-- BEHIND THE VISION -->
-<section class="vision" id="vision">
+      <div class="collection-head">
 
-  <div class="container vision-grid">
+        <div>
+          <div class="eyebrow">
+            <span></span>
+            The Collection
+          </div>
 
-    <div class="vision-image reveal">
-      <img src="owner.jpeg" alt="Infinity Granites Owner">
-    </div>
-
-    <div class="vision-content reveal">
-
-      <div class="eyebrow">Behind the Vision</div>
-
-      <h2 class="title">
-        Built on stone.<br>
-        <em>Driven by vision.</em>
-      </h2>
-
-      <p class="copy">
-        Infinity Granites is built around a simple belief — natural stone
-        should not simply fill a space, it should define it.
-      </p>
-
-      <p class="vision-quote">
-        “Every slab has a character. Our responsibility is to find the
-        right stone for the right vision.”
-      </p>
-
-      <p class="copy">
-        From our base in Kishangarh, the heart of India's natural stone
-        industry, we focus on carefully selected granite, dependable
-        wholesale supply and professional service for projects across India.
-      </p>
-
-      <div class="vision-points">
-
-        <div class="vision-point">
-          <span>Legacy</span>
-          <span>Since 1999</span>
+          <h2 class="display-title">
+            20 stones.
+            <br>
+            <em>Infinite character.</em>
+          </h2>
         </div>
 
-        <div class="vision-point">
-          <span>Location</span>
-          <span>Kishangarh, Rajasthan</span>
-        </div>
-
-        <div class="vision-point">
-          <span>Focus</span>
-          <span>Premium Natural Stone</span>
-        </div>
-
-        <div class="vision-point">
-          <span>Business</span>
-          <span>Wholesale / B2B</span>
-        </div>
+        <p>
+          Explore our selected granite collection through four
+          distinct visual families.
+        </p>
 
       </div>
 
-    </div>
 
-  </div>
+      <!-- CATEGORY 01 -->
+      <article class="collection-category category-dark">
 
-</section>
+        <div class="category-head">
 
-<!-- OUR STORY -->
-<section class="story">
+          <div>
+            <span class="category-index">01</span>
+            <h3>Signature Black</h3>
+          </div>
 
-  <div class="story-bg">
-    <img src="about.jpeg" alt="Infinity Granites Story">
-  </div>
+          <p>
+            Deep tones. Strong character.
+          </p>
 
-  <div class="story-overlay"></div>
-
-  <div class="container">
-    <div class="story-content reveal">
-
-      <div class="eyebrow">Our Story</div>
-
-      <h2 class="title">
-        A legacy carved<br>
-        <em>in natural stone.</em>
-      </h2>
-
-      <p class="copy">
-        Since 1999, our journey has been connected to Kishangarh's
-        extraordinary natural-stone ecosystem. What began with a focus
-        on quality stone continues today with a professional wholesale
-        approach built around selection, reliability and long-term
-        relationships.
-      </p>
-
-      <div class="story-meta">
-
-        <div>
-          <strong>1999</strong>
-          <span>Established</span>
         </div>
 
-        <div>
-          <strong>India</strong>
-          <span>Delivery Reach</span>
+
+        <div class="product-slider" data-slider="black">
+
+          <div class="product-track">
+
+            <article class="product-card">
+              <div class="product-image">
+                <img src="maj.jpeg" alt="Kotada Black / Majestic Black" loading="lazy">
+                <span>01</span>
+              </div>
+              <div class="product-info">
+                <h4>Kotada Black</h4>
+                <p>Majestic Black · Lappatro</p>
+                <button type="button" class="product-open">View ↗</button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-image">
+                <img src="fis.jpeg" alt="Fish Black" loading="lazy">
+                <span>02</span>
+              </div>
+              <div class="product-info">
+                <h4>Fish Black</h4>
+                <p>Natural Granite</p>
+                <button type="button" class="product-open">View ↗</button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-image">
+                <img src="pea.jpeg" alt="Pearl Black Polish" loading="lazy">
+                <span>03</span>
+              </div>
+              <div class="product-info">
+                <h4>Pearl Black</h4>
+                <p>Polished</p>
+                <button type="button" class="product-open">View ↗</button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-image">
+                <img src="pbl.jpeg" alt="Pearl Black Lappatro" loading="lazy">
+                <span>04</span>
+              </div>
+              <div class="product-info">
+                <h4>Pearl Black</h4>
+                <p>Lappatro</p>
+                <button type="button" class="product-open">View ↗</button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-image">
+                <img src="asi.jpeg" alt="Asian Black" loading="lazy">
+                <span>05</span>
+              </div>
+              <div class="product-info">
+                <h4>Asian Black</h4>
+                <p>Natural Granite</p>
+                <button type="button" class="product-open">View ↗</button>
+              </div>
+            </article>
+
+          </div>
+
+          <div class="slider-controls">
+            <button class="slider-prev" type="button" aria-label="Previous products">←</button>
+            <div class="slider-progress">
+              <span></span>
+            </div>
+            <button class="slider-next" type="button" aria-label="Next products">→</button>
+          </div>
+
         </div>
 
-        <div>
-          <strong>B2B</strong>
-          <span>Wholesale Focus</span>
+      </article>
+
+
+
+      <!-- CATEGORY 02 -->
+      <article class="collection-category category-earth">
+
+        <div class="category-head">
+
+          <div>
+            <span class="category-index">02</span>
+            <h3>Earth & Brown</h3>
+          </div>
+
+          <p>
+            Warm tones inspired by nature.
+          </p>
+
         </div>
 
-        <div>
-          <strong>KGJ</strong>
-          <span>Kishangarh Base</span>
+
+        <div class="product-slider" data-slider="brown">
+
+          <div class="product-track">
+
+            <article class="product-card">
+              <div class="product-image">
+                <img src="par.jpeg" alt="Paradiso Brown" loading="lazy">
+                <span>01</span>
+              </div>
+              <div class="product-info">
+                <h4>Paradiso Brown</h4>
+                <p>Natural Granite</p>
+                <button type="button" class="product-open">View ↗</button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-image">
+                <img src="tig.jpeg" alt="Tiger Skin" loading="lazy">
+                <span>02</span>
+              </div>
+              <div class="product-info">
+                <h4>Tiger Skin</h4>
+                <p>Natural Granite</p>
+                <button type="button" class="product-open">View ↗</button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-image">
+                <img src="mat.jpeg" alt="Mataka Brown" loading="lazy">
+                <span>03</span>
+              </div>
+              <div class="product-info">
+                <h4>Mataka Brown</h4>
+                <p>Natural Granite</p>
+                <button type="button" class="product-open">View ↗</button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-image">
+                <img src="bag.jpeg" alt="Baghera Brown Lappatro" loading="lazy">
+                <span>04</span>
+              </div>
+              <div class="product-info">
+                <h4>Baghera Brown</h4>
+                <p>Lappatro</p>
+                <button type="button" class="product-open">View ↗</button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-image">
+                <img src="him.jpeg" alt="Himalayan Brown" loading="lazy">
+                <span>05</span>
+              </div>
+              <div class="product-info">
+                <h4>Himalayan Brown</h4>
+                <p>Natural Granite</p>
+                <button type="button" class="product-open">View ↗</button>
+              </div>
+            </article>
+
+          </div>
+
+          <div class="slider-controls">
+            <button class="slider-prev" type="button" aria-label="Previous products">←</button>
+            <div class="slider-progress"><span></span></div>
+            <button class="slider-next" type="button" aria-label="Next products">→</button>
+          </div>
+
+        </div>
+
+      </article>
+
+
+
+      <!-- CATEGORY 03 -->
+      <article class="collection-category category-light">
+
+        <div class="category-head">
+
+          <div>
+            <span class="category-index">03</span>
+            <h3>Light & White</h3>
+          </div>
+
+          <p>
+            Clean surfaces. Refined presence.
+          </p>
+
+        </div>
+
+
+        <div class="product-slider" data-slider="white">
+
+          <div class="product-track">
+
+            <article class="product-card">
+              <div class="product-image">
+                <img src="pwh.jpeg" alt="P.White Polish" loading="lazy">
+                <span>01</span>
+              </div>
+              <div class="product-info">
+                <h4>P.White</h4>
+                <p>Polished</p>
+                <button type="button" class="product-open">View ↗</button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-image">
+                <img src="ice.jpeg" alt="Ice White Polish" loading="lazy">
+                <span>02</span>
+              </div>
+              <div class="product-info">
+                <h4>Ice White</h4>
+                <p>Polished</p>
+                <button type="button" class="product-open">View ↗</button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-image">
+                <img src="bij.jpeg" alt="Bijwar White Forest" loading="lazy">
+                <span>03</span>
+              </div>
+              <div class="product-info">
+                <h4>Bijwar</h4>
+                <p>White Forest · Natural</p>
+                <button type="button" class="product-open">View ↗</button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-image">
+                <img src="mark.jpeg" alt="Markino Lappatro" loading="lazy">
+                <span>04</span>
+              </div>
+              <div class="product-info">
+                <h4>Markino</h4>
+                <p>Lappatro</p>
+                <button type="button" class="product-open">View ↗</button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-image">
+                <img src="mar.jpeg" alt="Markino Polish" loading="lazy">
+                <span>05</span>
+              </div>
+              <div class="product-info">
+                <h4>Markino</h4>
+                <p>Polished</p>
+                <button type="button" class="product-open">View ↗</button>
+              </div>
+            </article>
+
+          </div>
+
+          <div class="slider-controls">
+            <button class="slider-prev" type="button" aria-label="Previous products">←</button>
+            <div class="slider-progress"><span></span></div>
+            <button class="slider-next" type="button" aria-label="Next products">→</button>
+          </div>
+
+        </div>
+
+      </article>
+
+
+
+      <!-- CATEGORY 04 -->
+      <article class="collection-category category-colour">
+
+        <div class="category-head">
+
+          <div>
+            <span class="category-index">04</span>
+            <h3>Colour & Character</h3>
+          </div>
+
+          <p>
+            For spaces that refuse to look ordinary.
+          </p>
+
+        </div>
+
+
+        <div class="product-slider" data-slider="colour">
+
+          <div class="product-track">
+
+            <article class="product-card">
+              <div class="product-image">
+                <img src="jam.jpeg" alt="Jam Red" loading="lazy">
+                <span>01</span>
+              </div>
+              <div class="product-info">
+                <h4>Jam Red</h4>
+                <p>Natural Granite</p>
+                <button type="button" class="product-open">View ↗</button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-image">
+                <img src="chi.jpeg" alt="Chima Pink" loading="lazy">
+                <span>02</span>
+              </div>
+              <div class="product-info">
+                <h4>Chima Pink</h4>
+                <p>Natural Granite</p>
+                <button type="button" class="product-open">View ↗</button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-image">
+                <img src="app.jpeg" alt="Apple Green" loading="lazy">
+                <span>03</span>
+              </div>
+              <div class="product-info">
+                <h4>Apple Green</h4>
+                <p>Natural Granite</p>
+                <button type="button" class="product-open">View ↗</button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-image">
+                <img src="coi.jpeg" alt="Coin Black Lappatro" loading="lazy">
+                <span>04</span>
+              </div>
+              <div class="product-info">
+                <h4>Coin Black</h4>
+                <p>Lappatro</p>
+                <button type="button" class="product-open">View ↗</button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-image">
+                <img src="raj.jpeg" alt="Rajasthan Z Black" loading="lazy">
+                <span>05</span>
+              </div>
+              <div class="product-info">
+                <h4>Rajasthan Z Black</h4>
+                <p>Natural Granite</p>
+                <button type="button" class="product-open">View ↗</button>
+              </div>
+            </article>
+
+          </div>
+
+          <div class="slider-controls">
+            <button class="slider-prev" type="button" aria-label="Previous products">←</button>
+            <div class="slider-progress"><span></span></div>
+            <button class="slider-next" type="button" aria-label="Next products">→</button>
+          </div>
+
+        </div>
+
+      </article>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         DISCOVER YOUR STONE + APPLICATIONS
+    ========================================================== -->
+    <section class="discover-section" id="discover">
+
+      <div class="section-number">03</div>
+
+      <div class="discover-heading">
+
+        <div class="eyebrow">
+          <span></span>
+          Discover Your Stone
+        </div>
+
+        <h2>
+          Not every stone
+          <br>
+          belongs in <em>every space.</em>
+        </h2>
+
+        <p>
+          Tell us what you're creating. We'll help narrow the
+          direction.
+        </p>
+
+      </div>
+
+
+      <div class="discover-layout">
+
+        <!-- FINDER -->
+        <div class="finder-panel">
+
+          <div class="finder-top">
+            <span>STONE FINDER</span>
+            <span id="finderStep">01 / 03</span>
+          </div>
+
+          <div class="finder-progress">
+            <span id="finderProgress"></span>
+          </div>
+
+
+          <!-- STEP 1 -->
+          <div class="finder-step active" data-step="1">
+
+            <span class="finder-label">01 — Application</span>
+
+            <h3>
+              What are you
+              <em>creating?</em>
+            </h3>
+
+            <div class="finder-options">
+
+              <button type="button" data-value="Residential">
+                <span>01</span>
+                Residential
+                <b>↗</b>
+              </button>
+
+              <button type="button" data-value="Commercial">
+                <span>02</span>
+                Commercial
+                <b>↗</b>
+              </button>
+
+              <button type="button" data-value="Facade">
+                <span>03</span>
+                Facade
+                <b>↗</b>
+              </button>
+
+              <button type="button" data-value="Kitchen">
+                <span>04</span>
+                Kitchen
+                <b>↗</b>
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- STEP 2 -->
+          <div class="finder-step" data-step="2">
+
+            <span class="finder-label">02 — Character</span>
+
+            <h3>
+              What kind of
+              <em>presence?</em>
+            </h3>
+
+            <div class="finder-options">
+
+              <button type="button" data-value="Bold">
+                <span>01</span>
+                Bold & Dramatic
+                <b>↗</b>
+              </button>
+
+              <button type="button" data-value="Elegant">
+                <span>02</span>
+                Elegant & Refined
+                <b>↗</b>
+              </button>
+
+              <button type="button" data-value="Natural">
+                <span>03</span>
+                Natural & Earthy
+                <b>↗</b>
+              </button>
+
+              <button type="button" data-value="Minimal">
+                <span>04</span>
+                Clean & Minimal
+                <b>↗</b>
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- STEP 3 -->
+          <div class="finder-step" data-step="3">
+
+            <span class="finder-label">03 — Finish</span>
+
+            <h3>
+              How should it
+              <em>feel?</em>
+            </h3>
+
+            <div class="finder-options">
+
+              <button type="button" data-value="Polished">
+                <span>01</span>
+                Polished
+                <b>↗</b>
+              </button>
+
+              <button type="button" data-value="Lappatro">
+                <span>02</span>
+                Lappatro
+                <b>↗</b>
+              </button>
+
+              <button type="button" data-value="Natural">
+                <span>03</span>
+                Natural
+                <b>↗</b>
+              </button>
+
+              <button type="button" data-value="Open">
+                <span>04</span>
+                Show Me Options
+                <b>↗</b>
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- RESULT -->
+          <div class="finder-result" id="finderResult">
+
+            <span>Your direction</span>
+
+            <h3 id="finderResultTitle">
+              Signature Stone
+            </h3>
+
+            <p id="finderResultText">
+              Your choices point towards a stone with strong
+              natural character and architectural presence.
+            </p>
+
+            <a href="#contact" class="btn btn-light">
+              Talk to Infinity
+              <span>↗</span>
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <!-- APPLICATIONS -->
+        <div class="applications-panel">
+
+          <div class="applications-heading">
+            <span>WHERE IT BELONGS</span>
+            <h3>
+              Stone for
+              <em>every vision.</em>
+            </h3>
+          </div>
+
+          <div class="application-grid">
+
+            <button
+              class="application-card"
+              type="button"
+              data-application="Kitchen"
+            >
+              <img src="pwh.jpeg" alt="Granite for Kitchen" loading="lazy">
+              <span>01</span>
+              <strong>Kitchen</strong>
+              <i>↗</i>
+            </button>
+
+            <button
+              class="application-card"
+              type="button"
+              data-application="Flooring"
+            >
+              <img src="mark.jpeg" alt="Granite Flooring" loading="lazy">
+              <span>02</span>
+              <strong>Flooring</strong>
+              <i>↗</i>
+            </button>
+
+            <button
+              class="application-card"
+              type="button"
+              data-application="Facade"
+            >
+              <img src="maj.jpeg" alt="Granite Facade" loading="lazy">
+              <span>03</span>
+              <strong>Facade</strong>
+              <i>↗</i>
+            </button>
+
+            <button
+              class="application-card"
+              type="button"
+              data-application="Staircase"
+            >
+              <img src="ice.jpeg" alt="Granite Staircase" loading="lazy">
+              <span>04</span>
+              <strong>Staircase</strong>
+              <i>↗</i>
+            </button>
+
+            <button
+              class="application-card application-wide"
+              type="button"
+              data-application="Commercial"
+            >
+              <img src="par.jpeg" alt="Commercial Granite Application" loading="lazy">
+              <span>05</span>
+              <strong>Commercial</strong>
+              <i>↗</i>
+            </button>
+
+            <button
+              class="application-card application-wide"
+              type="button"
+              data-application="Residential"
+            >
+              <img src="him.jpeg" alt="Residential Granite Application" loading="lazy">
+              <span>06</span>
+              <strong>Residential</strong>
+              <i>↗</i>
+            </button>
+
+          </div>
+
         </div>
 
       </div>
 
-    </div>
-  </div>
+    </section>
 
-</section>
 
-<!-- COLLECTION -->
-<section class="collection" id="collection">
 
-  <div class="container">
+    <!-- =========================================================
+         WHY INFINITY
+    ========================================================== -->
+    <section class="why-section" id="why-infinity">
 
-    <div class="collection-head reveal">
+      <div class="why-bg-number">1999</div>
 
-      <div>
-        <div class="eyebrow">The Collection</div>
+      <div class="why-intro">
 
-        <h2 class="title">
-          Stone with<br>
+        <div class="eyebrow">
+          <span></span>
+          Why Infinity
+        </div>
+
+        <h2>
+          More than
+          <br>
+          <em>just stone.</em>
+        </h2>
+
+        <p>
+          A sourcing partner for people who care about the
+          material they put into their spaces.
+        </p>
+
+      </div>
+
+
+      <div class="why-grid">
+
+        <article class="why-item">
+          <span>01</span>
+          <strong>Since 1999</strong>
+          <p>
+            Built around years of experience in the granite
+            and natural stone trade.
+          </p>
+        </article>
+
+        <article class="why-item">
+          <span>02</span>
+          <strong>Kishangarh</strong>
+          <p>
+            Based in one of India's major natural stone
+            markets.
+          </p>
+        </article>
+
+        <article class="why-item">
+          <span>03</span>
+          <strong>Premium Selection</strong>
+          <p>
+            Distinctive granite chosen for character,
+            finish and visual presence.
+          </p>
+        </article>
+
+        <article class="why-item">
+          <span>04</span>
+          <strong>Wholesale Focus</strong>
+          <p>
+            Built for project requirements and bulk
+            sourcing.
+          </p>
+        </article>
+
+        <article class="why-item">
+          <span>05</span>
+          <strong>All India Delivery</strong>
+          <p>
+            Nationwide supply for residential and
+            commercial requirements.
+          </p>
+        </article>
+
+        <article class="why-item">
+          <span>06</span>
+          <strong>Quality Focus</strong>
+          <p>
+            Consistent attention to selection and
+            project requirements.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         SELECTION + PROFESSIONALS + COMPARISON
+    ========================================================== -->
+    <section class="material-section" id="professionals">
+
+      <div class="material-intro">
+
+        <div class="eyebrow">
+          <span></span>
+          The Right Stone
+        </div>
+
+        <h2>
+          Choose by
+          <br>
           <em>character.</em>
         </h2>
 
-        <p class="copy">
-          A curated selection of natural granite varieties for
-          residential, commercial and architectural applications.
-        </p>
-      </div>
-
-      <div class="collection-note">
-        <span>←→</span>
-        Move your cursor to explore
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="collection-wrap" id="collectionWrap">
-
-    <div class="collection-track" id="collectionTrack">
-
-      <!-- 01 -->
-      <article class="stone-card">
-        <div class="stone-image">
-          <img src="mark.jpeg" alt="Markino Lappatro">
-          <span class="stone-index">01</span>
-          <span class="stone-finish">Lappatro</span>
-        </div>
-        <div class="stone-info">
-          <div>
-            <div class="stone-name">Markino Lappatro</div>
-            <div class="stone-desc">Natural Granite</div>
-          </div>
-          <div class="stone-arrow">↗</div>
-        </div>
-      </article>
-
-      <!-- 02 -->
-      <article class="stone-card">
-        <div class="stone-image">
-          <img src="pwh.jpeg" alt="P.White Polish">
-          <span class="stone-index">02</span>
-          <span class="stone-finish">Polished</span>
-        </div>
-        <div class="stone-info">
-          <div>
-            <div class="stone-name">P.White Polish</div>
-            <div class="stone-desc">Natural Granite</div>
-          </div>
-          <div class="stone-arrow">↗</div>
-        </div>
-      </article>
-
-      <!-- 03 -->
-      <article class="stone-card">
-        <div class="stone-image">
-          <img src="jam.jpeg" alt="Jam Red">
-          <span class="stone-index">03</span>
-          <span class="stone-finish">Natural</span>
-        </div>
-        <div class="stone-info">
-          <div>
-            <div class="stone-name">Jam Red</div>
-            <div class="stone-desc">Natural Granite</div>
-          </div>
-          <div class="stone-arrow">↗</div>
-        </div>
-      </article>
-
-      <!-- 04 -->
-      <article class="stone-card">
-        <div class="stone-image">
-          <img src="par.jpeg" alt="Paradiso Brown">
-          <span class="stone-index">04</span>
-          <span class="stone-finish">Natural</span>
-        </div>
-        <div class="stone-info">
-          <div>
-            <div class="stone-name">Paradiso Brown</div>
-            <div class="stone-desc">Natural Granite</div>
-          </div>
-          <div class="stone-arrow">↗</div>
-        </div>
-      </article>
-
-      <!-- 05 -->
-      <article class="stone-card">
-        <div class="stone-image">
-          <img src="mar.jpeg" alt="Markino Polish">
-          <span class="stone-index">05</span>
-          <span class="stone-finish">Polished</span>
-        </div>
-        <div class="stone-info">
-          <div>
-            <div class="stone-name">Markino Polish</div>
-            <div class="stone-desc">Natural Granite</div>
-          </div>
-          <div class="stone-arrow">↗</div>
-        </div>
-      </article>
-
-      <!-- 06 -->
-      <article class="stone-card">
-        <div class="stone-image">
-          <img src="ice.jpeg" alt="Ice White Polish">
-          <span class="stone-index">06</span>
-          <span class="stone-finish">Polished</span>
-        </div>
-        <div class="stone-info">
-          <div>
-            <div class="stone-name">Ice White Polish</div>
-            <div class="stone-desc">Natural Granite</div>
-          </div>
-          <div class="stone-arrow">↗</div>
-        </div>
-      </article>
-
-      <!-- 07 -->
-      <article class="stone-card">
-        <div class="stone-image">
-          <img src="maj.jpeg" alt="Kotada Black Majestic Black Lappatro">
-          <span class="stone-index">07</span>
-          <span class="stone-finish">Lappatro</span>
-        </div>
-        <div class="stone-info">
-          <div>
-            <div class="stone-name">Majestic Black</div>
-            <div class="stone-desc">Kotada Black</div>
-          </div>
-          <div class="stone-arrow">↗</div>
-        </div>
-      </article>
-
-      <!-- 08 -->
-      <article class="stone-card">
-        <div class="stone-image">
-          <img src="fis.jpeg" alt="Fish Black">
-          <span class="stone-index">08</span>
-          <span class="stone-finish">Natural</span>
-        </div>
-        <div class="stone-info">
-          <div>
-            <div class="stone-name">Fish Black</div>
-            <div class="stone-desc">Natural Granite</div>
-          </div>
-          <div class="stone-arrow">↗</div>
-        </div>
-      </article>
-
-      <!-- 09 -->
-      <article class="stone-card">
-        <div class="stone-image">
-          <img src="pea.jpeg" alt="Pearl Black Polish">
-          <span class="stone-index">09</span>
-          <span class="stone-finish">Polished</span>
-        </div>
-        <div class="stone-info">
-          <div>
-            <div class="stone-name">Pearl Black Polish</div>
-            <div class="stone-desc">Natural Granite</div>
-          </div>
-          <div class="stone-arrow">↗</div>
-        </div>
-      </article>
-
-      <!-- 10 -->
-      <article class="stone-card">
-        <div class="stone-image">
-          <img src="pbl.jpeg" alt="Pearl Black Lappatro">
-          <span class="stone-index">10</span>
-          <span class="stone-finish">Lappatro</span>
-        </div>
-        <div class="stone-info">
-          <div>
-            <div class="stone-name">Pearl Black Lappatro</div>
-            <div class="stone-desc">Natural Granite</div>
-          </div>
-          <div class="stone-arrow">↗</div>
-        </div>
-      </article>
-
-      <!-- 11 -->
-      <article class="stone-card">
-        <div class="stone-image">
-          <img src="tig.jpeg" alt="Tiger Skin">
-          <span class="stone-index">11</span>
-          <span class="stone-finish">Natural</span>
-        </div>
-        <div class="stone-info">
-          <div>
-            <div class="stone-name">Tiger Skin</div>
-            <div class="stone-desc">Natural Granite</div>
-          </div>
-          <div class="stone-arrow">↗</div>
-        </div>
-      </article>
-
-      <!-- 12 -->
-      <article class="stone-card">
-        <div class="stone-image">
-          <img src="asi.jpeg" alt="Asian Black">
-          <span class="stone-index">12</span>
-          <span class="stone-finish">Natural</span>
-        </div>
-        <div class="stone-info">
-          <div>
-            <div class="stone-name">Asian Black</div>
-            <div class="stone-desc">Natural Granite</div>
-          </div>
-          <div class="stone-arrow">↗</div>
-        </div>
-      </article>
-
-      <!-- 13 -->
-      <article class="stone-card">
-        <div class="stone-image">
-          <img src="mat.jpeg" alt="Mataka Brown">
-          <span class="stone-index">13</span>
-          <span class="stone-finish">Natural</span>
-        </div>
-        <div class="stone-info">
-          <div>
-            <div class="stone-name">Mataka Brown</div>
-            <div class="stone-desc">Natural Granite</div>
-          </div>
-          <div class="stone-arrow">↗</div>
-        </div>
-      </article>
-
-      <!-- 14 -->
-      <article class="stone-card">
-        <div class="stone-image">
-          <img src="bag.jpeg" alt="Baghera Brown Lappatro">
-          <span class="stone-index">14</span>
-          <span class="stone-finish">Lappatro</span>
-        </div>
-        <div class="stone-info">
-          <div>
-            <div class="stone-name">Baghera Brown</div>
-            <div class="stone-desc">Lappatro</div>
-          </div>
-          <div class="stone-arrow">↗</div>
-        </div>
-      </article>
-
-      <!-- 15 -->
-      <article class="stone-card">
-        <div class="stone-image">
-          <img src="chi.jpeg" alt="Chima Pink">
-          <span class="stone-index">15</span>
-          <span class="stone-finish">Natural</span>
-        </div>
-        <div class="stone-info">
-          <div>
-            <div class="stone-name">Chima Pink</div>
-            <div class="stone-desc">Natural Granite</div>
-          </div>
-          <div class="stone-arrow">↗</div>
-        </div>
-      </article>
-
-      <!-- 16 -->
-      <article class="stone-card">
-        <div class="stone-image">
-          <img src="app.jpeg" alt="Apple Green">
-          <span class="stone-index">16</span>
-          <span class="stone-finish">Natural</span>
-        </div>
-        <div class="stone-info">
-          <div>
-            <div class="stone-name">Apple Green</div>
-            <div class="stone-desc">Natural Granite</div>
-          </div>
-          <div class="stone-arrow">↗</div>
-        </div>
-      </article>
-
-      <!-- 17 -->
-      <article class="stone-card">
-        <div class="stone-image">
-          <img src="bij.jpeg" alt="Bijwar White Forest">
-          <span class="stone-index">17</span>
-          <span class="stone-finish">Natural</span>
-        </div>
-        <div class="stone-info">
-          <div>
-            <div class="stone-name">Bijwar</div>
-            <div class="stone-desc">White Forest</div>
-          </div>
-          <div class="stone-arrow">↗</div>
-        </div>
-      </article>
-
-      <!-- 18 -->
-      <article class="stone-card">
-        <div class="stone-image">
-          <img src="coi.jpeg" alt="Coin Black Lappatro">
-          <span class="stone-index">18</span>
-          <span class="stone-finish">Lappatro</span>
-        </div>
-        <div class="stone-info">
-          <div>
-            <div class="stone-name">Coin Black</div>
-            <div class="stone-desc">Lappatro</div>
-          </div>
-          <div class="stone-arrow">↗</div>
-        </div>
-      </article>
-
-      <!-- 19 -->
-      <article class="stone-card">
-        <div class="stone-image">
-          <img src="him.jpeg" alt="Himalayan Brown">
-          <span class="stone-index">19</span>
-          <span class="stone-finish">Natural</span>
-        </div>
-        <div class="stone-info">
-          <div>
-            <div class="stone-name">Himalayan Brown</div>
-            <div class="stone-desc">Natural Granite</div>
-          </div>
-          <div class="stone-arrow">↗</div>
-        </div>
-      </article>
-
-      <!-- 20 -->
-      <article class="stone-card">
-        <div class="stone-image">
-          <img src="raj.jpeg" alt="Rajasthan Z Black">
-          <span class="stone-index">20</span>
-          <span class="stone-finish">Natural</span>
-        </div>
-        <div class="stone-info">
-          <div>
-            <div class="stone-name">Rajasthan Z Black</div>
-            <div class="stone-desc">Natural Granite</div>
-          </div>
-          <div class="stone-arrow">↗</div>
-        </div>
-      </article>
-
-    </div>
-  </div>
-
-</section>
-
-<!-- STONE FINDER -->
-<section class="finder" id="finder">
-
-  <div class="container finder-grid">
-
-    <div class="reveal">
-
-      <div class="eyebrow">Stone Finder</div>
-
-      <h2 class="title">
-        Find the stone<br>
-        <em>for your vision.</em>
-      </h2>
-
-      <p class="copy">
-        Answer a few simple questions and discover the kind of granite
-        that could complement your project.
-      </p>
-
-      <div class="progress" id="finderProgress">
-        <span class="active"></span>
-        <span></span>
-        <span></span>
-      </div>
-
-    </div>
-
-    <div class="finder-box reveal">
-
-      <div class="finder-step active" data-step="1">
-
-        <div class="step-label">01 · Application</div>
-
-        <div class="question">
-          Where will the stone be used?
-        </div>
-
-        <div class="options">
-
-          <button class="option">Kitchen</button>
-          <button class="option">Flooring</button>
-          <button class="option">Facade</button>
-          <button class="option">Commercial</button>
-
-        </div>
-
-        <button class="finder-next" data-next="2">
-          Continue →
-        </button>
-
-      </div>
-
-      <div class="finder-step" data-step="2">
-
-        <div class="step-label">02 · Character</div>
-
-        <div class="question">
-          What kind of look do you prefer?
-        </div>
-
-        <div class="options">
-
-          <button class="option">Light & Elegant</button>
-          <button class="option">Dark & Dramatic</button>
-          <button class="option">Warm & Earthy</button>
-          <button class="option">Bold & Natural</button>
-
-        </div>
-
-        <button class="finder-next" data-next="3">
-          Continue →
-        </button>
-
-      </div>
-
-      <div class="finder-step" data-step="3">
-
-        <div class="step-label">03 · Finish</div>
-
-        <div class="question">
-          Which finish speaks to you?
-        </div>
-
-        <div class="options">
-
-          <button class="option">Polished</button>
-          <button class="option">Lappatro</button>
-          <button class="option">Natural</button>
-          <button class="option">Open to Advice</button>
-
-        </div>
-
-        <button class="finder-next" data-next="result">
-          Find My Stone →
-        </button>
-
-      </div>
-
-      <div class="finder-result" id="finderResult">
-
-        <div class="result-label">Your Stone Direction</div>
-
-        <div class="result-name" id="resultName">
-          Signature Granite
-        </div>
-
-        <p class="result-text">
-          Based on your preferences, our team can help you shortlist
-          the most suitable granite from the Infinity Granites collection.
+        <p>
+          For homeowners, designers and professionals,
+          the right granite begins with understanding how
+          it needs to perform and feel.
         </p>
 
-        <div class="result-actions">
+      </div>
 
-          <a href="#contact" class="btn" id="finderEnquiry">
-            Discuss My Requirement →
+
+      <div class="material-layout">
+
+        <!-- PROFESSIONAL IMAGE -->
+        <div class="professional-visual">
+
+          <img
+            src="pp.jpg"
+            alt="Infinity Granites Professional Stone Partner"
+            loading="lazy"
+          >
+
+          <div class="professional-overlay">
+            <span>FOR PROFESSIONALS</span>
+            <strong>
+              A stone partner
+              <em>for serious projects.</em>
+            </strong>
+          </div>
+
+        </div>
+
+
+        <!-- PROFESSIONAL CONTENT -->
+        <div class="professional-content">
+
+          <div class="professional-heading">
+            <span>PROJECT SOURCING</span>
+
+            <h3>
+              Built for
+              <em>professionals.</em>
+            </h3>
+          </div>
+
+          <p>
+            Architects, interior designers, contractors,
+            builders and developers can work with Infinity
+            Granites for project-focused stone sourcing and
+            wholesale requirements.
+          </p>
+
+
+          <div class="professional-list">
+
+            <div>
+              <span>01</span>
+              <strong>Architects</strong>
+              <small>Stone selection support</small>
+            </div>
+
+            <div>
+              <span>02</span>
+              <strong>Interior Designers</strong>
+              <small>Project requirements</small>
+            </div>
+
+            <div>
+              <span>03</span>
+              <strong>Contractors</strong>
+              <small>Bulk requirements</small>
+            </div>
+
+            <div>
+              <span>04</span>
+              <strong>Builders & Developers</strong>
+              <small>Wholesale supply</small>
+            </div>
+
+          </div>
+
+          <a href="#contact" class="btn btn-dark">
+            Discuss Your Project
+            <span>↗</span>
           </a>
 
-          <button class="btn" id="finderRestart">
-            Start Again
-          </button>
+        </div>
+
+      </div>
+
+
+      <!-- COMPARISON -->
+      <div class="comparison-block">
+
+        <div class="comparison-heading">
+
+          <div>
+            <span>STONE COMPARISON</span>
+            <h3>
+              See the difference
+              <em>in the finish.</em>
+            </h3>
+          </div>
+
+          <p>
+            Different finishes create different visual
+            experiences. Choose according to the character
+            you want for your project.
+          </p>
+
+        </div>
+
+
+        <div class="comparison-table">
+
+          <div class="comparison-row comparison-header">
+            <span>Parameter</span>
+            <span>Polished</span>
+            <span>Lappatro</span>
+            <span>Natural</span>
+          </div>
+
+          <div class="comparison-row">
+            <span>Surface</span>
+            <strong>Smooth & reflective</strong>
+            <strong>Soft textured</strong>
+            <strong>Natural texture</strong>
+          </div>
+
+          <div class="comparison-row">
+            <span>Visual feel</span>
+            <strong>Elegant</strong>
+            <strong>Contemporary</strong>
+            <strong>Earthy</strong>
+          </div>
+
+          <div class="comparison-row">
+            <span>Best for</span>
+            <strong>Interiors</strong>
+            <strong>Modern spaces</strong>
+            <strong>Natural character</strong>
+          </div>
 
         </div>
 
       </div>
 
-    </div>
+    </section>
 
-  </div>
 
-</section>
 
-<!-- APPLICATIONS -->
-<section class="applications" id="applications">
+    <!-- =========================================================
+         PROJECTS
+    ========================================================== -->
+    <section class="projects-section" id="projects">
 
-  <div class="container">
+      <div class="projects-heading">
 
-    <div class="app-head reveal">
+        <div class="eyebrow">
+          <span></span>
+          Selected Projects
+        </div>
 
-      <div>
-        <div class="eyebrow">Applications</div>
-
-        <h2 class="title">
-          Designed for<br>
-          <em>every space.</em>
+        <h2>
+          Where stone
+          <br>
+          becomes <em>space.</em>
         </h2>
+
       </div>
 
-      <p class="copy">
-        Natural granite brings depth, durability and individuality to
-        spaces ranging from private homes to large architectural projects.
-      </p>
 
-    </div>
+      <div class="projects-grid">
 
-    <div class="app-grid">
+        <figure class="project project-large reveal">
+          <img
+            src="project1.jpeg"
+            alt="Infinity Granites Project 1"
+            loading="lazy"
+          >
+          <figcaption>
+            <span>01</span>
+            <strong>Architectural Expression</strong>
+          </figcaption>
+        </figure>
 
-      <div class="app-card reveal">
-        <div class="app-placeholder"></div>
-        <div class="app-content">
-          <div class="app-number">01</div>
-          <h3>Kitchen</h3>
-          <p>Countertops, islands and refined kitchen surfaces.</p>
-        </div>
+        <figure class="project project-small reveal">
+          <img
+            src="project2.jpeg"
+            alt="Infinity Granites Project 2"
+            loading="lazy"
+          >
+          <figcaption>
+            <span>02</span>
+            <strong>Natural Character</strong>
+          </figcaption>
+        </figure>
+
+        <figure class="project project-small reveal">
+          <img
+            src="project3.jpeg"
+            alt="Infinity Granites Project 3"
+            loading="lazy"
+          >
+          <figcaption>
+            <span>03</span>
+            <strong>Material & Form</strong>
+          </figcaption>
+        </figure>
+
+        <figure class="project project-large reveal">
+          <img
+            src="project4.jpeg"
+            alt="Infinity Granites Project 4"
+            loading="lazy"
+          >
+          <figcaption>
+            <span>04</span>
+            <strong>Stone in Context</strong>
+          </figcaption>
+        </figure>
+
       </div>
 
-      <div class="app-card reveal">
-        <div class="app-placeholder"></div>
-        <div class="app-content">
-          <div class="app-number">02</div>
-          <h3>Flooring</h3>
-          <p>Durable natural surfaces with architectural character.</p>
-        </div>
-      </div>
+    </section>
 
-      <div class="app-card reveal">
-        <div class="app-placeholder"></div>
-        <div class="app-content">
-          <div class="app-number">03</div>
-          <h3>Staircases</h3>
-          <p>Strong, elegant stone for residential and commercial stairs.</p>
-        </div>
-      </div>
 
-      <div class="app-card reveal">
-        <div class="app-placeholder"></div>
-        <div class="app-content">
-          <div class="app-number">04</div>
-          <h3>Facades</h3>
-          <p>Distinctive natural stone for exterior architecture.</p>
-        </div>
-      </div>
 
-      <div class="app-card reveal">
-        <div class="app-placeholder"></div>
-        <div class="app-content">
-          <div class="app-number">05</div>
-          <h3>Countertops</h3>
-          <p>Premium surfaces for practical everyday spaces.</p>
-        </div>
-      </div>
+    <!-- =========================================================
+         REVIEWS
+    ========================================================== -->
+    <section class="reviews-section" id="reviews">
 
-      <div class="app-card reveal">
-        <div class="app-placeholder"></div>
-        <div class="app-content">
-          <div class="app-number">06</div>
-          <h3>Commercial</h3>
-          <p>Professional stone solutions for commercial environments.</p>
-        </div>
-      </div>
+      <div class="reviews-mark">“</div>
 
-      <div class="app-card reveal">
-        <div class="app-placeholder"></div>
-        <div class="app-content">
-          <div class="app-number">07</div>
-          <h3>Interiors</h3>
-          <p>Natural textures for sophisticated interior design.</p>
-        </div>
-      </div>
+      <div class="reviews-heading">
 
-      <div class="app-card reveal">
-        <div class="app-placeholder"></div>
-        <div class="app-content">
-          <div class="app-number">08</div>
-          <h3>Architecture</h3>
-          <p>Stone selected around the needs of modern architecture.</p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- WHY INFINITY -->
-<section class="why">
-
-  <div class="container">
-
-    <div class="why-head reveal">
-
-      <div class="eyebrow">Why Infinity</div>
-
-      <h2 class="title">
-        More than stone.<br>
-        <em>A dependable partner.</em>
-      </h2>
-
-      <p class="copy">
-        Built around experience, Kishangarh's stone ecosystem and a
-        wholesale-first approach.
-      </p>
-
-    </div>
-
-    <div class="why-grid">
-
-      <div class="why-item reveal">
-        <div class="why-number">01</div>
-        <h3>Since 1999</h3>
-        <p>Experience built through decades of involvement with natural stone.</p>
-      </div>
-
-      <div class="why-item reveal">
-        <div class="why-number">02</div>
-        <h3>Direct from Kishangarh</h3>
-        <p>Strategically located in one of India's major natural stone hubs.</p>
-      </div>
-
-      <div class="why-item reveal">
-        <div class="why-number">03</div>
-        <h3>Premium Selection</h3>
-        <p>Granite varieties selected around visual character and application.</p>
-      </div>
-
-      <div class="why-item reveal">
-        <div class="why-number">04</div>
-        <h3>Wholesale</h3>
-        <p>A B2B-focused approach for professional and bulk requirements.</p>
-      </div>
-
-      <div class="why-item reveal">
-        <div class="why-number">05</div>
-        <h3>All India Delivery</h3>
-        <p>Serving requirements beyond Kishangarh with nationwide reach.</p>
-      </div>
-
-      <div class="why-item reveal">
-        <div class="why-number">06</div>
-        <h3>Quality Focus</h3>
-        <p>A practical focus on selecting natural stone for the right project.</p>
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- SELECTION GUIDE GAME -->
-<section class="guide" id="guide">
-
-  <div class="container">
-
-    <div class="guide-head reveal">
-
-      <div class="eyebrow" style="justify-content:center;">
-        Selection Guide
-      </div>
-
-      <h2 class="title">
-        Play. Explore.<br>
-        <em>Find your stone.</em>
-      </h2>
-
-      <p class="copy">
-        Instead of another boring questionnaire, explore your stone
-        personality through a simple interactive selection game.
-      </p>
-
-    </div>
-
-    <div class="game reveal" id="stoneGame">
-
-      <div class="game-top">
-        <div class="game-level" id="gameLevel">
-          Level 01 · Your Space
+        <div class="eyebrow">
+          <span></span>
+          Client Perspective
         </div>
 
-        <div class="game-score">
-          <span id="gameScore">0</span> pts
-        </div>
+        <h2>
+          The stone speaks.
+          <br>
+          <em>So do our clients.</em>
+        </h2>
+
       </div>
 
-      <div class="game-question" id="gameQuestion">
-        Choose the space you are designing.
+
+      <div class="reviews-slider" id="reviewsSlider">
+
+        <article class="review-slide active">
+
+          <div class="review-stars">
+            ★ ★ ★ ★ ★
+          </div>
+
+          <blockquote>
+            “A premium stone experience starts with
+            understanding the project. That's exactly
+            what we look for.”
+          </blockquote>
+
+          <div class="review-person">
+            <span>01</span>
+            <div>
+              <strong>Project Client</strong>
+              <small>Kishangarh · Rajasthan</small>
+            </div>
+          </div>
+
+        </article>
+
+
+        <article class="review-slide">
+
+          <div class="review-stars">
+            ★ ★ ★ ★ ★
+          </div>
+
+          <blockquote>
+            “The collection gives enough variety to find
+            something distinctive without compromising
+            the project direction.”
+          </blockquote>
+
+          <div class="review-person">
+            <span>02</span>
+            <div>
+              <strong>Design Professional</strong>
+              <small>Architectural Project</small>
+            </div>
+          </div>
+
+        </article>
+
+
+        <article class="review-slide">
+
+          <div class="review-stars">
+            ★ ★ ★ ★ ★
+          </div>
+
+          <blockquote>
+            “Good stone is not just about colour.
+            It is about the right character for the space.”
+          </blockquote>
+
+          <div class="review-person">
+            <span>03</span>
+            <div>
+              <strong>Project Partner</strong>
+              <small>Rajasthan</small>
+            </div>
+          </div>
+
+        </article>
+
       </div>
 
-      <div class="game-options" id="gameOptions">
 
-        <button class="game-option" data-value="Modern">
-          <span>Modern Home</span>
+      <div class="review-controls">
+
+        <button type="button" id="reviewPrev" aria-label="Previous review">
+          ←
         </button>
 
-        <button class="game-option" data-value="Luxury">
-          <span>Luxury Villa</span>
-        </button>
+        <div class="review-dots">
+          <button class="active" type="button" data-review="0"></button>
+          <button type="button" data-review="1"></button>
+          <button type="button" data-review="2"></button>
+        </div>
 
-        <button class="game-option" data-value="Commercial">
-          <span>Commercial Space</span>
-        </button>
-
-        <button class="game-option" data-value="Architectural">
-          <span>Architectural Project</span>
+        <button type="button" id="reviewNext" aria-label="Next review">
+          →
         </button>
 
       </div>
 
-      <div class="game-progress">
-        <span id="gameProgress"></span>
-      </div>
+    </section>
 
-      <div class="game-result" id="gameResult">
 
-        <small>Your Stone Personality</small>
 
-        <h3 id="gameResultTitle">
-          Signature Stone
-        </h3>
+    <!-- =========================================================
+         FAQ
+    ========================================================== -->
+    <section class="faq-section" id="faq">
 
-        <p id="gameResultText">
-          Your preferences point towards a stone with strong natural
-          character and a refined architectural presence.
+      <div class="faq-intro">
+
+        <div class="eyebrow">
+          <span></span>
+          Frequently Asked
+        </div>
+
+        <h2>
+          Questions,
+          <br>
+          <em>answered simply.</em>
+        </h2>
+
+        <p>
+          Have something specific in mind?
+          Start a conversation with our team.
         </p>
 
-        <a href="#contact" class="btn">
-          Talk to Infinity →
+        <a href="#contact" class="text-link dark-link">
+          Ask Infinity
+          <span>↗</span>
+        </a>
+
+      </div>
+
+
+      <div class="faq-list">
+
+        <div class="faq-item active">
+
+          <button type="button" class="faq-question">
+            <span>01</span>
+            <strong>How do I select the right granite?</strong>
+            <i>+</i>
+          </button>
+
+          <div class="faq-answer">
+            <p>
+              Consider the application, colour direction,
+              desired character and finish. Our Stone Finder
+              can help narrow down the right direction.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+          <button type="button" class="faq-question">
+            <span>02</span>
+            <strong>Is wholesale supply available?</strong>
+            <i>+</i>
+          </button>
+
+          <div class="faq-answer">
+            <p>
+              Infinity Granites is positioned around
+              wholesale and project-focused granite sourcing.
+              Contact us with your requirement.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+          <button type="button" class="faq-question">
+            <span>03</span>
+            <strong>Do you supply across India?</strong>
+            <i>+</i>
+          </button>
+
+          <div class="faq-answer">
+            <p>
+              Nationwide supply is available for suitable
+              requirements. Share your project and delivery
+              details with the team.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+          <button type="button" class="faq-question">
+            <span>04</span>
+            <strong>What finishes are available?</strong>
+            <i>+</i>
+          </button>
+
+          <div class="faq-answer">
+            <p>
+              The collection includes polished, lappatro and
+              natural granite options. Availability can vary
+              by product.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+          <button type="button" class="faq-question">
+            <span>05</span>
+            <strong>Can architects and contractors enquire?</strong>
+            <i>+</i>
+          </button>
+
+          <div class="faq-answer">
+            <p>
+              Yes. Architects, interior designers, contractors,
+              builders and developers can discuss project and
+              bulk requirements with Infinity Granites.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+          <button type="button" class="faq-question">
+            <span>06</span>
+            <strong>Where is Infinity Granites located?</strong>
+            <i>+</i>
+          </button>
+
+          <div class="faq-answer">
+            <p>
+              Plot 206A, Lane 4, Mangal Murti Katla,
+              Khatoli, Kishangarh, Rajasthan 305801.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         START A CONVERSATION
+    ========================================================== -->
+    <section class="contact-section" id="contact">
+
+      <div class="contact-background-text">
+        LET'S TALK
+      </div>
+
+      <div class="contact-inner">
+
+        <div class="contact-intro">
+
+          <div class="eyebrow">
+            <span></span>
+            Start a Conversation
+          </div>
+
+          <h2>
+            Tell us what
+            <br>
+            you're <em>building.</em>
+          </h2>
+
+          <p>
+            Whether you're sourcing for a home, a commercial
+            project or a larger requirement, let's find the
+            right stone together.
+          </p>
+
+
+          <div class="contact-details">
+
+            <a href="tel:+919462761833">
+              <span>Call</span>
+              <strong>+91 94627 61833</strong>
+            </a>
+
+            <a href="mailto:granitesinfinity@gmail.com">
+              <span>Email</span>
+              <strong>granitesinfinity@gmail.com</strong>
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <!-- ENQUIRY FORM -->
+        <form class="enquiry-form" id="enquiryForm">
+
+          <div class="form-top">
+            <span>ENQUIRY</span>
+            <span>∞</span>
+          </div>
+
+          <div class="form-grid">
+
+            <label>
+              <span>Your Name</span>
+              <input
+                type="text"
+                name="name"
+                placeholder="Enter your name"
+                required
+              >
+            </label>
+
+            <label>
+              <span>Phone</span>
+              <input
+                type="tel"
+                name="phone"
+                placeholder="+91"
+                required
+              >
+            </label>
+
+            <label>
+              <span>Email</span>
+              <input
+                type="email"
+                name="email"
+                placeholder="you@example.com"
+              >
+            </label>
+
+            <label>
+              <span>Company</span>
+              <input
+                type="text"
+                name="company"
+                placeholder="Company / Studio"
+              >
+            </label>
+
+            <label>
+              <span>Requirement</span>
+
+              <select name="requirement">
+                <option value="">Select requirement</option>
+                <option value="Residential">Residential</option>
+                <option value="Commercial">Commercial</option>
+                <option value="Architect">Architect / Designer</option>
+                <option value="Contractor">Contractor</option>
+                <option value="Bulk">Bulk / Wholesale</option>
+                <option value="Other">Other</option>
+              </select>
+
+            </label>
+
+            <label>
+              <span>Granite / Product</span>
+              <input
+                type="text"
+                name="product"
+                placeholder="Product name if known"
+              >
+            </label>
+
+            <label class="form-full">
+              <span>Message</span>
+              <textarea
+                name="message"
+                rows="5"
+                placeholder="Tell us about your project..."
+              ></textarea>
+            </label>
+
+          </div>
+
+
+          <button type="submit" class="form-submit">
+            <span>Send Enquiry</span>
+            <b>↗</b>
+          </button>
+
+          <p class="form-note">
+            Your enquiry will open directly in WhatsApp.
+          </p>
+
+        </form>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         LOCATION / GOOGLE MAPS
+    ========================================================== -->
+    <section class="location-section">
+
+      <div class="location-copy">
+
+        <div class="eyebrow">
+          <span></span>
+          Visit Infinity
+        </div>
+
+        <h2>
+          Find us in
+          <br>
+          <em>Kishangarh.</em>
+        </h2>
+
+        <p>
+          Our factory is located at Mangal Murti Katla,
+          Khatoli, Kishangarh, Rajasthan.
+        </p>
+
+        <address>
+          Plot 206A, Lane 4,<br>
+          Mangal Murti Katla, Khatoli,<br>
+          Kishangarh, Rajasthan 305801
+        </address>
+
+        <a
+          href="https://maps.app.goo.gl/xdxrEAwjHAmu8Xmu5?g_st=iwb"
+          target="_blank"
+          rel="noopener"
+          class="btn btn-dark"
+        >
+          Open in Google Maps
+          <span>↗</span>
+        </a>
+
+      </div>
+
+
+      <div class="map-wrap">
+
+        <iframe
+          title="Infinity Granites Location"
+          src="https://www.google.com/maps?q=Plot%20206A%2C%20Lane%204%2C%20Mangal%20Murti%20Katla%2C%20Khatoli%2C%20Kishangarh%2C%20Rajasthan%20305801&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
+
+        <div class="map-label">
+          <span>∞</span>
+          <strong>Infinity Granites</strong>
+          <small>Kishangarh · Rajasthan</small>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+
+  <!-- =========================================================
+       FOOTER
+  ========================================================== -->
+  <footer class="site-footer">
+
+    <div class="footer-main">
+
+      <div class="footer-brand">
+
+        <a href="#home">
+          <img src="logo.png" alt="Infinity Granites">
+        </a>
+
+        <h2>
+          From Mines
+          <br>
+          to <em>Marvels.</em>
+        </h2>
+
+        <p>
+          Premium natural granite sourcing from
+          Kishangarh, Rajasthan.
+        </p>
+
+      </div>
+
+
+      <div class="footer-column">
+
+        <span>EXPLORE</span>
+
+        <a href="#home">Home</a>
+        <a href="#story">Our Story</a>
+        <a href="#collection">Collection</a>
+        <a href="#discover">Stone Finder</a>
+        <a href="#projects">Projects</a>
+
+      </div>
+
+
+      <div class="footer-column">
+
+        <span>WORK WITH US</span>
+
+        <a href="#professionals">Professionals</a>
+        <a href="#contact">Wholesale</a>
+        <a href="#contact">Request Quote</a>
+        <a href="#contact">Contact</a>
+        <a href="#faq">FAQ</a>
+
+      </div>
+
+
+      <div class="footer-column footer-contact">
+
+        <span>CONTACT</span>
+
+        <a href="tel:+919462761833">
+          +91 94627 61833
+        </a>
+
+        <a href="mailto:granitesinfinity@gmail.com">
+          granitesinfinity@gmail.com
+        </a>
+
+        <p>
+          Plot 206A, Lane 4,<br>
+          Mangal Murti Katla, Khatoli,<br>
+          Kishangarh, Rajasthan 305801
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="footer-social">
+
+      <span>FOLLOW INFINITY</span>
+
+      <div>
+
+        <a
+          href="https://www.instagram.com/infinity.granites/"
+          target="_blank"
+          rel="noopener"
+          aria-label="Instagram"
+        >
+          Instagram ↗
+        </a>
+
+        <a
+          href="https://www.facebook.com/people/Infinity-Granites/pfbid02HDMawVTqvBkny8rQccQFpUg2RgKaW2RwSJbTMbZY7HsWume7TASzgPNivAuqLrs2l/?mibextid=wwXIfr&rdid=HPcE6WBjfYz9KiQj&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F16RAWjLq9o%2F%3Fmibextid%3DwwXIfr%26utm_source%3Dig%26utm_medium%3Dsocial%26utm_content%3Dlink_in_bio"
+          target="_blank"
+          rel="noopener"
+          aria-label="Facebook"
+        >
+          Facebook ↗
+        </a>
+
+        <a
+          href="https://youtube.com/@granites_infinity?si=VhtyZ4NiqusufoRr"
+          target="_blank"
+          rel="noopener"
+          aria-label="YouTube"
+        >
+          YouTube ↗
+        </a>
+
+        <a
+          href="https://wa.me/919462761833"
+          target="_blank"
+          rel="noopener"
+          aria-label="WhatsApp"
+        >
+          WhatsApp ↗
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+      <span>
+        © <span id="year"></span> Infinity Granites.
+        All rights reserved.
+      </span>
+
+      <span>
+        From Mines to Marvels.
+      </span>
+
+      <a href="#home">
+        Back to top ↑
+      </a>
+
+      <span class="made-by">
+        Website crafted by
+        <strong>Marwar Infotech</strong>
+      </span>
+
+    </div>
+
+  </footer>
+
+
+
+  <!-- =========================================================
+       FLOATING CONTACT BUTTONS
+  ========================================================== -->
+  <div class="floating-actions">
+
+    <a
+      href="tel:+919462761833"
+      class="floating-call"
+      aria-label="Call Infinity Granites"
+    >
+      <span>☎</span>
+    </a>
+
+    <a
+      href="https://wa.me/919462761833"
+      target="_blank"
+      rel="noopener"
+      class="floating-whatsapp"
+      aria-label="WhatsApp Infinity Granites"
+    >
+      <span>◉</span>
+    </a>
+
+  </div>
+
+
+
+  <!-- =========================================================
+       PRODUCT QUICK VIEW
+  ========================================================== -->
+  <div class="product-modal" id="productModal" aria-hidden="true">
+
+    <div class="product-modal-backdrop" data-close-modal></div>
+
+    <div class="product-modal-box">
+
+      <button
+        type="button"
+        class="modal-close"
+        data-close-modal
+        aria-label="Close product"
+      >
+        ×
+      </button>
+
+      <div class="modal-image">
+        <img id="modalProductImage" src="" alt="">
+      </div>
+
+      <div class="modal-content">
+
+        <span id="modalProductIndex">01</span>
+
+        <h3 id="modalProductName">
+          Granite
+        </h3>
+
+        <p id="modalProductFinish">
+          Natural Granite
+        </p>
+
+        <a href="#contact" class="btn btn-dark" data-close-modal>
+          Enquire About This Stone
+          <span>↗</span>
         </a>
 
       </div>
@@ -2954,1181 +2093,18 @@ footer{
 
   </div>
 
-</section>
 
-<!-- PROFESSIONAL -->
-<section class="professional" id="professional">
 
-  <div class="container professional-grid">
+  <!-- =========================================================
+       SCROLL PROGRESS
+  ========================================================== -->
+  <div class="scroll-progress" id="scrollProgress"></div>
 
-    <div class="professional-image reveal">
-      <img src="pp.jpg" alt="Infinity Granites Professional Stone Partner">
-    </div>
 
-    <div class="professional-content reveal">
-
-      <div class="eyebrow">
-        For Professionals
-      </div>
-
-      <h2 class="title">
-        A stone partner<br>
-        <em>for serious projects.</em>
-      </h2>
-
-      <p class="copy">
-        Architects, interior designers, contractors, builders and
-        developers can work with Infinity Granites for project-focused
-        stone sourcing and wholesale requirements.
-      </p>
-
-      <div class="professional-list">
-
-        <div>
-          <span>Architects</span>
-          <span>Stone selection support</span>
-        </div>
-
-        <div>
-          <span>Interior Designers</span>
-          <span>Project requirements</span>
-        </div>
-
-        <div>
-          <span>Contractors</span>
-          <span>Bulk requirements</span>
-        </div>
-
-        <div>
-          <span>Builders & Developers</span>
-          <span>Wholesale supply</span>
-        </div>
-
-      </div>
-
-      <br>
-
-      <a href="#contact" class="btn">
-        Discuss Your Project →
-      </a>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- COMPARISON -->
-<section class="comparison">
-
-  <div class="container">
-
-    <div class="eyebrow">Stone Comparison</div>
-
-    <h2 class="title reveal" style="margin-top:24px;">
-      Compare by<br>
-      <em>character.</em>
-    </h2>
-
-    <div class="compare-wrap reveal">
-
-      <table class="compare-table">
-
-        <thead>
-          <tr>
-            <th>Parameter</th>
-            <th>Polished</th>
-            <th>Lappatro</th>
-            <th>Natural</th>
-          </tr>
-        </thead>
-
-        <tbody>
-
-          <tr>
-            <td>Look</td>
-            <td>Reflective & refined</td>
-            <td>Textured & contemporary</td>
-            <td>Raw & organic</td>
-          </tr>
-
-          <tr>
-            <td>Finish</td>
-            <td>High polish</td>
-            <td>Leathered / textured</td>
-            <td>Natural character</td>
-          </tr>
-
-          <tr>
-            <td>Applications</td>
-            <td>Interiors / counters</td>
-            <td>Modern interiors</td>
-            <td>Architectural surfaces</td>
-          </tr>
-
-          <tr>
-            <td>Visual Character</td>
-            <td>Elegant</td>
-            <td>Distinctive</td>
-            <td>Organic</td>
-          </tr>
-
-          <tr>
-            <td>Selection</td>
-            <td>Light / dark options</td>
-            <td>Strong natural patterns</td>
-            <td>Authentic stone feel</td>
-          </tr>
-
-        </tbody>
-
-      </table>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- REVIEWS -->
-<section class="reviews" id="reviews">
-
-  <div class="container">
-
-    <div class="review-head reveal">
-
-      <div class="eyebrow" style="justify-content:center;">
-        Reviews
-      </div>
-
-      <h2 class="title" style="margin-top:24px;">
-        Chosen for<br>
-        <em>the details.</em>
-      </h2>
-
-    </div>
-
-    <div class="review-grid">
-
-      <div class="review reveal">
-
-        <div class="stars">★★★★★</div>
-
-        <p>
-          The stone selection was impressive and the overall dealing
-          experience was professional. The team understood our requirement.
-        </p>
-
-        <strong>Architectural Client</strong>
-        <small>Rajasthan</small>
-
-      </div>
-
-      <div class="review reveal">
-
-        <div class="stars">★★★★★</div>
-
-        <p>
-          We were looking for granite for a larger requirement and the
-          wholesale approach made the conversation straightforward.
-        </p>
-
-        <strong>Project Client</strong>
-        <small>North India</small>
-
-      </div>
-
-      <div class="review reveal">
-
-        <div class="stars">★★★★★</div>
-
-        <p>
-          Good variety and a strong understanding of natural stone.
-          The Kishangarh location is a major advantage.
-        </p>
-
-        <strong>Interior Professional</strong>
-        <small>India</small>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- FAQ -->
-<section class="faq" id="faq">
-
-  <div class="container faq-grid">
-
-    <div class="reveal">
-
-      <div class="eyebrow">FAQ</div>
-
-      <h2 class="title" style="margin-top:24px;">
-        Questions<br>
-        <em>answered.</em>
-      </h2>
-
-      <p class="copy" style="margin-top:25px;">
-        Have a specific requirement? Get in touch with the Infinity
-        Granites team and discuss your project directly.
-      </p>
-
-    </div>
-
-    <div class="faq-list reveal">
-
-      <div class="faq-item">
-
-        <button class="faq-question">
-          Is wholesale granite available?
-          <span class="faq-icon">+</span>
-        </button>
-
-        <div class="faq-answer">
-          <p>
-            Yes. Infinity Granites is positioned primarily for wholesale
-            and B2B natural stone requirements.
-          </p>
-        </div>
-
-      </div>
-
-      <div class="faq-item">
-
-        <button class="faq-question">
-          Do you deliver across India?
-          <span class="faq-icon">+</span>
-        </button>
-
-        <div class="faq-answer">
-          <p>
-            Infinity Granites serves requirements across India.
-            Discuss your location and quantity with the team.
-          </p>
-        </div>
-
-      </div>
-
-      <div class="faq-item">
-
-        <button class="faq-question">
-          Can architects and designers contact you?
-          <span class="faq-icon">+</span>
-        </button>
-
-        <div class="faq-answer">
-          <p>
-            Yes. Architects, interior designers, contractors, builders
-            and developers are welcome to discuss project requirements.
-          </p>
-        </div>
-
-      </div>
-
-      <div class="faq-item">
-
-        <button class="faq-question">
-          Where are you located?
-          <span class="faq-icon">+</span>
-        </button>
-
-        <div class="faq-answer">
-          <p>
-            Infinity Granites is located at Makrana Rd, RIICO Industrial
-            Area, Kishangarh, Rajasthan – 305801.
-          </p>
-        </div>
-
-      </div>
-
-      <div class="faq-item">
-
-        <button class="faq-question">
-          Can I ask about a specific granite?
-          <span class="faq-icon">+</span>
-        </button>
-
-        <div class="faq-answer">
-          <p>
-            Absolutely. Send the granite name, image or your requirement
-            through the enquiry form and the team can discuss availability.
-          </p>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- CONTACT -->
-<section class="contact" id="contact">
-
-  <div class="container contact-grid">
-
-    <div class="contact-left reveal">
-
-      <div class="eyebrow">Start a Conversation</div>
-
-      <h2 class="title">
-        Let's find the<br>
-        <em>right stone.</em>
-      </h2>
-
-      <p class="copy">
-        Tell us what you are looking for. Whether it is a single
-        requirement or a larger B2B project, our team can help you
-        start the conversation.
-      </p>
-
-      <div class="contact-details">
-
-        <div class="contact-detail">
-          <span>Phone / WhatsApp</span>
-          <strong>
-            <a href="tel:+919462761833">
-              +91 94627 61833
-            </a>
-          </strong>
-        </div>
-
-        <div class="contact-detail">
-          <span>Location</span>
-          <strong>
-            Kishangarh, Rajasthan
-          </strong>
-        </div>
-
-        <div class="contact-detail">
-          <span>Instagram</span>
-          <strong>
-            @infinity.granites
-          </strong>
-        </div>
-
-      </div>
-
-    </div>
-
-    <form class="form reveal" id="enquiryForm">
-
-      <div class="form-grid">
-
-        <div class="field">
-          <label>Name</label>
-          <input type="text" required placeholder="Your name">
-        </div>
-
-        <div class="field">
-          <label>Phone</label>
-          <input type="tel" required placeholder="Phone number">
-        </div>
-
-        <div class="field">
-          <label>Email</label>
-          <input type="email" placeholder="Email address">
-        </div>
-
-        <div class="field">
-          <label>Company</label>
-          <input type="text" placeholder="Company / Firm">
-        </div>
-
-        <div class="field full">
-          <label>Requirement</label>
-
-          <select>
-            <option value="">Select requirement</option>
-            <option>Granite</option>
-            <option>Bulk Wholesale</option>
-            <option>Residential Project</option>
-            <option>Commercial Project</option>
-            <option>Architect / Designer</option>
-            <option>Other</option>
-          </select>
-
-        </div>
-
-        <div class="field full">
-          <label>Message</label>
-          <textarea placeholder="Tell us about your requirement"></textarea>
-        </div>
-
-      </div>
-
-      <button class="btn" type="submit">
-        Send Enquiry →
-      </button>
-
-    </form>
-
-  </div>
-
-</section>
-
-<!-- MAP -->
-<section class="map">
-
-  <iframe
-    src="https://www.google.com/maps?q=Makrana%20Rd%20RIICO%20Industrial%20Area%20Kishangarh%20Rajasthan%20305801&output=embed"
-    loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade">
-  </iframe>
-
-</section>
-
-<!-- FOOTER -->
-<footer>
-
-  <div class="container">
-
-    <div class="footer-top">
-
-      <div class="footer-brand">
-
-        <img src="logo.JPEG" alt="Infinity Granites Logo">
-
-        <h3>Infinity Granites</h3>
-
-        <p>
-          From Mines to Marvels. Premium natural granite from
-          Kishangarh, Rajasthan, with a wholesale and B2B focus.
-        </p>
-
-      </div>
-
-      <div>
-
-        <div class="footer-heading">
-          Explore
-        </div>
-
-        <div class="footer-links">
-          <a href="#home">Home</a>
-          <a href="#vision">About</a>
-          <a href="#collection">Collection</a>
-          <a href="#finder">Stone Finder</a>
-          <a href="#applications">Applications</a>
-        </div>
-
-      </div>
-
-      <div>
-
-        <div class="footer-heading">
-          Information
-        </div>
-
-        <div class="footer-links">
-          <a href="#guide">Selection Guide</a>
-          <a href="#professional">Professionals</a>
-          <a href="#reviews">Reviews</a>
-          <a href="#faq">FAQ</a>
-          <a href="#contact">Contact</a>
-        </div>
-
-      </div>
-
-      <div>
-
-        <div class="footer-heading">
-          Connect
-        </div>
-
-        <div class="socials">
-
-          <!-- Instagram -->
-          <a
-            class="social"
-            href="https://www.instagram.com/infinity.granites/"
-            target="_blank"
-            rel="noopener"
-            aria-label="Instagram">
-
-            <svg viewBox="0 0 24 24">
-              <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5zm0 2A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5zM17.5 6a1.25 1.25 0 1 1-1.25 1.25A1.25 1.25 0 0 1 17.5 6z"/>
-            </svg>
-
-          </a>
-
-          <!-- YouTube -->
-          <a
-            class="social"
-            href="#"
-            target="_blank"
-            rel="noopener"
-            aria-label="YouTube">
-
-            <svg viewBox="0 0 24 24">
-              <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.8V8.2l6.5 3.8-6.5 3.8z"/>
-            </svg>
-
-          </a>
-
-          <!-- Facebook -->
-          <a
-            class="social"
-            href="#"
-            target="_blank"
-            rel="noopener"
-            aria-label="Facebook">
-
-            <svg viewBox="0 0 24 24">
-              <path d="M13.5 22v-8h2.7l.4-3h-3.1V9.1c0-.9.3-1.5 1.6-1.5h1.7V4.9c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3V11H7.3v3h2.8v8h3.4z"/>
-            </svg>
-
-          </a>
-
-          <!-- WhatsApp -->
-          <a
-            class="social"
-            href="https://wa.me/919462761833"
-            target="_blank"
-            rel="noopener"
-            aria-label="WhatsApp">
-
-            <svg viewBox="0 0 24 24">
-              <path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .4 5.2.4 11.7c0 2.1.5 4.1 1.6 5.9L.3 24l6.5-1.7a11.8 11.8 0 0 0 5.3 1.3h.1c6.4 0 11.6-5.2 11.6-11.7 0-3.1-1.2-6.1-3.3-8.4zM12.1 21.5c-1.7 0-3.4-.5-4.8-1.4l-.3-.2-3.8 1 1-3.7-.2-.3a9.8 9.8 0 1 1 8.1 4.6zm5.4-7.4c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.2-.4-2.3-1.4-.9-.8-1.4-1.8-1.6-2.1-.2-.3 0-.5.1-.7.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2.1-.4 0-.5-.1-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1 2.9 1.1 3.1c.1.2 2 3.1 4.8 4.3.7.3 1.3.5 1.8.7.8.2 1.5.2 2 .1.6-.1 1.8-.7 2.1-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3z"/>
-            </svg>
-
-          </a>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="footer-bottom">
-
-      <div>
-        © 2026 Infinity Granites. All Rights Reserved.
-      </div>
-
-      <div>
-        Made by <strong style="color:var(--gold);font-weight:500;">
-          Marwar Infotech
-        </strong>
-      </div>
-
-    </div>
-
-  </div>
-
-</footer>
-
-<!-- FLOATING ACTIONS -->
-<div class="float-actions">
-
-  <a
-    class="float-btn call"
-    href="tel:+919462761833"
-    aria-label="Call Infinity Granites">
-
-    <svg viewBox="0 0 24 24">
-      <path d="M6.6 10.8a15.6 15.6 0 0 0 6.6 6.6l2.2-2.2c.3-.3.8-.4 1.2-.2 1.3.4 2.7.7 4.1.7.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C11.1 21 3 12.9 3 3.3c0-.6.4-1 1-1h3.3c.6 0 1 .4 1 1 0 1.4.2 2.8.7 4.1.1.4.1.8-.2 1.2l-2.2 2.2z"/>
-    </svg>
-
-  </a>
-
-  <a
-    class="float-btn whatsapp"
-    href="https://wa.me/919462761833"
-    target="_blank"
-    rel="noopener"
-    aria-label="WhatsApp Infinity Granites">
-
-    <svg viewBox="0 0 24 24">
-      <path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .4 5.2.4 11.7c0 2.1.5 4.1 1.6 5.9L.3 24l6.5-1.7a11.8 11.8 0 0 0 5.3 1.3h.1c6.4 0 11.6-5.2 11.6-11.7 0-3.1-1.2-6.1-3.3-8.4zM12.1 21.5c-1.7 0-3.4-.5-4.8-1.4l-.3-.2-3.8 1 1-3.7-.2-.3a9.8 9.8 0 1 1 8.1 4.6zm5.4-7.4c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.2-.4-2.3-1.4-.9-.8-1.4-1.8-1.6-2.1-.2-.3 0-.5.1-.7.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2.1-.4 0-.5-.1-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1 2.9 1.1 3.1c.1.2 2 3.1 4.8 4.3.7.3 1.3.5 1.8.7.8.2 1.5.2 2 .1.6-.1 1.8-.7 2.1-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3z"/>
-    </svg>
-
-  </a>
-
-</div>
-
-<script>
-
-/* =========================
-   PRELOADER
-========================= */
-
-window.addEventListener("load",function(){
-
-  setTimeout(function(){
-    document.getElementById("preloader").classList.add("hide");
-  },700);
-
-});
-
-
-/* =========================
-   HEADER
-========================= */
-
-const header=document.getElementById("header");
-
-window.addEventListener("scroll",function(){
-
-  if(window.scrollY>60){
-    header.classList.add("scrolled");
-  }else{
-    header.classList.remove("scrolled");
-  }
-
-});
-
-
-/* =========================
-   MOBILE MENU
-========================= */
-
-const menuBtn=document.getElementById("menuBtn");
-const mobileMenu=document.getElementById("mobileMenu");
-
-menuBtn.addEventListener("click",function(){
-
-  mobileMenu.classList.toggle("open");
-  document.body.classList.toggle("menu-open");
-
-});
-
-document.querySelectorAll(".mobile-inner a").forEach(function(link){
-
-  link.addEventListener("click",function(){
-
-    mobileMenu.classList.remove("open");
-    document.body.classList.remove("menu-open");
-
-  });
-
-});
-
-
-/* =========================
-   REVEAL ANIMATION
-========================= */
-
-const observer=new IntersectionObserver(function(entries){
-
-  entries.forEach(function(entry){
-
-    if(entry.isIntersecting){
-      entry.target.classList.add("visible");
-    }
-
-  });
-
-},{
-  threshold:.12
-});
-
-document.querySelectorAll(".reveal").forEach(function(el){
-  observer.observe(el);
-});
-
-
-/* =========================
-   HERO CURSOR
-========================= */
-
-const hero=document.querySelector(".hero");
-const cursorLight=document.getElementById("cursorLight");
-
-hero.addEventListener("mousemove",function(e){
-
-  const rect=hero.getBoundingClientRect();
-
-  cursorLight.style.left=(e.clientX-rect.left)+"px";
-  cursorLight.style.top=(e.clientY-rect.top)+"px";
-
-});
-
-
-/* =========================
-   COLLECTION MOUSE FOLLOW
-========================= */
-
-const collectionWrap=document.getElementById("collectionWrap");
-const collectionTrack=document.getElementById("collectionTrack");
-
-let collectionTarget=0;
-let collectionCurrent=0;
-
-function collectionAnimation(){
-
-  collectionCurrent +=
-    (collectionTarget-collectionCurrent)*.075;
-
-  collectionTrack.style.transform=
-    "translateX("+collectionCurrent+"px)";
-
-  requestAnimationFrame(collectionAnimation);
-}
-
-collectionAnimation();
-
-collectionWrap.addEventListener("mousemove",function(e){
-
-  if(window.innerWidth<=700) return;
-
-  const rect=collectionWrap.getBoundingClientRect();
-
-  const percentage=
-    (e.clientX-rect.left)/rect.width;
-
-  const maxMove=
-    -(collectionTrack.scrollWidth-rect.width);
-
-  collectionTarget=maxMove*percentage;
-
-});
-
-collectionWrap.addEventListener("mouseleave",function(){
-
-  collectionTarget=0;
-
-});
-
-
-/* =========================
-   COLLECTION TOUCH SWIPE
-========================= */
-
-let touchStartX=0;
-let touchCurrent=0;
-
-collectionWrap.addEventListener("touchstart",function(e){
-
-  touchStartX=e.touches[0].clientX;
-  touchCurrent=collectionTarget;
-
-});
-
-collectionWrap.addEventListener("touchmove",function(e){
-
-  const currentX=e.touches[0].clientX;
-  const difference=currentX-touchStartX;
-
-  collectionTarget=touchCurrent+difference;
-
-  const maxMove=
-    -(collectionTrack.scrollWidth-collectionWrap.clientWidth);
-
-  collectionTarget=Math.min(0,Math.max(maxMove,collectionTarget));
-
-});
-
-
-/* =========================
-   STONE FINDER
-========================= */
-
-let finderStep=1;
-const finderSelections=[];
-
-const finderSteps=
-document.querySelectorAll(".finder-step");
-
-const finderProgress=
-document.querySelectorAll("#finderProgress span");
-
-document.querySelectorAll(".finder-step .option").forEach(function(option){
-
-  option.addEventListener("click",function(){
-
-    const parent=option.closest(".finder-step");
-
-    parent.querySelectorAll(".option").forEach(function(btn){
-      btn.classList.remove("selected");
-    });
-
-    option.classList.add("selected");
-
-  });
-
-});
-
-document.querySelectorAll(".finder-next").forEach(function(button){
-
-  button.addEventListener("click",function(){
-
-    const next=button.dataset.next;
-
-    const current=
-      document.querySelector(
-        '.finder-step[data-step="'+finderStep+'"]'
-      );
-
-    const selected=
-      current.querySelector(".option.selected");
-
-    if(!selected){
-
-      current.querySelectorAll(".option").forEach(function(btn){
-
-        btn.animate(
-          [
-            {transform:"translateX(0)"},
-            {transform:"translateX(-5px)"},
-            {transform:"translateX(5px)"},
-            {transform:"translateX(0)"}
-          ],
-          {duration:300}
-        );
-
-      });
-
-      return;
-    }
-
-    finderSelections.push(selected.textContent.trim());
-
-    if(next==="result"){
-
-      finderSteps.forEach(function(step){
-        step.classList.remove("active");
-      });
-
-      document.getElementById("finderResult").classList.add("show");
-
-      finderProgress.forEach(function(bar){
-        bar.classList.add("active");
-      });
-
-      return;
-    }
-
-    finderStep=parseInt(next);
-
-    finderSteps.forEach(function(step){
-      step.classList.remove("active");
-    });
-
-    document
-      .querySelector(
-        '.finder-step[data-step="'+finderStep+'"]'
-      )
-      .classList.add("active");
-
-    finderProgress.forEach(function(bar,index){
-
-      bar.classList.toggle(
-        "active",
-        index<finderStep
-      );
-
-    });
-
-  });
-
-});
-
-
-/* Finder result goes to enquiry */
-
-document
-  .getElementById("finderEnquiry")
-  .addEventListener("click",function(){
-
-    setTimeout(function(){
-
-      const phoneInput=
-        document.querySelector(
-          '#enquiryForm input[type="tel"]'
-        );
-
-      if(phoneInput){
-        phoneInput.focus();
-      }
-
-    },700);
-
-  });
-
-
-/* Finder restart */
-
-document
-  .getElementById("finderRestart")
-  .addEventListener("click",function(){
-
-    finderStep=1;
-    finderSelections.length=0;
-
-    document
-      .getElementById("finderResult")
-      .classList.remove("show");
-
-    finderSteps.forEach(function(step){
-      step.classList.remove("active");
-      step.querySelectorAll(".option").forEach(function(option){
-        option.classList.remove("selected");
-      });
-    });
-
-    finderSteps[0].classList.add("active");
-
-    finderProgress.forEach(function(bar,index){
-      bar.classList.toggle("active",index===0);
-    });
-
-  });
-
-
-/* =========================
-   SELECTION GUIDE GAME
-========================= */
-
-const gameQuestions=[
-
-  {
-    level:"Level 01 · Your Space",
-    question:"Choose the space you are designing.",
-    options:[
-      "Modern Home",
-      "Luxury Villa",
-      "Commercial Space",
-      "Architectural Project"
-    ]
-  },
-
-  {
-    level:"Level 02 · Personality",
-    question:"What should the stone feel like?",
-    options:[
-      "Light & Elegant",
-      "Dark & Dramatic",
-      "Warm & Earthy",
-      "Bold & Natural"
-    ]
-  },
-
-  {
-    level:"Level 03 · Finish",
-    question:"Which finish feels closest to your vision?",
-    options:[
-      "Polished",
-      "Lappatro",
-      "Natural",
-      "Surprise Me"
-    ]
-  }
-
-];
-
-let gameIndex=0;
-let gameScore=0;
-
-const gameLevel=document.getElementById("gameLevel");
-const gameQuestion=document.getElementById("gameQuestion");
-const gameOptions=document.getElementById("gameOptions");
-const gameProgress=document.getElementById("gameProgress");
-const gameScoreEl=document.getElementById("gameScore");
-const gameResult=document.getElementById("gameResult");
-
-function renderGame(){
-
-  const current=gameQuestions[gameIndex];
-
-  gameLevel.textContent=current.level;
-  gameQuestion.textContent=current.question;
-
-  gameOptions.innerHTML="";
-
-  current.options.forEach(function(optionText){
-
-    const button=document.createElement("button");
-
-    button.className="game-option";
-
-    button.innerHTML=
-      "<span>"+optionText+"</span>";
-
-    button.addEventListener("click",function(){
-
-      document
-        .querySelectorAll(".game-option")
-        .forEach(function(btn){
-          btn.disabled=true;
-        });
-
-      button.classList.add("correct");
-
-      gameScore+=100;
-
-      gameScoreEl.textContent=gameScore;
-
-      gameProgress.style.width=
-        ((gameIndex+1)/gameQuestions.length*100)+"%";
-
-      setTimeout(function(){
-
-        gameIndex++;
-
-        if(gameIndex>=gameQuestions.length){
-
-          finishGame();
-
-        }else{
-
-          renderGame();
-
-        }
-
-      },600);
-
-    });
-
-    gameOptions.appendChild(button);
-
-  });
-
-}
-
-function finishGame(){
-
-  gameOptions.style.display="none";
-  gameQuestion.style.display="none";
-  gameResult.classList.add("show");
-
-  let title="Signature Stone";
-  let text=
-    "Your choices suggest a refined natural-stone direction. Talk to Infinity Granites to explore suitable options from the collection.";
-
-  if(gameScore>=300){
-
-    title="The Architectural Choice";
-
-    text=
-      "You prefer a stone with presence, individuality and a strong architectural character — perfect for projects where natural stone becomes part of the identity.";
-
-  }
-
-  document.getElementById("gameResultTitle").textContent=title;
-  document.getElementById("gameResultText").textContent=text;
-
-}
-
-renderGame();
-
-
-/* =========================
-   FAQ
-========================= */
-
-document.querySelectorAll(".faq-question").forEach(function(question){
-
-  question.addEventListener("click",function(){
-
-    const item=question.closest(".faq-item");
-
-    document.querySelectorAll(".faq-item").forEach(function(other){
-
-      if(other!==item){
-        other.classList.remove("open");
-      }
-
-    });
-
-    item.classList.toggle("open");
-
-  });
-
-});
-
-
-/* =========================
-   ENQUIRY FORM
-========================= */
-
-document
-  .getElementById("enquiryForm")
-  .addEventListener("submit",function(e){
-
-    e.preventDefault();
-
-    const name=
-      this.querySelector('input[type="text"]').value;
-
-    const phone=
-      this.querySelector('input[type="tel"]').value;
-
-    const requirement=
-      this.querySelector("select").value;
-
-    const message=
-      this.querySelector("textarea").value;
-
-    const whatsappText=
-      "Hello Infinity Granites,%0A%0A"+
-      "Name: "+encodeURIComponent(name)+"%0A"+
-      "Phone: "+encodeURIComponent(phone)+"%0A"+
-      "Requirement: "+encodeURIComponent(requirement)+"%0A"+
-      "Message: "+encodeURIComponent(message);
-
-    window.open(
-      "https://wa.me/919462761833?text="+whatsappText,
-      "_blank"
-    );
-
-  });
-
-
-/* =========================
-   HERO VIDEO FALLBACK
-========================= */
-
-const heroVideo=document.querySelector(".hero-video");
-
-heroVideo.addEventListener("error",function(){
-
-  document.querySelector(".hero").style.background=
-    "linear-gradient(90deg,rgba(35,22,12,.85),rgba(65,42,20,.45)),url('about.jpeg') center/cover";
-
-});
-
-
-/* =========================
-   SMOOTH ANCHOR OFFSET
-========================= */
-
-document.querySelectorAll('a[href^="#"]').forEach(function(link){
-
-  link.addEventListener("click",function(e){
-
-    const targetId=link.getAttribute("href");
-
-    if(targetId==="#" || targetId==="") return;
-
-    const target=document.querySelector(targetId);
-
-    if(!target) return;
-
-    e.preventDefault();
-
-    const offset=75;
-
-    const top=
-      target.getBoundingClientRect().top+
-      window.scrollY-
-      offset;
-
-    window.scrollTo({
-      top:top,
-      behavior:"smooth"
-    });
-
-  });
-
-});
-
-</script>
+  <!-- =========================================================
+       JAVASCRIPT
+  ========================================================== -->
+  <script src="script.js"></script>
 
 </body>
 </html>
