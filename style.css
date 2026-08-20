@@ -1080,53 +1080,88 @@ h3 em {
 
 
 /* =========================================================
-   10 — STORY
+   OUR STORY — FULL BACKGROUND IMAGE
 ========================================================= */
 
 .story-section {
   position: relative;
 
-  display: grid;
-  grid-template-columns: .9fr 1.1fr;
+  min-height: 760px;
+
+  display: flex;
   align-items: center;
-  gap: 8vw;
 
   padding: 150px 8vw;
-}
 
-.story-image {
-  position: relative;
-
-  aspect-ratio: .83;
   overflow: hidden;
 
-  border-radius: 0 100px 0 0;
-}
+  color: var(--white);
 
-.story-image::before {
-  content: "";
+  background-color: var(--wood-950);
 
-  position: absolute;
-  inset: 12px -12px -12px 12px;
+  /* FULL IMAGE — NO CROP */
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(20,14,9,.90) 0%,
+      rgba(20,14,9,.60) 42%,
+      rgba(20,14,9,.28) 72%,
+      rgba(20,14,9,.45) 100%
+    ),
+    url("about.jpeg");
 
-  border: 1px solid var(--yellow-dark);
-  pointer-events: none;
-}
+  background-repeat: no-repeat;
 
-.story-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  /*
+    contain = poori image dikhegi
+    crop nahi hogi
+  */
+  background-size:
+    cover,
+    contain;
 
-  transition: transform 1s var(--ease);
-}
+  background-position:
+    center,
+    center;
 
-.story-image:hover img {
-  transform: scale(1.06);
+  /* image repeat nahi hogi */
+  background-attachment: scroll;
 }
 
 .story-content {
+  position: relative;
+  z-index: 2;
+
   max-width: 620px;
+}
+
+.story-content .eyebrow {
+  color: var(--yellow-light);
+}
+
+.story-content h2 {
+  font-size: clamp(3.2rem, 6vw, 6.2rem);
+
+  color: var(--white);
+}
+
+.story-content h2 em {
+  color: var(--yellow-light);
+}
+
+.story-content > p {
+  max-width: 540px;
+
+  margin: 30px 0 0;
+
+  color: rgba(255,255,255,.72);
+
+  font-size: .9rem;
+  line-height: 1.9;
+}
+
+.story-content .btn {
+  margin-top: 35px;
 }
 
 .story-content h2 {
