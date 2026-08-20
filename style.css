@@ -4137,3 +4137,81 @@ h3 em {
   }
 
 }
+/* =========================================================
+   SOCIAL ICONS
+========================================================= */
+
+.footer-social-icons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  color: rgba(255,255,255,.65);
+  background: rgba(255,255,255,.035);
+
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 50%;
+
+  transition:
+    color .3s var(--ease),
+    background .3s var(--ease),
+    border-color .3s var(--ease),
+    transform .3s var(--ease);
+}
+
+.footer-social-icons a:hover {
+  color: var(--wood-950);
+  background: var(--yellow);
+  border-color: var(--yellow);
+  transform: translateY(-3px);
+}
+
+.footer-social-icons svg {
+  width: 17px;
+  height: 17px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.footer-social-icons svg .icon-fill {
+  fill: currentColor;
+  stroke: none;
+}
+
+
+/* =========================================================
+   FLOATING CONTACT ICONS
+========================================================= */
+
+.floating-actions a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.floating-actions svg {
+  width: 20px;
+  height: 20px;
+
+  fill: currentColor;
+
+  pointer-events: none;
+}
+
+.floating-actions .floating-call:hover,
+.floating-actions .floating-whatsapp:hover {
+  transform: translateY(-4px) scale(1.06);
+}
