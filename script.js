@@ -317,6 +317,10 @@ document.addEventListener("DOMContentLoaded", () => {
      
      Desktop:
      smooth manual movement
+
+     NOTE:
+     Collection AUTO SLIDER REMOVED.
+     Manual buttons + touch swipe remain.
   ========================================================= */
 
   const productSliders =
@@ -343,7 +347,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     let index = 0;
-    let timer = null;
 
     function getVisible() {
       if (window.innerWidth <= 600) {
@@ -443,57 +446,34 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
+    /* =======================================================
+       MANUAL NEXT
+    ======================================================= */
+
     if (next) {
       next.addEventListener(
         "click",
         () => {
           nextSlide();
-          restartAuto();
         }
       );
     }
+
+    /* =======================================================
+       MANUAL PREVIOUS
+    ======================================================= */
 
     if (prev) {
       prev.addEventListener(
         "click",
         () => {
           previousSlide();
-          restartAuto();
         }
       );
     }
 
-    function startAuto() {
-      if (reduceMotion) return;
-
-      clearInterval(timer);
-
-      timer = setInterval(() => {
-        nextSlide();
-      }, 4300);
-    }
-
-    function restartAuto() {
-      startAuto();
-    }
-
-    slider.addEventListener(
-      "mouseenter",
-      () => {
-        clearInterval(timer);
-      }
-    );
-
-    slider.addEventListener(
-      "mouseleave",
-      () => {
-        startAuto();
-      }
-    );
-
-    // Initial state
+    // Initial state — manual slider only
     moveTo(0);
-    startAuto();
 
 
     /* =======================================================
@@ -508,8 +488,6 @@ document.addEventListener("DOMContentLoaded", () => {
       (event) => {
         startX =
           event.changedTouches[0].clientX;
-
-        clearInterval(timer);
       },
       { passive: true }
     );
@@ -530,8 +508,6 @@ document.addEventListener("DOMContentLoaded", () => {
             previousSlide();
           }
         }
-
-        startAuto();
       },
       { passive: true }
     );
@@ -1034,6 +1010,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!modal) return;
 
     modal.classList.remove("open");
+
     modal.setAttribute(
       "aria-hidden",
       "true"
