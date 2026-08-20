@@ -23,10 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* =========================================================
      1. FAST PRELOADER
-     
-     IMPORTANT:
-     Never wait for window.load or all images.
-     Website opens immediately.
   ========================================================= */
 
   const preloader = $(
@@ -34,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   if (preloader) {
-    // Allow first paint, then remove loader quickly.
     requestAnimationFrame(() => {
       setTimeout(() => {
         preloader.classList.add("loaded");
@@ -51,45 +46,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* =========================================================
      2. FORCE EAGER IMAGE LOADING
-     
-     No lazy loading anywhere.
   ========================================================= */
 
   const allImages = $$("img");
 
   allImages.forEach((img) => {
-    // Force normal immediate loading
     img.loading = "eager";
-
-    // Decode without blocking main thread
     img.decoding = "async";
 
-    // Remove possible lazy attributes
     img.removeAttribute("data-src");
     img.removeAttribute("data-srcset");
 
-    // Don't allow browser priority tricks from old code
     if (img.getAttribute("loading") === "lazy") {
       img.setAttribute("loading", "eager");
     }
 
-    // Visual state
     img.classList.add("image-ready");
 
-    // Graceful missing image handling
-    img.addEventListener("error", () => {
-      img.classList.add("image-error");
-
-      // Never stop website if an image is missing
-      img.setAttribute("data-missing", "true");
-    }, { once: true });
+    img.addEventListener(
+      "error",
+      () => {
+        img.classList.add("image-error");
+        img.setAttribute("data-missing", "true");
+      },
+      { once: true }
+    );
   });
 
 
   /* =========================================================
      3. HERO IMAGE PRELOAD
-     
-     Start hero images immediately.
   ========================================================= */
 
   const heroFiles = [
@@ -106,7 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     image.decoding = "async";
 
-    // Highest priority for first hero image
     if (index === 0) {
       image.fetchPriority = "high";
     }
@@ -142,6 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const opened = mobileMenu.classList.toggle("open");
 
       menuToggle.classList.toggle("active", opened);
+
       menuToggle.setAttribute(
         "aria-expanded",
         opened ? "true" : "false"
@@ -303,24 +289,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =========================================================
-     9. PRODUCT SLIDERS
+     9. PRODUCT / COLLECTION SLIDERS
      
-     Works with current HTML:
-     .product-slider
-     .product-track
-     .product-card
-     .slider-prev
-     .slider-next
-     
-     Mobile:
-     native horizontal swipe
-     
-     Desktop:
-     smooth manual movement
-
-     NOTE:
-     Collection AUTO SLIDER REMOVED.
-     Manual buttons + touch swipe remain.
+     IMPORTANT:
+     - NO AUTO SLIDER
+     - MANUAL BUTTONS ONLY
+     - MOBILE SWIPE ONLY
+     - NEVER MOVE THE WHOLE PAGE
   ========================================================= */
 
   const productSliders =
@@ -371,7 +346,18 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     }
 
-    function moveTo(newIndex) {
+
+    /* ---------------------------------------------------------
+       MOVE PRODUCT TRACK
+       
+       shouldScroll = true ONLY when the user manually
+       changes the collection slider.
+    --------------------------------------------------------- */
+
+    function moveTo(
+      newIndex,
+      shouldScroll = false
+    ) {
       const visible = getVisible();
 
       const maxIndex =
@@ -383,24 +369,66 @@ document.addEventListener("DOMContentLoaded", () => {
       index =
         Math.max(
           0,
-          Math.min(newIndex, maxIndex)
+          Math.min(
+            newIndex,
+            maxIndex
+          )
         );
 
-      // Mobile uses natural scroll.
+
+      /* -------------------------------------------------------
+         MOBILE
+         
+         IMPORTANT FIX:
+         DO NOT use card.scrollIntoView()
+         
+         That function was moving the WHOLE WEB PAGE
+         to the Collection section.
+         
+         Now we scroll only the product track.
+      ------------------------------------------------------- */
+
       if (window.innerWidth <= 600) {
         const card = cards[index];
 
-        if (card) {
-          card.scrollIntoView({
-            behavior: reduceMotion
-              ? "auto"
-              : "smooth",
-            block: "nearest",
-            inline: "start"
+        if (card && shouldScroll) {
+          const trackRect =
+            track.getBoundingClientRect();
+
+          const cardRect =
+            card.getBoundingClientRect();
+
+          const maxScroll =
+            Math.max(
+              0,
+              track.scrollWidth -
+              track.clientWidth
+            );
+
+          const targetLeft =
+            track.scrollLeft +
+            (cardRect.left -
+              trackRect.left);
+
+          track.scrollTo({
+            left: Math.min(
+              maxScroll,
+              Math.max(0, targetLeft)
+            ),
+            behavior:
+              reduceMotion
+                ? "auto"
+                : "smooth"
           });
         }
-      } else {
-        // Desktop/tablet
+      }
+
+
+      /* -------------------------------------------------------
+         DESKTOP / TABLET
+      ------------------------------------------------------- */
+
+      else {
         const cardWidth =
           cards[0].getBoundingClientRect().width;
 
@@ -412,43 +440,78 @@ document.addEventListener("DOMContentLoaded", () => {
           `translate3d(-${distance}px,0,0)`;
       }
 
+
+      /* -------------------------------------------------------
+         PROGRESS
+      ------------------------------------------------------- */
+
       if (progress) {
         const total =
-          Math.max(1, cards.length - visible);
+          Math.max(
+            1,
+            cards.length - visible
+          );
 
         const percent =
-          ((index + 1) / (total + 1)) * 100;
+          ((index + 1) /
+            (total + 1)) *
+          100;
 
         progress.style.width =
-          `${Math.min(100, percent)}%`;
+          `${Math.min(
+            100,
+            percent
+          )}%`;
       }
     }
+
+
+    /* ---------------------------------------------------------
+       NEXT PRODUCT
+    --------------------------------------------------------- */
 
     function nextSlide() {
-      const visible = getVisible();
+      const visible =
+        getVisible();
 
-      if (index >= cards.length - visible) {
-        moveTo(0);
-      } else {
-        moveTo(index + 1);
-      }
+      const targetIndex =
+        index >= cards.length - visible
+          ? 0
+          : index + 1;
+
+      moveTo(
+        targetIndex,
+        true
+      );
     }
+
+
+    /* ---------------------------------------------------------
+       PREVIOUS PRODUCT
+    --------------------------------------------------------- */
 
     function previousSlide() {
-      const visible = getVisible();
+      const visible =
+        getVisible();
 
-      if (index <= 0) {
-        moveTo(
-          Math.max(0, cards.length - visible)
-        );
-      } else {
-        moveTo(index - 1);
-      }
+      const targetIndex =
+        index <= 0
+          ? Math.max(
+              0,
+              cards.length - visible
+            )
+          : index - 1;
+
+      moveTo(
+        targetIndex,
+        true
+      );
     }
 
-    /* =======================================================
-       MANUAL NEXT
-    ======================================================= */
+
+    /* ---------------------------------------------------------
+       MANUAL NEXT BUTTON
+    --------------------------------------------------------- */
 
     if (next) {
       next.addEventListener(
@@ -459,9 +522,10 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     }
 
-    /* =======================================================
-       MANUAL PREVIOUS
-    ======================================================= */
+
+    /* ---------------------------------------------------------
+       MANUAL PREVIOUS BUTTON
+    --------------------------------------------------------- */
 
     if (prev) {
       prev.addEventListener(
@@ -472,8 +536,18 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     }
 
-    // Initial state — manual slider only
-    moveTo(0);
+
+    /* ---------------------------------------------------------
+       INITIAL STATE
+       
+       IMPORTANT:
+       false = DON'T scroll the page.
+    --------------------------------------------------------- */
+
+    moveTo(
+      0,
+      false
+    );
 
 
     /* =======================================================
@@ -501,12 +575,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const distance =
           endX - startX;
 
-        if (Math.abs(distance) >= 45) {
-          if (distance < 0) {
-            nextSlide();
-          } else {
-            previousSlide();
-          }
+        if (
+          Math.abs(distance) <
+          45
+        ) {
+          return;
+        }
+
+        if (distance < 0) {
+          nextSlide();
+        } else {
+          previousSlide();
         }
       },
       { passive: true }
@@ -514,13 +593,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =======================================================
-       RESIZE RE-CALCULATION
+       RESIZE
+       
+       IMPORTANT:
+       Never scroll page on resize.
     ======================================================= */
 
     window.addEventListener(
       "resize",
       () => {
-        moveTo(index);
+        moveTo(
+          index,
+          false
+        );
       },
       { passive: true }
     );
@@ -566,7 +651,10 @@ document.addEventListener("DOMContentLoaded", () => {
       currentStep =
         Math.max(
           0,
-          Math.min(step, steps.length - 1)
+          Math.min(
+            step,
+            steps.length - 1
+          )
         );
 
       steps.forEach((item, i) => {
@@ -578,18 +666,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (stepCounter) {
         stepCounter.textContent =
-          `${String(currentStep + 1).padStart(2, "0")} / ${String(steps.length).padStart(2, "0")}`;
+          `${String(
+            currentStep + 1
+          ).padStart(
+            2,
+            "0"
+          )} / ${String(
+            steps.length
+          ).padStart(
+            2,
+            "0"
+          )}`;
       }
 
       if (progress) {
         progress.style.width =
-          `${((currentStep + 1) / steps.length) * 100}%`;
+          `${(
+            (currentStep + 1) /
+            steps.length
+          ) * 100}%`;
       }
     }
 
     function getRecommendation() {
       const values =
-        choices.map((item) => item || "");
+        choices.map(
+          (item) => item || ""
+        );
 
       let title =
         "Signature Stone";
@@ -606,7 +709,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         description =
           "A stronger, more expressive stone direction suits a project where material becomes part of the identity.";
-      } else if (
+      }
+
+      else if (
         values.includes("Elegant") ||
         values.includes("Minimal")
       ) {
@@ -615,7 +720,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         description =
           "A clean and elegant stone direction can create a restrained, sophisticated architectural feel.";
-      } else if (
+      }
+
+      else if (
         values.includes("Natural") ||
         values.includes("Facade")
       ) {
@@ -640,25 +747,33 @@ document.addEventListener("DOMContentLoaded", () => {
             Number(
               button
                 .closest(".finder-step")
-                ?.dataset.step || 1
+                ?.dataset.step ||
+              1
             );
 
           const value =
             button.dataset.value ||
             button.textContent.trim();
 
-          choices[step - 1] = value;
+          choices[step - 1] =
+            value;
 
-          // Visual selection
-          $$(".finder-options button", button.closest(".finder-step"))
-            .forEach((item) => {
-              item.classList.remove("selected");
-            });
+          $$(".finder-options button",
+            button.closest(".finder-step")
+          ).forEach((item) => {
+            item.classList.remove(
+              "selected"
+            );
+          });
 
-          button.classList.add("selected");
+          button.classList.add(
+            "selected"
+          );
 
-          // 3rd step -> result
-          if (step >= steps.length) {
+          if (
+            step >=
+            steps.length
+          ) {
             const recommendation =
               getRecommendation();
 
@@ -673,19 +788,25 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             steps.forEach((item) => {
-              item.classList.remove("active");
+              item.classList.remove(
+                "active"
+              );
             });
 
             if (result) {
-              result.classList.add("show");
+              result.classList.add(
+                "show"
+              );
             }
 
             if (stepCounter) {
-              stepCounter.textContent = "RESULT";
+              stepCounter.textContent =
+                "RESULT";
             }
 
             if (progress) {
-              progress.style.width = "100%";
+              progress.style.width =
+                "100%";
             }
 
             return;
@@ -710,24 +831,36 @@ document.addEventListener("DOMContentLoaded", () => {
     $$(".application-card");
 
   applicationCards.forEach((card) => {
-    card.addEventListener("click", () => {
-      applicationCards.forEach((item) => {
-        item.classList.remove("active");
-      });
+    card.addEventListener(
+      "click",
+      () => {
+        applicationCards.forEach(
+          (item) => {
+            item.classList.remove(
+              "active"
+            );
+          }
+        );
 
-      card.classList.add("active");
+        card.classList.add(
+          "active"
+        );
 
-      const application =
-        card.dataset.application;
+        const application =
+          card.dataset.application;
 
-      const discoverSection =
-        $("#discover");
+        const discoverSection =
+          $("#discover");
 
-      if (discoverSection && application) {
-        discoverSection.dataset.selectedApplication =
-          application;
+        if (
+          discoverSection &&
+          application
+        ) {
+          discoverSection.dataset.selectedApplication =
+            application;
+        }
       }
-    });
+    );
   });
 
 
@@ -738,25 +871,38 @@ document.addEventListener("DOMContentLoaded", () => {
   const whyItems =
     $$(".why-item");
 
-  if ("IntersectionObserver" in window) {
+  if (
+    "IntersectionObserver" in
+    window
+  ) {
     const whyObserver =
       new IntersectionObserver(
         (entries, observer) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
+          entries.forEach(
+            (entry) => {
+              if (
+                !entry.isIntersecting
+              ) {
+                return;
+              }
 
-            whyItems.forEach((item, i) => {
-              item.style.transitionDelay =
-                `${i * 70}ms`;
+              whyItems.forEach(
+                (item, i) => {
+                  item.style.transitionDelay =
+                    `${i * 70}ms`;
 
-              item.classList.add(
-                "visible",
-                "revealed"
+                  item.classList.add(
+                    "visible",
+                    "revealed"
+                  );
+                }
               );
-            });
 
-            observer.unobserve(entry.target);
-          });
+              observer.unobserve(
+                entry.target
+              );
+            }
+          );
         },
         {
           threshold: 0.15
@@ -767,7 +913,9 @@ document.addEventListener("DOMContentLoaded", () => {
       $("#why-infinity");
 
     if (whySection) {
-      whyObserver.observe(whySection);
+      whyObserver.observe(
+        whySection
+      );
     }
   }
 
@@ -779,37 +927,57 @@ document.addEventListener("DOMContentLoaded", () => {
   const revealItems =
     $$(".reveal");
 
-  if ("IntersectionObserver" in window) {
+  if (
+    "IntersectionObserver" in
+    window
+  ) {
     const revealObserver =
       new IntersectionObserver(
         (entries, observer) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
+          entries.forEach(
+            (entry) => {
+              if (
+                !entry.isIntersecting
+              ) {
+                return;
+              }
 
-            entry.target.classList.add(
-              "visible",
-              "revealed"
-            );
+              entry.target.classList.add(
+                "visible",
+                "revealed"
+              );
 
-            observer.unobserve(entry.target);
-          });
+              observer.unobserve(
+                entry.target
+              );
+            }
+          );
         },
         {
           threshold: 0.08,
-          rootMargin: "0px 0px -40px 0px"
+          rootMargin:
+            "0px 0px -40px 0px"
         }
       );
 
-    revealItems.forEach((item) => {
-      revealObserver.observe(item);
-    });
-  } else {
-    revealItems.forEach((item) => {
-      item.classList.add(
-        "visible",
-        "revealed"
-      );
-    });
+    revealItems.forEach(
+      (item) => {
+        revealObserver.observe(
+          item
+        );
+      }
+    );
+  }
+
+  else {
+    revealItems.forEach(
+      (item) => {
+        item.classList.add(
+          "visible",
+          "revealed"
+        );
+      }
+    );
   }
 
 
@@ -827,10 +995,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const answer =
       $(".faq-answer", item);
 
-    if (!question || !answer) return;
+    if (
+      !question ||
+      !answer
+    ) {
+      return;
+    }
 
-    // Current HTML starts with first FAQ active.
-    if (item.classList.contains("active")) {
+    if (
+      item.classList.contains(
+        "active"
+      )
+    ) {
       answer.style.maxHeight =
         `${answer.scrollHeight}px`;
     }
@@ -839,21 +1015,30 @@ document.addEventListener("DOMContentLoaded", () => {
       "click",
       () => {
         const wasActive =
-          item.classList.contains("active");
+          item.classList.contains(
+            "active"
+          );
 
-        faqItems.forEach((other) => {
-          other.classList.remove("active");
+        faqItems.forEach(
+          (other) => {
+            other.classList.remove(
+              "active"
+            );
 
-          const otherAnswer =
-            $(".faq-answer", other);
+            const otherAnswer =
+              $(".faq-answer", other);
 
-          if (otherAnswer) {
-            otherAnswer.style.maxHeight = null;
+            if (otherAnswer) {
+              otherAnswer.style.maxHeight =
+                null;
+            }
           }
-        });
+        );
 
         if (!wasActive) {
-          item.classList.add("active");
+          item.classList.add(
+            "active"
+          );
 
           answer.style.maxHeight =
             `${answer.scrollHeight}px`;
@@ -887,57 +1072,96 @@ document.addEventListener("DOMContentLoaded", () => {
     let reviewTimer = null;
 
     function renderReview(index) {
-      if (!slides.length) return;
+      if (!slides.length) {
+        return;
+      }
 
       reviewIndex =
-        (index + slides.length) %
+        (
+          index +
+          slides.length
+        ) %
         slides.length;
 
-      slides.forEach((slide, i) => {
-        slide.classList.toggle(
-          "active",
-          i === reviewIndex
-        );
-      });
+      slides.forEach(
+        (slide, i) => {
+          slide.classList.toggle(
+            "active",
+            i === reviewIndex
+          );
+        }
+      );
 
-      dots.forEach((dot, i) => {
-        dot.classList.toggle(
-          "active",
-          i === reviewIndex
-        );
-      });
+      dots.forEach(
+        (dot, i) => {
+          dot.classList.toggle(
+            "active",
+            i === reviewIndex
+          );
+        }
+      );
     }
 
     function startReviewAuto() {
-      if (reduceMotion) return;
+      if (reduceMotion) {
+        return;
+      }
 
-      clearInterval(reviewTimer);
+      clearInterval(
+        reviewTimer
+      );
 
-      reviewTimer = setInterval(() => {
-        renderReview(reviewIndex + 1);
-      }, 6500);
+      reviewTimer =
+        setInterval(
+          () => {
+            renderReview(
+              reviewIndex + 1
+            );
+          },
+          6500
+        );
     }
 
     if (prev) {
-      prev.addEventListener("click", () => {
-        renderReview(reviewIndex - 1);
-        startReviewAuto();
-      });
+      prev.addEventListener(
+        "click",
+        () => {
+          renderReview(
+            reviewIndex - 1
+          );
+
+          startReviewAuto();
+        }
+      );
     }
 
     if (next) {
-      next.addEventListener("click", () => {
-        renderReview(reviewIndex + 1);
-        startReviewAuto();
-      });
+      next.addEventListener(
+        "click",
+        () => {
+          renderReview(
+            reviewIndex + 1
+          );
+
+          startReviewAuto();
+        }
+      );
     }
 
-    dots.forEach((dot, index) => {
-      dot.addEventListener("click", () => {
-        renderReview(index);
-        startReviewAuto();
-      });
-    });
+    dots.forEach(
+      (dot, index) => {
+        dot.addEventListener(
+          "click",
+          () => {
+            renderReview(
+              index
+            );
+
+            startReviewAuto();
+          }
+        );
+      }
+    );
 
     renderReview(0);
     startReviewAuto();
@@ -969,7 +1193,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const distance =
           endX - startX;
 
-        if (Math.abs(distance) < 45) {
+        if (
+          Math.abs(distance) <
+          45
+        ) {
           return;
         }
 
@@ -1007,9 +1234,13 @@ document.addEventListener("DOMContentLoaded", () => {
     $$(".product-open");
 
   function closeProductModal() {
-    if (!modal) return;
+    if (!modal) {
+      return;
+    }
 
-    modal.classList.remove("open");
+    modal.classList.remove(
+      "open"
+    );
 
     modal.setAttribute(
       "aria-hidden",
@@ -1021,66 +1252,93 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
-  productOpenButtons.forEach((button) => {
-    button.addEventListener(
-      "click",
-      () => {
-        const card =
-          button.closest(".product-card");
+  productOpenButtons.forEach(
+    (button) => {
+      button.addEventListener(
+        "click",
+        () => {
+          const card =
+            button.closest(
+              ".product-card"
+            );
 
-        if (!card || !modal) return;
+          if (
+            !card ||
+            !modal
+          ) {
+            return;
+          }
 
-        const image =
-          $(".product-image img", card);
+          const image =
+            $(".product-image img", card);
 
-        const name =
-          $(".product-info h4", card);
+          const name =
+            $(".product-info h4", card);
 
-        const finish =
-          $(".product-info p", card);
+          const finish =
+            $(".product-info p", card);
 
-        const number =
-          $(".product-image > span", card);
+          const number =
+            $(".product-image > span", card);
 
-        if (modalImage && image) {
-          modalImage.src =
-            image.currentSrc ||
-            image.src;
+          if (
+            modalImage &&
+            image
+          ) {
+            modalImage.src =
+              image.currentSrc ||
+              image.src;
 
-          modalImage.alt =
-            image.alt || "Granite";
+            modalImage.alt =
+              image.alt ||
+              "Granite";
+          }
+
+          if (
+            modalName &&
+            name
+          ) {
+            modalName.textContent =
+              name.textContent;
+          }
+
+          if (
+            modalFinish &&
+            finish
+          ) {
+            modalFinish.textContent =
+              finish.textContent;
+          }
+
+          if (
+            modalIndex &&
+            number
+          ) {
+            modalIndex.textContent =
+              number.textContent;
+          }
+
+          modal.classList.add(
+            "open"
+          );
+
+          modal.setAttribute(
+            "aria-hidden",
+            "false"
+          );
+
+          document.body.classList.add(
+            "modal-open"
+          );
         }
+      );
+    }
+  );
 
-        if (modalName && name) {
-          modalName.textContent =
-            name.textContent;
-        }
-
-        if (modalFinish && finish) {
-          modalFinish.textContent =
-            finish.textContent;
-        }
-
-        if (modalIndex && number) {
-          modalIndex.textContent =
-            number.textContent;
-        }
-
-        modal.classList.add("open");
-
-        modal.setAttribute(
-          "aria-hidden",
-          "false"
-        );
-
-        document.body.classList.add(
-          "modal-open"
-        );
-      }
-    );
-  });
-
-  $$("[data-close-modal]", modal).forEach(
+  $$(
+    "[data-close-modal]",
+    modal
+  ).forEach(
     (element) => {
       element.addEventListener(
         "click",
@@ -1095,7 +1353,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener(
     "keydown",
     (event) => {
-      if (event.key === "Escape") {
+      if (
+        event.key ===
+        "Escape"
+      ) {
         closeProductModal();
       }
     }
@@ -1115,14 +1376,17 @@ document.addEventListener("DOMContentLoaded", () => {
       (event) => {
         event.preventDefault();
 
-        const getValue = (name) => {
-          const field =
-            enquiryForm.elements[name];
+        const getValue =
+          (name) => {
+            const field =
+              enquiryForm.elements[
+                name
+              ];
 
-          return field
-            ? field.value.trim()
-            : "";
-        };
+            return field
+              ? field.value.trim()
+              : "";
+          };
 
         const name =
           getValue("name");
@@ -1137,14 +1401,15 @@ document.addEventListener("DOMContentLoaded", () => {
           getValue("company");
 
         const requirement =
-          getValue("requirement");
+          getValue(
+            "requirement"
+          );
 
         const product =
           getValue("product");
 
         const message =
           getValue("message");
-
 
         const whatsappText =
 `Hello Infinity Granites,
@@ -1159,9 +1424,6 @@ Requirement: ${requirement}
 Granite / Product: ${product}
 Message: ${message}`;
 
-        /*
-          Infinity Granites phone from website details
-        */
         const whatsappNumber =
           "919462761833";
 
@@ -1188,22 +1450,39 @@ Message: ${message}`;
     $("#scrollProgress");
 
   function updateScrollProgress() {
-    if (!scrollProgress) return;
+    if (!scrollProgress) {
+      return;
+    }
 
     const documentHeight =
-      document.documentElement.scrollHeight -
+      document.documentElement
+        .scrollHeight -
       window.innerHeight;
 
-    if (documentHeight <= 0) {
-      scrollProgress.style.width = "0%";
+    if (
+      documentHeight <=
+      0
+    ) {
+      scrollProgress.style.width =
+        "0%";
+
       return;
     }
 
     const percent =
-      (window.scrollY / documentHeight) * 100;
+      (
+        window.scrollY /
+        documentHeight
+      ) * 100;
 
     scrollProgress.style.width =
-      `${Math.min(100, Math.max(0, percent))}%`;
+      `${Math.min(
+        100,
+        Math.max(
+          0,
+          percent
+        )
+      )}%`;
   }
 
   window.addEventListener(
@@ -1226,36 +1505,42 @@ Message: ${message}`;
     const interactive =
       $$(".product-card, .application-card, .why-item, .circle-link");
 
-    interactive.forEach((item) => {
-      item.addEventListener(
-        "mousemove",
-        (event) => {
-          const rect =
-            item.getBoundingClientRect();
+    interactive.forEach(
+      (item) => {
+        item.addEventListener(
+          "mousemove",
+          (event) => {
+            const rect =
+              item.getBoundingClientRect();
 
-          const x =
-            ((event.clientX - rect.left) /
-              rect.width) *
-            100;
+            const x =
+              (
+                (event.clientX -
+                  rect.left) /
+                rect.width
+              ) * 100;
 
-          const y =
-            ((event.clientY - rect.top) /
-              rect.height) *
-            100;
+            const y =
+              (
+                (event.clientY -
+                  rect.top) /
+                rect.height
+              ) * 100;
 
-          item.style.setProperty(
-            "--mouse-x",
-            `${x}%`
-          );
+            item.style.setProperty(
+              "--mouse-x",
+              `${x}%`
+            );
 
-          item.style.setProperty(
-            "--mouse-y",
-            `${y}%`
-          );
-        },
-        { passive: true }
-      );
-    });
+            item.style.setProperty(
+              "--mouse-y",
+              `${y}%`
+            );
+          },
+          { passive: true }
+        );
+      }
+    );
   }
 
 
@@ -1277,27 +1562,32 @@ Message: ${message}`;
       const viewport =
         window.innerHeight;
 
-      parallaxImages.forEach((image) => {
-        const rect =
-          image.getBoundingClientRect();
+      parallaxImages.forEach(
+        (image) => {
+          const rect =
+            image.getBoundingClientRect();
 
-        if (
-          rect.bottom < 0 ||
-          rect.top > viewport
-        ) {
-          return;
+          if (
+            rect.bottom < 0 ||
+            rect.top > viewport
+          ) {
+            return;
+          }
+
+          const center =
+            rect.top +
+            rect.height / 2;
+
+          const delta =
+            (
+              viewport / 2 -
+              center
+            ) * 0.025;
+
+          image.style.transform =
+            `translate3d(0, ${delta}px, 0)`;
         }
-
-        const center =
-          rect.top +
-          rect.height / 2;
-
-        const delta =
-          (viewport / 2 - center) * 0.025;
-
-        image.style.transform =
-          `translate3d(0, ${delta}px, 0)`;
-      });
+      );
 
       rafID = null;
     }
@@ -1305,7 +1595,11 @@ Message: ${message}`;
     window.addEventListener(
       "scroll",
       () => {
-        if (rafID !== null) return;
+        if (
+          rafID !== null
+        ) {
+          return;
+        }
 
         rafID =
           requestAnimationFrame(
@@ -1325,35 +1619,38 @@ Message: ${message}`;
     !reduceMotion &&
     window.innerWidth > 1100
   ) {
-    $$(".magnetic").forEach((button) => {
-      button.addEventListener(
-        "mousemove",
-        (event) => {
-          const rect =
-            button.getBoundingClientRect();
+    $$(".magnetic").forEach(
+      (button) => {
+        button.addEventListener(
+          "mousemove",
+          (event) => {
+            const rect =
+              button.getBoundingClientRect();
 
-          const x =
-            event.clientX -
-            rect.left -
-            rect.width / 2;
+            const x =
+              event.clientX -
+              rect.left -
+              rect.width / 2;
 
-          const y =
-            event.clientY -
-            rect.top -
-            rect.height / 2;
+            const y =
+              event.clientY -
+              rect.top -
+              rect.height / 2;
 
-          button.style.transform =
-            `translate(${x * 0.08}px, ${y * 0.08}px)`;
-        }
-      );
+            button.style.transform =
+              `translate(${x * 0.08}px, ${y * 0.08}px)`;
+          }
+        );
 
-      button.addEventListener(
-        "mouseleave",
-        () => {
-          button.style.transform = "";
-        }
-      );
-    });
+        button.addEventListener(
+          "mouseleave",
+          () => {
+            button.style.transform =
+              "";
+          }
+        );
+      }
+    );
   }
 
 
@@ -1369,26 +1666,35 @@ Message: ${message}`;
 
   if (
     sections.length &&
-    "IntersectionObserver" in window
+    "IntersectionObserver" in
+    window
   ) {
     const navObserver =
       new IntersectionObserver(
         (entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) {
-              return;
-            }
+          entries.forEach(
+            (entry) => {
+              if (
+                !entry.isIntersecting
+              ) {
+                return;
+              }
 
-            const id =
-              `#${entry.target.id}`;
+              const id =
+                `#${entry.target.id}`;
 
-            navLinks.forEach((link) => {
-              link.classList.toggle(
-                "active",
-                link.getAttribute("href") === id
+              navLinks.forEach(
+                (link) => {
+                  link.classList.toggle(
+                    "active",
+                    link.getAttribute(
+                      "href"
+                    ) === id
+                  );
+                }
               );
-            });
-          });
+            }
+          );
         },
         {
           threshold: 0.2,
@@ -1397,9 +1703,13 @@ Message: ${message}`;
         }
       );
 
-    sections.forEach((section) => {
-      navObserver.observe(section);
-    });
+    sections.forEach(
+      (section) => {
+        navObserver.observe(
+          section
+        );
+      }
+    );
   }
 
 
@@ -1412,32 +1722,45 @@ Message: ${message}`;
   window.addEventListener(
     "resize",
     () => {
-      clearTimeout(resizeTimer);
+      clearTimeout(
+        resizeTimer
+      );
 
-      resizeTimer = setTimeout(() => {
-        // Close menu if switching to desktop
-        if (
-          window.innerWidth > 900 &&
-          mobileMenu?.classList.contains("open")
-        ) {
-          closeMobileMenu();
-        }
+      resizeTimer =
+        setTimeout(
+          () => {
+            if (
+              window.innerWidth >
+                900 &&
+              mobileMenu?.classList.contains(
+                "open"
+              )
+            ) {
+              closeMobileMenu();
+            }
 
-        // Fix FAQ opened heights
-        faqItems.forEach((item) => {
-          if (!item.classList.contains("active")) {
-            return;
-          }
+            faqItems.forEach(
+              (item) => {
+                if (
+                  !item.classList.contains(
+                    "active"
+                  )
+                ) {
+                  return;
+                }
 
-          const answer =
-            $(".faq-answer", item);
+                const answer =
+                  $(".faq-answer", item);
 
-          if (answer) {
-            answer.style.maxHeight =
-              `${answer.scrollHeight}px`;
-          }
-        });
-      }, 120);
+                if (answer) {
+                  answer.style.maxHeight =
+                    `${answer.scrollHeight}px`;
+                }
+              }
+            );
+          },
+          120
+        );
     },
     { passive: true }
   );
@@ -1458,15 +1781,15 @@ Message: ${message}`;
 
   /* =========================================================
      26. TAB VISIBILITY
-     
-     Pause only timer-based effects.
   ========================================================= */
 
   document.addEventListener(
     "visibilitychange",
     () => {
       if (document.hidden) {
-        clearInterval(heroTimer);
+        clearInterval(
+          heroTimer
+        );
       } else {
         startHeroSlider();
       }
@@ -1476,26 +1799,33 @@ Message: ${message}`;
 
   /* =========================================================
      27. REMOVE OLD LAZY-LOADER ARTIFACTS
-     
-     If old code left classes/attributes,
-     clear them here.
   ========================================================= */
 
   $$(
     '[loading="lazy"], [data-src], [data-srcset]'
-  ).forEach((element) => {
-    if (element.tagName === "IMG") {
-      element.loading = "eager";
-      element.removeAttribute("data-src");
-      element.removeAttribute("data-srcset");
+  ).forEach(
+    (element) => {
+      if (
+        element.tagName ===
+        "IMG"
+      ) {
+        element.loading =
+          "eager";
+
+        element.removeAttribute(
+          "data-src"
+        );
+
+        element.removeAttribute(
+          "data-srcset"
+        );
+      }
     }
-  });
+  );
 
 
   /* =========================================================
      28. INITIAL IMAGE REQUEST
-     
-     Force browser to request all known images immediately.
   ========================================================= */
 
   const knownImages = [
@@ -1543,23 +1873,22 @@ Message: ${message}`;
     "project4.jpeg"
   ];
 
-  /*
-     IMPORTANT:
-     We create Image objects, but NEVER wait for them.
-     They begin downloading immediately.
-  */
+  knownImages.forEach(
+    (src, index) => {
+      const img =
+        new Image();
 
-  knownImages.forEach((src, index) => {
-    const img = new Image();
+      img.decoding =
+        "async";
 
-    img.decoding = "async";
+      if (index < 6) {
+        img.fetchPriority =
+          "high";
+      }
 
-    if (index < 6) {
-      img.fetchPriority = "high";
+      img.src = src;
     }
-
-    img.src = src;
-  });
+  );
 
 
   /* =========================================================
