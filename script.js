@@ -1,1296 +1,1488 @@
 /* =========================================================
-   INFINITY GRANITES — PREMIUM INTERACTIONS
-   Vanilla JS | Fast | Mobile Friendly
+   INFINITY GRANITES
+   FAST + PREMIUM + NON-BLOCKING JAVASCRIPT
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
   "use strict";
 
   /* =========================================================
-     HELPERS
+     BASIC HELPERS
   ========================================================= */
 
   const $ = (selector, parent = document) =>
     parent.querySelector(selector);
 
   const $$ = (selector, parent = document) =>
-    [...parent.querySelectorAll(selector)];
+    Array.from(parent.querySelectorAll(selector));
 
-  const prefersReducedMotion = window.matchMedia(
+  const reduceMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
 
   /* =========================================================
-     MOBILE NAVIGATION
-  ========================================================= */
-
-  const menuToggle = $(
-    ".menu-toggle, .nav-toggle, .mobile-menu-toggle, [data-menu-toggle]"
-  );
-
-  const navMenu = $(
-    ".nav-menu, .nav-links, .navigation, [data-nav]"
-  );
-
-  if (menuToggle && navMenu) {
-    menuToggle.addEventListener("click", () => {
-      menuToggle.classList.toggle("active");
-      navMenu.classList.toggle("active");
-      document.body.classList.toggle("menu-open");
-    });
-
-    $$(".nav-menu a, .nav-links a, .navigation a", navMenu).forEach((link) => {
-      link.addEventListener("click", () => {
-        menuToggle.classList.remove("active");
-        navMenu.classList.remove("active");
-        document.body.classList.remove("menu-open");
-      });
-    });
-  }
-
-
-  /* =========================================================
-     SMOOTH SCROLL
-  ========================================================= */
-
-  $$('a[href^="#"]').forEach((link) => {
-    link.addEventListener("click", (e) => {
-      const targetID = link.getAttribute("href");
-
-      if (!targetID || targetID === "#") return;
-
-      const target = $(targetID);
-
-      if (target) {
-        e.preventDefault();
-
-        target.scrollIntoView({
-          behavior: prefersReducedMotion ? "auto" : "smooth",
-          block: "start"
-        });
-      }
-    });
-  });
-
-
-  /* =========================================================
-     NAVBAR SCROLL EFFECT
-  ========================================================= */
-
-  const header = $(
-    "header, .site-header, .navbar, .main-header"
-  );
-
-  const updateHeader = () => {
-    if (!header) return;
-
-    header.classList.toggle("scrolled", window.scrollY > 40);
-  };
-
-  updateHeader();
-  window.addEventListener("scroll", updateHeader, { passive: true });
-
-
-  /* =========================================================
-     HERO SLIDER
-     Supports:
-     .hero-slide
-     .hero-next
-     .hero-prev
-     .hero-dot
-  ========================================================= */
-
-  const heroSlides = $$(".hero-slide");
-  const heroNext = $(".hero-next, [data-hero-next]");
-  const heroPrev = $(".hero-prev, [data-hero-prev]");
-  const heroDots = $$(".hero-dot, [data-hero-dot]");
-
-  let heroIndex = 0;
-  let heroTimer = null;
-
-  function showHero(index) {
-    if (!heroSlides.length) return;
-
-    heroIndex =
-      (index + heroSlides.length) % heroSlides.length;
-
-    heroSlides.forEach((slide, i) => {
-      slide.classList.toggle("active", i === heroIndex);
-      slide.setAttribute(
-        "aria-hidden",
-        i === heroIndex ? "false" : "true"
-      );
-    });
-
-    heroDots.forEach((dot, i) => {
-      dot.classList.toggle("active", i === heroIndex);
-    });
-  }
-
-  function startHeroAuto() {
-    if (prefersReducedMotion || heroSlides.length < 2) return;
-
-    clearInterval(heroTimer);
-
-    heroTimer = setInterval(() => {
-      showHero(heroIndex + 1);
-    }, 5500);
-  }
-
-  if (heroSlides.length) {
-    showHero(0);
-    startHeroAuto();
-  }
-
-  if (heroNext) {
-    heroNext.addEventListener("click", () => {
-      showHero(heroIndex + 1);
-      startHeroAuto();
-    });
-  }
-
-  if (heroPrev) {
-    heroPrev.addEventListener("click", () => {
-      showHero(heroIndex - 1);
-      startHeroAuto();
-    });
-  }
-
-  heroDots.forEach((dot, index) => {
-    dot.addEventListener("click", () => {
-      showHero(index);
-      startHeroAuto();
-    });
-  });
-
-
-  /* =========================================================
-     HERO TOUCH SWIPE
-  ========================================================= */
-
-  const hero = $(".hero, .hero-section");
-
-  if (hero && heroSlides.length > 1) {
-    let startX = 0;
-    let endX = 0;
-
-    hero.addEventListener(
-      "touchstart",
-      (e) => {
-        startX = e.changedTouches[0].screenX;
-      },
-      { passive: true }
-    );
-
-    hero.addEventListener(
-      "touchend",
-      (e) => {
-        endX = e.changedTouches[0].screenX;
-
-        const distance = endX - startX;
-
-        if (Math.abs(distance) < 50) return;
-
-        if (distance < 0) {
-          showHero(heroIndex + 1);
-        } else {
-          showHero(heroIndex - 1);
-        }
-
-        startHeroAuto();
-      },
-      { passive: true }
-    );
-  }
-
-
-  /* =========================================================
-     PRODUCT CATEGORY SLIDERS
+     1. FAST PRELOADER
      
-     Works with common structures:
-     
-     .product-slider
-       .product-track
-       .product-card
-       .slider-next
-       .slider-prev
-  ========================================================= */
-
-  const productSliders = $$(".product-slider, .products-slider, [data-slider]");
-
-  productSliders.forEach((slider) => {
-    const track = $(
-      ".product-track, .products-track, .slider-track",
-      slider
-    );
-
-    const cards = $$(
-      ".product-card, .product-item, .stone-card",
-      slider
-    );
-
-    const next = $(
-      ".slider-next, .product-next, [data-next]",
-      slider
-    );
-
-    const prev = $(
-      ".slider-prev, .product-prev, [data-prev]",
-      slider
-    );
-
-    const dots = $$(".slider-dot, .product-dot", slider);
-
-    if (!track || cards.length < 2) return;
-
-    let current = 0;
-
-    const getVisibleCards = () => {
-      if (window.innerWidth <= 600) return 1;
-      if (window.innerWidth <= 900) return 2;
-      return 3;
-    };
-
-    const moveSlider = (index) => {
-      const visible = getVisibleCards();
-
-      const maxIndex = Math.max(
-        0,
-        cards.length - visible
-      );
-
-      current = Math.max(
-        0,
-        Math.min(index, maxIndex)
-      );
-
-      const cardWidth =
-        cards[0].getBoundingClientRect().width;
-
-      const gap =
-        parseFloat(getComputedStyle(track).gap) || 0;
-
-      track.style.transform =
-        `translate3d(-${current * (cardWidth + gap)}px, 0, 0)`;
-
-      dots.forEach((dot, i) => {
-        dot.classList.toggle("active", i === current);
-      });
-    };
-
-    if (next) {
-      next.addEventListener("click", () => {
-        const visible = getVisibleCards();
-
-        if (current >= cards.length - visible) {
-          moveSlider(0);
-        } else {
-          moveSlider(current + 1);
-        }
-      });
-    }
-
-    if (prev) {
-      prev.addEventListener("click", () => {
-        if (current <= 0) {
-          moveSlider(cards.length - getVisibleCards());
-        } else {
-          moveSlider(current - 1);
-        }
-      });
-    }
-
-    dots.forEach((dot, i) => {
-      dot.addEventListener("click", () => {
-        moveSlider(i);
-      });
-    });
-
-    /* Touch Swipe */
-
-    let startX = 0;
-    let currentX = 0;
-
-    track.addEventListener(
-      "touchstart",
-      (e) => {
-        startX = e.changedTouches[0].clientX;
-      },
-      { passive: true }
-    );
-
-    track.addEventListener(
-      "touchend",
-      (e) => {
-        currentX = e.changedTouches[0].clientX;
-
-        const distance = currentX - startX;
-
-        if (Math.abs(distance) < 45) return;
-
-        if (distance < 0) {
-          const visible = getVisibleCards();
-
-          if (current >= cards.length - visible) {
-            moveSlider(0);
-          } else {
-            moveSlider(current + 1);
-          }
-        } else {
-          if (current <= 0) {
-            moveSlider(cards.length - getVisibleCards());
-          } else {
-            moveSlider(current - 1);
-          }
-        }
-      },
-      { passive: true }
-    );
-
-    /* Recalculate after resize */
-
-    window.addEventListener(
-      "resize",
-      () => {
-        moveSlider(current);
-      },
-      { passive: true }
-    );
-
-    moveSlider(0);
-  });
-
-
-  /* =========================================================
-     GENERIC AUTO SLIDERS
-  ========================================================= */
-
-  productSliders.forEach((slider) => {
-    const auto =
-      slider.dataset.autoplay !== "false";
-
-    if (!auto || prefersReducedMotion) return;
-
-    let interval = Number(
-      slider.dataset.interval || 5000
-    );
-
-    if (interval < 2500) interval = 2500;
-
-    const next = $(
-      ".slider-next, .product-next, [data-next]",
-      slider
-    );
-
-    if (!next) return;
-
-    let timer = setInterval(() => {
-      next.click();
-    }, interval);
-
-    slider.addEventListener("mouseenter", () => {
-      clearInterval(timer);
-    });
-
-    slider.addEventListener("mouseleave", () => {
-      timer = setInterval(() => {
-        next.click();
-      }, interval);
-    });
-
-    slider.addEventListener("touchstart", () => {
-      clearInterval(timer);
-    }, { passive: true });
-
-    slider.addEventListener("touchend", () => {
-      timer = setInterval(() => {
-        next.click();
-      }, interval);
-    }, { passive: true });
-  });
-
-
-  /* =========================================================
-     SCROLL REVEAL
-  ========================================================= */
-
-  const revealElements = $$(
-    ".reveal, .reveal-up, .reveal-left, .reveal-right, .fade-in, [data-reveal]"
-  );
-
-  if ("IntersectionObserver" in window && revealElements.length) {
-    const revealObserver = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-
-          entry.target.classList.add("revealed");
-
-          observer.unobserve(entry.target);
-        });
-      },
-      {
-        threshold: 0.12,
-        rootMargin: "0px 0px -50px 0px"
-      }
-    );
-
-    revealElements.forEach((element) => {
-      revealObserver.observe(element);
-    });
-  } else {
-    revealElements.forEach((element) => {
-      element.classList.add("revealed");
-    });
-  }
-
-
-  /* =========================================================
-     STAGGERED CARDS
-  ========================================================= */
-
-  const staggerGroups = $$(
-    ".product-grid, .category-grid, .services-grid, .projects-grid, .reviews-grid"
-  );
-
-  if ("IntersectionObserver" in window) {
-    const staggerObserver = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-
-          const children = [...entry.target.children];
-
-          children.forEach((child, index) => {
-            child.style.setProperty(
-              "--delay",
-              `${index * 90}ms`
-            );
-
-            child.classList.add("stagger-visible");
-          });
-
-          observer.unobserve(entry.target);
-        });
-      },
-      {
-        threshold: 0.1
-      }
-    );
-
-    staggerGroups.forEach((group) => {
-      staggerObserver.observe(group);
-    });
-  }
-
-
-  /* =========================================================
-     IMAGE LOAD EFFECT
-  ========================================================= */
-
-  $$("img").forEach((img) => {
-    if (img.complete) {
-      img.classList.add("loaded");
-    } else {
-      img.addEventListener(
-        "load",
-        () => img.classList.add("loaded"),
-        { once: true }
-      );
-    }
-
-    img.addEventListener(
-      "error",
-      () => img.classList.add("image-error"),
-      { once: true }
-    );
-  });
-
-
-  /* =========================================================
-     PREMIUM IMAGE TILT
-     Desktop only
-  ========================================================= */
-
-  if (!prefersReducedMotion) {
-    const tiltCards = $$(".tilt-card, .premium-card, .product-card");
-
-    tiltCards.forEach((card) => {
-      let raf = null;
-
-      card.addEventListener("mousemove", (e) => {
-        if (window.innerWidth < 1000) return;
-
-        if (raf) cancelAnimationFrame(raf);
-
-        raf = requestAnimationFrame(() => {
-          const rect = card.getBoundingClientRect();
-
-          const x =
-            (e.clientX - rect.left) / rect.width - 0.5;
-
-          const y =
-            (e.clientY - rect.top) / rect.height - 0.5;
-
-          card.style.setProperty(
-            "--rotate-x",
-            `${y * -5}deg`
-          );
-
-          card.style.setProperty(
-            "--rotate-y",
-            `${x * 5}deg`
-          );
-
-          card.classList.add("tilting");
-        });
-      });
-
-      card.addEventListener("mouseleave", () => {
-        card.classList.remove("tilting");
-
-        card.style.setProperty(
-          "--rotate-x",
-          "0deg"
-        );
-
-        card.style.setProperty(
-          "--rotate-y",
-          "0deg"
-        );
-      });
-    });
-  }
-
-
-  /* =========================================================
-     PARALLAX — LIGHTWEIGHT
-  ========================================================= */
-
-  const parallaxElements = $$(
-    ".parallax, [data-parallax]"
-  );
-
-  if (
-    !prefersReducedMotion &&
-    parallaxElements.length &&
-    window.innerWidth > 768
-  ) {
-    let ticking = false;
-
-    const updateParallax = () => {
-      const scrollY = window.scrollY;
-
-      parallaxElements.forEach((element) => {
-        const speed =
-          Number(element.dataset.speed || 0.08);
-
-        const rect =
-          element.getBoundingClientRect();
-
-        const center =
-          rect.top + rect.height / 2;
-
-        const offset =
-          (window.innerHeight / 2 - center) * speed;
-
-        element.style.transform =
-          `translate3d(0, ${offset}px, 0)`;
-      });
-
-      ticking = false;
-    };
-
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (!ticking) {
-          requestAnimationFrame(updateParallax);
-          ticking = true;
-        }
-      },
-      { passive: true }
-    );
-  }
-
-
-  /* =========================================================
-     COUNTERS
-  ========================================================= */
-
-  const counters = $$(
-    ".counter, [data-counter]"
-  );
-
-  function animateCounter(element) {
-    const target = Number(
-      element.dataset.counter ||
-      element.textContent.replace(/[^\d.]/g, "")
-    );
-
-    if (!Number.isFinite(target)) return;
-
-    const suffix =
-      element.dataset.suffix || "";
-
-    const prefix =
-      element.dataset.prefix || "";
-
-    const duration = 1600;
-    const startTime = performance.now();
-
-    function update(time) {
-      const progress = Math.min(
-        (time - startTime) / duration,
-        1
-      );
-
-      const eased =
-        1 - Math.pow(1 - progress, 3);
-
-      const value =
-        Math.floor(target * eased);
-
-      element.textContent =
-        `${prefix}${value.toLocaleString()}${suffix}`;
-
-      if (progress < 1) {
-        requestAnimationFrame(update);
-      }
-    }
-
-    requestAnimationFrame(update);
-  }
-
-  if ("IntersectionObserver" in window) {
-    const counterObserver = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-
-          animateCounter(entry.target);
-          observer.unobserve(entry.target);
-        });
-      },
-      {
-        threshold: 0.6
-      }
-    );
-
-    counters.forEach((counter) => {
-      counterObserver.observe(counter);
-    });
-  }
-
-
-  /* =========================================================
-     FAQ ACCORDION
-  ========================================================= */
-
-  const faqItems = $$(
-    ".faq-item, .faq-card, [data-faq]"
-  );
-
-  faqItems.forEach((item) => {
-    const question = $(
-      ".faq-question, .faq-title, [data-faq-question]",
-      item
-    );
-
-    const answer = $(
-      ".faq-answer, .faq-content, [data-faq-answer]",
-      item
-    );
-
-    if (!question || !answer) return;
-
-    question.addEventListener("click", () => {
-      const isOpen =
-        item.classList.contains("active");
-
-      /* Close other FAQs */
-
-      faqItems.forEach((other) => {
-        if (other === item) return;
-
-        other.classList.remove("active");
-
-        const otherAnswer = $(
-          ".faq-answer, .faq-content, [data-faq-answer]",
-          other
-        );
-
-        if (otherAnswer) {
-          otherAnswer.style.maxHeight = null;
-        }
-      });
-
-      if (isOpen) {
-        item.classList.remove("active");
-        answer.style.maxHeight = null;
-      } else {
-        item.classList.add("active");
-
-        answer.style.maxHeight =
-          `${answer.scrollHeight}px`;
-      }
-    });
-  });
-
-
-  /* =========================================================
-     STONE FINDER / APPLICATION TABS
-  ========================================================= */
-
-  const tabGroups = $$(".tab-group, [data-tabs]");
-
-  tabGroups.forEach((group) => {
-    const buttons = $$(
-      ".tab-btn, .tab-button, [data-tab]",
-      group
-    );
-
-    const contents = $$(
-      ".tab-content, [data-tab-content]",
-      group
-    );
-
-    if (!buttons.length || !contents.length) return;
-
-    buttons.forEach((button) => {
-      button.addEventListener("click", () => {
-        const target =
-          button.dataset.tab ||
-          button.getAttribute("data-target");
-
-        buttons.forEach((btn) =>
-          btn.classList.remove("active")
-        );
-
-        contents.forEach((content) =>
-          content.classList.remove("active")
-        );
-
-        button.classList.add("active");
-
-        const content =
-          $(`[data-tab-content="${target}"]`, group) ||
-          $(`#${target}`, group);
-
-        if (content) {
-          content.classList.add("active");
-        }
-      });
-    });
-  });
-
-
-  /* =========================================================
-     STONE COMPARISON
-  ========================================================= */
-
-  const comparisonButtons = $$(
-    ".comparison-option, [data-comparison]"
-  );
-
-  comparisonButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const group =
-        button.closest(
-          ".comparison-section, .comparison-wrapper, [data-comparison-group]"
-        );
-
-      if (!group) return;
-
-      $$(".comparison-option, [data-comparison]", group)
-        .forEach((item) => {
-          item.classList.remove("active");
-        });
-
-      button.classList.add("active");
-
-      const target =
-        button.dataset.comparison ||
-        button.dataset.target;
-
-      if (!target) return;
-
-      $$(
-        ".comparison-result, [data-comparison-result]",
-        group
-      ).forEach((result) => {
-        result.classList.toggle(
-          "active",
-          result.dataset.comparisonResult === target ||
-          result.id === target
-        );
-      });
-    });
-  });
-
-
-  /* =========================================================
-     REVIEW SLIDER
-  ========================================================= */
-
-  const reviewSections = $$(
-    ".reviews-slider, .testimonial-slider, [data-reviews]"
-  );
-
-  reviewSections.forEach((section) => {
-    const cards = $$(
-      ".review-card, .testimonial-card, .review-item",
-      section
-    );
-
-    const next = $(
-      ".review-next, .testimonial-next, [data-review-next]",
-      section
-    );
-
-    const prev = $(
-      ".review-prev, .testimonial-prev, [data-review-prev]",
-      section
-    );
-
-    if (cards.length < 2) return;
-
-    let index = 0;
-
-    const showReview = (newIndex) => {
-      index =
-        (newIndex + cards.length) % cards.length;
-
-      cards.forEach((card, i) => {
-        card.classList.toggle(
-          "active",
-          i === index
-        );
-      });
-    };
-
-    showReview(0);
-
-    if (next) {
-      next.addEventListener("click", () => {
-        showReview(index + 1);
-      });
-    }
-
-    if (prev) {
-      prev.addEventListener("click", () => {
-        showReview(index - 1);
-      });
-    }
-
-    if (!prefersReducedMotion) {
-      setInterval(() => {
-        showReview(index + 1);
-      }, 6500);
-    }
-  });
-
-
-  /* =========================================================
-     LAZY LOAD FALLBACK
-  ========================================================= */
-
-  const lazyImages = $$("img[data-src]");
-
-  if ("IntersectionObserver" in window) {
-    const imageObserver = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-
-          const img = entry.target;
-
-          if (img.dataset.src) {
-            img.src = img.dataset.src;
-          }
-
-          if (img.dataset.srcset) {
-            img.srcset = img.dataset.srcset;
-          }
-
-          img.removeAttribute("data-src");
-          img.removeAttribute("data-srcset");
-
-          observer.unobserve(img);
-        });
-      },
-      {
-        rootMargin: "250px"
-      }
-    );
-
-    lazyImages.forEach((img) =>
-      imageObserver.observe(img)
-    );
-  }
-
-
-  /* =========================================================
-     IMAGE LIGHTBOX
-     Product / project images
-  ========================================================= */
-
-  const lightboxTriggers = $$(
-    ".lightbox-trigger, [data-lightbox]"
-  );
-
-  const lightbox = $(
-    ".lightbox, #lightbox"
-  );
-
-  if (lightbox && lightboxTriggers.length) {
-    const lightboxImage = $(
-      ".lightbox-image, #lightbox-image",
-      lightbox
-    );
-
-    const closeLightbox = $(
-      ".lightbox-close, [data-lightbox-close]",
-      lightbox
-    );
-
-    lightboxTriggers.forEach((trigger) => {
-      trigger.addEventListener("click", () => {
-        const image =
-          trigger.dataset.lightbox ||
-          trigger.getAttribute("src");
-
-        if (!image || !lightboxImage) return;
-
-        lightboxImage.src = image;
-
-        lightbox.classList.add("active");
-        document.body.classList.add("lightbox-open");
-      });
-    });
-
-    const close = () => {
-      lightbox.classList.remove("active");
-      document.body.classList.remove("lightbox-open");
-    };
-
-    if (closeLightbox) {
-      closeLightbox.addEventListener("click", close);
-    }
-
-    lightbox.addEventListener("click", (e) => {
-      if (e.target === lightbox) {
-        close();
-      }
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        close();
-      }
-    });
-  }
-
-
-  /* =========================================================
-     CONTACT / WHATSAPP
-  ========================================================= */
-
-  const enquiryForms = $$(
-    "#enquiryForm, .enquiry-form, [data-enquiry-form]"
-  );
-
-  const whatsappNumber = "919XXXXXXXXX";
-
-  enquiryForms.forEach((form) => {
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const name =
-        $('[name="name"]', form)?.value.trim() || "";
-
-      const phone =
-        $('[name="phone"]', form)?.value.trim() || "";
-
-      const email =
-        $('[name="email"]', form)?.value.trim() || "";
-
-      const message =
-        $('[name="message"]', form)?.value.trim() || "";
-
-      const text =
-`Hello Infinity Granites,
-
-I would like to enquire about your granite products.
-
-Name: ${name}
-Phone: ${phone}
-Email: ${email}
-Requirement: ${message}`;
-
-      const whatsappURL =
-        `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
-
-      window.open(
-        whatsappURL,
-        "_blank",
-        "noopener,noreferrer"
-      );
-    });
-  });
-
-
-  /* =========================================================
-     COPY EMAIL
-  ========================================================= */
-
-  $$("[data-copy-email]").forEach((button) => {
-    button.addEventListener("click", async () => {
-      const email =
-        button.dataset.copyEmail ||
-        "granitesinfinity@gmail.com";
-
-      try {
-        await navigator.clipboard.writeText(email);
-
-        const original =
-          button.textContent;
-
-        button.textContent = "Copied";
-
-        setTimeout(() => {
-          button.textContent = original;
-        }, 1500);
-      } catch {
-        window.location.href =
-          `mailto:${email}`;
-      }
-    });
-  });
-
-
-  /* =========================================================
-     MOUSE GLOW
-     Premium desktop effect
-  ========================================================= */
-
-  const glowSections = $$(
-    ".glow-section, .premium-section, [data-glow]"
-  );
-
-  if (!prefersReducedMotion && window.innerWidth > 900) {
-    glowSections.forEach((section) => {
-      section.addEventListener("mousemove", (e) => {
-        const rect =
-          section.getBoundingClientRect();
-
-        section.style.setProperty(
-          "--mouse-x",
-          `${e.clientX - rect.left}px`
-        );
-
-        section.style.setProperty(
-          "--mouse-y",
-          `${e.clientY - rect.top}px`
-        );
-      });
-    });
-  }
-
-
-  /* =========================================================
-     MAGNETIC BUTTONS
-  ========================================================= */
-
-  if (!prefersReducedMotion && window.innerWidth > 1000) {
-    $$(".magnetic").forEach((button) => {
-      button.addEventListener("mousemove", (e) => {
-        const rect =
-          button.getBoundingClientRect();
-
-        const x =
-          e.clientX -
-          rect.left -
-          rect.width / 2;
-
-        const y =
-          e.clientY -
-          rect.top -
-          rect.height / 2;
-
-        button.style.transform =
-          `translate(${x * 0.12}px, ${y * 0.12}px)`;
-      });
-
-      button.addEventListener("mouseleave", () => {
-        button.style.transform = "";
-      });
-    });
-  }
-
-
-  /* =========================================================
-     ACTIVE SECTION NAVIGATION
-  ========================================================= */
-
-  const sections = $$(
-    "main section[id], section[id]"
-  );
-
-  const navLinks = $$(
-    '.nav-menu a[href^="#"], .nav-links a[href^="#"], header a[href^="#"]'
-  );
-
-  if ("IntersectionObserver" in window && sections.length) {
-    const sectionObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-
-          navLinks.forEach((link) => {
-            link.classList.toggle(
-              "active",
-              link.getAttribute("href") ===
-                `#${entry.target.id}`
-            );
-          });
-        });
-      },
-      {
-        threshold: 0.25,
-        rootMargin: "-20% 0px -60% 0px"
-      }
-    );
-
-    sections.forEach((section) =>
-      sectionObserver.observe(section)
-    );
-  }
-
-
-  /* =========================================================
-     BACK TO TOP
-  ========================================================= */
-
-  const backTop = $(
-    ".back-to-top, #backToTop, [data-back-top]"
-  );
-
-  if (backTop) {
-    const toggleBackTop = () => {
-      backTop.classList.toggle(
-        "visible",
-        window.scrollY > 600
-      );
-    };
-
-    toggleBackTop();
-
-    window.addEventListener(
-      "scroll",
-      toggleBackTop,
-      { passive: true }
-    );
-
-    backTop.addEventListener("click", () => {
-      window.scrollTo({
-        top: 0,
-        behavior: prefersReducedMotion
-          ? "auto"
-          : "smooth"
-      });
-    });
-  }
-
-
-  /* =========================================================
-     CURRENT YEAR
-  ========================================================= */
-
-  $$("[data-year], #year").forEach((element) => {
-    element.textContent =
-      new Date().getFullYear();
-  });
-
-
-  /* =========================================================
-     PRELOADER
+     IMPORTANT:
+     Never wait for window.load or all images.
+     Website opens immediately.
   ========================================================= */
 
   const preloader = $(
-    ".preloader, #preloader, [data-preloader]"
+    "#pageLoader, .page-loader, #preloader, .preloader"
   );
 
   if (preloader) {
-    window.addEventListener("load", () => {
+    // Allow first paint, then remove loader quickly.
+    requestAnimationFrame(() => {
       setTimeout(() => {
         preloader.classList.add("loaded");
 
         setTimeout(() => {
-          preloader.remove();
-        }, 700);
+          if (preloader && preloader.parentNode) {
+            preloader.remove();
+          }
+        }, 650);
       }, 250);
     });
   }
 
 
   /* =========================================================
-     3D CARD SHINE
+     2. FORCE EAGER IMAGE LOADING
+     
+     No lazy loading anywhere.
   ========================================================= */
 
-  if (!prefersReducedMotion && window.innerWidth > 900) {
-    $$(".shine-card, .product-card").forEach((card) => {
-      card.addEventListener("mousemove", (e) => {
-        const rect =
-          card.getBoundingClientRect();
+  const allImages = $$("img");
 
-        const x =
-          ((e.clientX - rect.left) /
-            rect.width) *
-          100;
+  allImages.forEach((img) => {
+    // Force normal immediate loading
+    img.loading = "eager";
 
-        const y =
-          ((e.clientY - rect.top) /
-            rect.height) *
-          100;
+    // Decode without blocking main thread
+    img.decoding = "async";
 
-        card.style.setProperty(
-          "--shine-x",
-          `${x}%`
-        );
+    // Remove possible lazy attributes
+    img.removeAttribute("data-src");
+    img.removeAttribute("data-srcset");
 
-        card.style.setProperty(
-          "--shine-y",
-          `${y}%`
-        );
+    // Don't allow browser priority tricks from old code
+    if (img.getAttribute("loading") === "lazy") {
+      img.setAttribute("loading", "eager");
+    }
+
+    // Visual state
+    img.classList.add("image-ready");
+
+    // Graceful missing image handling
+    img.addEventListener("error", () => {
+      img.classList.add("image-error");
+
+      // Never stop website if an image is missing
+      img.setAttribute("data-missing", "true");
+    }, { once: true });
+  });
+
+
+  /* =========================================================
+     3. HERO IMAGE PRELOAD
+     
+     Start hero images immediately.
+  ========================================================= */
+
+  const heroFiles = [
+    "h1.png",
+    "h2.png",
+    "h3.png",
+    "h4.png",
+    "h5.png",
+    "h6.png"
+  ];
+
+  const heroPreload = heroFiles.map((src, index) => {
+    const image = new Image();
+
+    image.decoding = "async";
+
+    // Highest priority for first hero image
+    if (index === 0) {
+      image.fetchPriority = "high";
+    }
+
+    image.src = src;
+
+    return image;
+  });
+
+
+  /* =========================================================
+     4. HEADER + MOBILE MENU
+  ========================================================= */
+
+  const header = $(".site-header, .site-header#siteHeader");
+  const menuToggle = $("#menuToggle");
+  const mobileMenu = $("#mobileMenu");
+  const mobileLinks = $$(".mobile-nav a");
+
+  function closeMobileMenu() {
+    if (!menuToggle || !mobileMenu) return;
+
+    menuToggle.classList.remove("active");
+    menuToggle.setAttribute("aria-expanded", "false");
+
+    mobileMenu.classList.remove("open");
+
+    document.body.classList.remove("menu-open");
+  }
+
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener("click", () => {
+      const opened = mobileMenu.classList.toggle("open");
+
+      menuToggle.classList.toggle("active", opened);
+      menuToggle.setAttribute(
+        "aria-expanded",
+        opened ? "true" : "false"
+      );
+
+      document.body.classList.toggle(
+        "menu-open",
+        opened
+      );
+    });
+
+    mobileLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        closeMobileMenu();
       });
     });
   }
 
 
   /* =========================================================
-     PREVENT BROKEN HASH ON LOAD
+     5. HEADER SCROLL STATE
   ========================================================= */
 
-  if (window.location.hash) {
-    setTimeout(() => {
-      const target =
-        $(window.location.hash);
+  function updateHeader() {
+    if (!header) return;
 
-      if (target) {
-        window.scrollTo({
-          top: target.offsetTop - 80,
-          behavior: "auto"
-        });
+    header.classList.toggle(
+      "scrolled",
+      window.scrollY > 35
+    );
+  }
+
+  updateHeader();
+
+  window.addEventListener(
+    "scroll",
+    updateHeader,
+    { passive: true }
+  );
+
+
+  /* =========================================================
+     6. SMOOTH ANCHOR NAVIGATION
+  ========================================================= */
+
+  $$('a[href^="#"]').forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const targetID = link.getAttribute("href");
+
+      if (!targetID || targetID === "#") {
+        return;
       }
-    }, 100);
+
+      const target = $(targetID);
+
+      if (!target) return;
+
+      event.preventDefault();
+
+      target.scrollIntoView({
+        behavior: reduceMotion ? "auto" : "smooth",
+        block: "start"
+      });
+    });
+  });
+
+
+  /* =========================================================
+     7. HERO SLIDER
+  ========================================================= */
+
+  const heroSlides = $$(".hero-slide");
+  const heroCurrent = $("#heroCurrent");
+
+  let heroIndex = 0;
+  let heroTimer = null;
+
+  function renderHero(index) {
+    if (!heroSlides.length) return;
+
+    heroIndex =
+      (index + heroSlides.length) %
+      heroSlides.length;
+
+    heroSlides.forEach((slide, i) => {
+      slide.classList.toggle(
+        "active",
+        i === heroIndex
+      );
+
+      slide.setAttribute(
+        "aria-hidden",
+        i === heroIndex ? "false" : "true"
+      );
+    });
+
+    if (heroCurrent) {
+      heroCurrent.textContent =
+        String(heroIndex + 1).padStart(2, "0");
+    }
+  }
+
+  function startHeroSlider() {
+    if (heroSlides.length < 2) return;
+
+    clearInterval(heroTimer);
+
+    heroTimer = setInterval(() => {
+      renderHero(heroIndex + 1);
+    }, 5200);
+  }
+
+  renderHero(0);
+  startHeroSlider();
+
+
+  /* =========================================================
+     8. HERO SWIPE
+  ========================================================= */
+
+  const hero = $(".hero");
+
+  if (hero && heroSlides.length > 1) {
+    let touchStartX = 0;
+
+    hero.addEventListener(
+      "touchstart",
+      (event) => {
+        touchStartX =
+          event.changedTouches[0].clientX;
+      },
+      { passive: true }
+    );
+
+    hero.addEventListener(
+      "touchend",
+      (event) => {
+        const touchEndX =
+          event.changedTouches[0].clientX;
+
+        const distance =
+          touchEndX - touchStartX;
+
+        if (Math.abs(distance) < 45) {
+          return;
+        }
+
+        if (distance < 0) {
+          renderHero(heroIndex + 1);
+        } else {
+          renderHero(heroIndex - 1);
+        }
+
+        startHeroSlider();
+      },
+      { passive: true }
+    );
   }
 
 
   /* =========================================================
-     PERFORMANCE:
-     PAUSE HEAVY EFFECTS WHEN TAB HIDDEN
+     9. PRODUCT SLIDERS
+     
+     Works with current HTML:
+     .product-slider
+     .product-track
+     .product-card
+     .slider-prev
+     .slider-next
+     
+     Mobile:
+     native horizontal swipe
+     
+     Desktop:
+     smooth manual movement
+  ========================================================= */
+
+  const productSliders =
+    $$(".product-slider");
+
+  productSliders.forEach((slider) => {
+    const track =
+      $(".product-track", slider);
+
+    const cards =
+      $$(".product-card", slider);
+
+    const prev =
+      $(".slider-prev", slider);
+
+    const next =
+      $(".slider-next", slider);
+
+    const progress =
+      $(".slider-progress span", slider);
+
+    if (!track || !cards.length) {
+      return;
+    }
+
+    let index = 0;
+    let timer = null;
+
+    function getVisible() {
+      if (window.innerWidth <= 600) {
+        return 1;
+      }
+
+      if (window.innerWidth <= 900) {
+        return 2;
+      }
+
+      return 5;
+    }
+
+    function getGap() {
+      const styles =
+        window.getComputedStyle(track);
+
+      return (
+        parseFloat(styles.columnGap) ||
+        parseFloat(styles.gap) ||
+        0
+      );
+    }
+
+    function moveTo(newIndex) {
+      const visible = getVisible();
+
+      const maxIndex =
+        Math.max(
+          0,
+          cards.length - visible
+        );
+
+      index =
+        Math.max(
+          0,
+          Math.min(newIndex, maxIndex)
+        );
+
+      // Mobile uses natural scroll.
+      if (window.innerWidth <= 600) {
+        const card = cards[index];
+
+        if (card) {
+          card.scrollIntoView({
+            behavior: reduceMotion
+              ? "auto"
+              : "smooth",
+            block: "nearest",
+            inline: "start"
+          });
+        }
+      } else {
+        // Desktop/tablet
+        const cardWidth =
+          cards[0].getBoundingClientRect().width;
+
+        const distance =
+          index *
+          (cardWidth + getGap());
+
+        track.style.transform =
+          `translate3d(-${distance}px,0,0)`;
+      }
+
+      if (progress) {
+        const total =
+          Math.max(1, cards.length - visible);
+
+        const percent =
+          ((index + 1) / (total + 1)) * 100;
+
+        progress.style.width =
+          `${Math.min(100, percent)}%`;
+      }
+    }
+
+    function nextSlide() {
+      const visible = getVisible();
+
+      if (index >= cards.length - visible) {
+        moveTo(0);
+      } else {
+        moveTo(index + 1);
+      }
+    }
+
+    function previousSlide() {
+      const visible = getVisible();
+
+      if (index <= 0) {
+        moveTo(
+          Math.max(0, cards.length - visible)
+        );
+      } else {
+        moveTo(index - 1);
+      }
+    }
+
+    if (next) {
+      next.addEventListener(
+        "click",
+        () => {
+          nextSlide();
+          restartAuto();
+        }
+      );
+    }
+
+    if (prev) {
+      prev.addEventListener(
+        "click",
+        () => {
+          previousSlide();
+          restartAuto();
+        }
+      );
+    }
+
+    function startAuto() {
+      if (reduceMotion) return;
+
+      clearInterval(timer);
+
+      timer = setInterval(() => {
+        nextSlide();
+      }, 4300);
+    }
+
+    function restartAuto() {
+      startAuto();
+    }
+
+    slider.addEventListener(
+      "mouseenter",
+      () => {
+        clearInterval(timer);
+      }
+    );
+
+    slider.addEventListener(
+      "mouseleave",
+      () => {
+        startAuto();
+      }
+    );
+
+    // Initial state
+    moveTo(0);
+    startAuto();
+
+
+    /* =======================================================
+       PRODUCT TOUCH SWIPE
+    ======================================================= */
+
+    let startX = 0;
+    let endX = 0;
+
+    track.addEventListener(
+      "touchstart",
+      (event) => {
+        startX =
+          event.changedTouches[0].clientX;
+
+        clearInterval(timer);
+      },
+      { passive: true }
+    );
+
+    track.addEventListener(
+      "touchend",
+      (event) => {
+        endX =
+          event.changedTouches[0].clientX;
+
+        const distance =
+          endX - startX;
+
+        if (Math.abs(distance) >= 45) {
+          if (distance < 0) {
+            nextSlide();
+          } else {
+            previousSlide();
+          }
+        }
+
+        startAuto();
+      },
+      { passive: true }
+    );
+
+
+    /* =======================================================
+       RESIZE RE-CALCULATION
+    ======================================================= */
+
+    window.addEventListener(
+      "resize",
+      () => {
+        moveTo(index);
+      },
+      { passive: true }
+    );
+  });
+
+
+  /* =========================================================
+     10. STONE FINDER
+  ========================================================= */
+
+  const finder =
+    $(".finder-panel");
+
+  if (finder) {
+    const steps =
+      $$(".finder-step", finder);
+
+    const buttons =
+      $$(".finder-options button", finder);
+
+    const result =
+      $("#finderResult");
+
+    const stepCounter =
+      $("#finderStep");
+
+    const progress =
+      $("#finderProgress");
+
+    const resultTitle =
+      $("#finderResultTitle");
+
+    const resultText =
+      $("#finderResultText");
+
+    let currentStep = 0;
+
+    const choices = [];
+
+    function showFinderStep(step) {
+      if (!steps.length) return;
+
+      currentStep =
+        Math.max(
+          0,
+          Math.min(step, steps.length - 1)
+        );
+
+      steps.forEach((item, i) => {
+        item.classList.toggle(
+          "active",
+          i === currentStep
+        );
+      });
+
+      if (stepCounter) {
+        stepCounter.textContent =
+          `${String(currentStep + 1).padStart(2, "0")} / ${String(steps.length).padStart(2, "0")}`;
+      }
+
+      if (progress) {
+        progress.style.width =
+          `${((currentStep + 1) / steps.length) * 100}%`;
+      }
+    }
+
+    function getRecommendation() {
+      const values =
+        choices.map((item) => item || "");
+
+      let title =
+        "Signature Stone";
+
+      let description =
+        "Your choices point towards a stone with strong natural character and architectural presence.";
+
+      if (
+        values.includes("Bold") ||
+        values.includes("Commercial")
+      ) {
+        title =
+          "The Architectural Choice";
+
+        description =
+          "A stronger, more expressive stone direction suits a project where material becomes part of the identity.";
+      } else if (
+        values.includes("Elegant") ||
+        values.includes("Minimal")
+      ) {
+        title =
+          "The Refined Choice";
+
+        description =
+          "A clean and elegant stone direction can create a restrained, sophisticated architectural feel.";
+      } else if (
+        values.includes("Natural") ||
+        values.includes("Facade")
+      ) {
+        title =
+          "The Natural Choice";
+
+        description =
+          "A stone with stronger natural character is a compelling direction for a warm and authentic space.";
+      }
+
+      return {
+        title,
+        description
+      };
+    }
+
+    buttons.forEach((button) => {
+      button.addEventListener(
+        "click",
+        () => {
+          const step =
+            Number(
+              button
+                .closest(".finder-step")
+                ?.dataset.step || 1
+            );
+
+          const value =
+            button.dataset.value ||
+            button.textContent.trim();
+
+          choices[step - 1] = value;
+
+          // Visual selection
+          $$(".finder-options button", button.closest(".finder-step"))
+            .forEach((item) => {
+              item.classList.remove("selected");
+            });
+
+          button.classList.add("selected");
+
+          // 3rd step -> result
+          if (step >= steps.length) {
+            const recommendation =
+              getRecommendation();
+
+            if (resultTitle) {
+              resultTitle.textContent =
+                recommendation.title;
+            }
+
+            if (resultText) {
+              resultText.textContent =
+                recommendation.description;
+            }
+
+            steps.forEach((item) => {
+              item.classList.remove("active");
+            });
+
+            if (result) {
+              result.classList.add("show");
+            }
+
+            if (stepCounter) {
+              stepCounter.textContent = "RESULT";
+            }
+
+            if (progress) {
+              progress.style.width = "100%";
+            }
+
+            return;
+          }
+
+          setTimeout(() => {
+            showFinderStep(step);
+          }, 220);
+        }
+      );
+    });
+
+    showFinderStep(0);
+  }
+
+
+  /* =========================================================
+     11. APPLICATION CARDS
+  ========================================================= */
+
+  const applicationCards =
+    $$(".application-card");
+
+  applicationCards.forEach((card) => {
+    card.addEventListener("click", () => {
+      applicationCards.forEach((item) => {
+        item.classList.remove("active");
+      });
+
+      card.classList.add("active");
+
+      const application =
+        card.dataset.application;
+
+      const discoverSection =
+        $("#discover");
+
+      if (discoverSection && application) {
+        discoverSection.dataset.selectedApplication =
+          application;
+      }
+    });
+  });
+
+
+  /* =========================================================
+     12. WHY INFINITY REVEAL
+  ========================================================= */
+
+  const whyItems =
+    $$(".why-item");
+
+  if ("IntersectionObserver" in window) {
+    const whyObserver =
+      new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+
+            whyItems.forEach((item, i) => {
+              item.style.transitionDelay =
+                `${i * 70}ms`;
+
+              item.classList.add(
+                "visible",
+                "revealed"
+              );
+            });
+
+            observer.unobserve(entry.target);
+          });
+        },
+        {
+          threshold: 0.15
+        }
+      );
+
+    const whySection =
+      $("#why-infinity");
+
+    if (whySection) {
+      whyObserver.observe(whySection);
+    }
+  }
+
+
+  /* =========================================================
+     13. SCROLL REVEAL
+  ========================================================= */
+
+  const revealItems =
+    $$(".reveal");
+
+  if ("IntersectionObserver" in window) {
+    const revealObserver =
+      new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+
+            entry.target.classList.add(
+              "visible",
+              "revealed"
+            );
+
+            observer.unobserve(entry.target);
+          });
+        },
+        {
+          threshold: 0.08,
+          rootMargin: "0px 0px -40px 0px"
+        }
+      );
+
+    revealItems.forEach((item) => {
+      revealObserver.observe(item);
+    });
+  } else {
+    revealItems.forEach((item) => {
+      item.classList.add(
+        "visible",
+        "revealed"
+      );
+    });
+  }
+
+
+  /* =========================================================
+     14. FAQ ACCORDION
+  ========================================================= */
+
+  const faqItems =
+    $$(".faq-item");
+
+  faqItems.forEach((item) => {
+    const question =
+      $(".faq-question", item);
+
+    const answer =
+      $(".faq-answer", item);
+
+    if (!question || !answer) return;
+
+    // Current HTML starts with first FAQ active.
+    if (item.classList.contains("active")) {
+      answer.style.maxHeight =
+        `${answer.scrollHeight}px`;
+    }
+
+    question.addEventListener(
+      "click",
+      () => {
+        const wasActive =
+          item.classList.contains("active");
+
+        faqItems.forEach((other) => {
+          other.classList.remove("active");
+
+          const otherAnswer =
+            $(".faq-answer", other);
+
+          if (otherAnswer) {
+            otherAnswer.style.maxHeight = null;
+          }
+        });
+
+        if (!wasActive) {
+          item.classList.add("active");
+
+          answer.style.maxHeight =
+            `${answer.scrollHeight}px`;
+        }
+      }
+    );
+  });
+
+
+  /* =========================================================
+     15. REVIEWS SLIDER
+  ========================================================= */
+
+  const reviewSlider =
+    $("#reviewsSlider");
+
+  if (reviewSlider) {
+    const slides =
+      $$(".review-slide", reviewSlider);
+
+    const prev =
+      $("#reviewPrev");
+
+    const next =
+      $("#reviewNext");
+
+    const dots =
+      $$(".review-dots button");
+
+    let reviewIndex = 0;
+    let reviewTimer = null;
+
+    function renderReview(index) {
+      if (!slides.length) return;
+
+      reviewIndex =
+        (index + slides.length) %
+        slides.length;
+
+      slides.forEach((slide, i) => {
+        slide.classList.toggle(
+          "active",
+          i === reviewIndex
+        );
+      });
+
+      dots.forEach((dot, i) => {
+        dot.classList.toggle(
+          "active",
+          i === reviewIndex
+        );
+      });
+    }
+
+    function startReviewAuto() {
+      if (reduceMotion) return;
+
+      clearInterval(reviewTimer);
+
+      reviewTimer = setInterval(() => {
+        renderReview(reviewIndex + 1);
+      }, 6500);
+    }
+
+    if (prev) {
+      prev.addEventListener("click", () => {
+        renderReview(reviewIndex - 1);
+        startReviewAuto();
+      });
+    }
+
+    if (next) {
+      next.addEventListener("click", () => {
+        renderReview(reviewIndex + 1);
+        startReviewAuto();
+      });
+    }
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener("click", () => {
+        renderReview(index);
+        startReviewAuto();
+      });
+    });
+
+    renderReview(0);
+    startReviewAuto();
+  }
+
+
+  /* =========================================================
+     16. REVIEW SWIPE
+  ========================================================= */
+
+  if (reviewSlider) {
+    let startX = 0;
+
+    reviewSlider.addEventListener(
+      "touchstart",
+      (event) => {
+        startX =
+          event.changedTouches[0].clientX;
+      },
+      { passive: true }
+    );
+
+    reviewSlider.addEventListener(
+      "touchend",
+      (event) => {
+        const endX =
+          event.changedTouches[0].clientX;
+
+        const distance =
+          endX - startX;
+
+        if (Math.abs(distance) < 45) {
+          return;
+        }
+
+        if (distance < 0) {
+          $("#reviewNext")?.click();
+        } else {
+          $("#reviewPrev")?.click();
+        }
+      },
+      { passive: true }
+    );
+  }
+
+
+  /* =========================================================
+     17. PRODUCT QUICK VIEW MODAL
+  ========================================================= */
+
+  const modal =
+    $("#productModal");
+
+  const modalImage =
+    $("#modalProductImage");
+
+  const modalName =
+    $("#modalProductName");
+
+  const modalFinish =
+    $("#modalProductFinish");
+
+  const modalIndex =
+    $("#modalProductIndex");
+
+  const productOpenButtons =
+    $$(".product-open");
+
+  function closeProductModal() {
+    if (!modal) return;
+
+    modal.classList.remove("open");
+    modal.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+    document.body.classList.remove(
+      "modal-open"
+    );
+  }
+
+  productOpenButtons.forEach((button) => {
+    button.addEventListener(
+      "click",
+      () => {
+        const card =
+          button.closest(".product-card");
+
+        if (!card || !modal) return;
+
+        const image =
+          $(".product-image img", card);
+
+        const name =
+          $(".product-info h4", card);
+
+        const finish =
+          $(".product-info p", card);
+
+        const number =
+          $(".product-image > span", card);
+
+        if (modalImage && image) {
+          modalImage.src =
+            image.currentSrc ||
+            image.src;
+
+          modalImage.alt =
+            image.alt || "Granite";
+        }
+
+        if (modalName && name) {
+          modalName.textContent =
+            name.textContent;
+        }
+
+        if (modalFinish && finish) {
+          modalFinish.textContent =
+            finish.textContent;
+        }
+
+        if (modalIndex && number) {
+          modalIndex.textContent =
+            number.textContent;
+        }
+
+        modal.classList.add("open");
+
+        modal.setAttribute(
+          "aria-hidden",
+          "false"
+        );
+
+        document.body.classList.add(
+          "modal-open"
+        );
+      }
+    );
+  });
+
+  $$("[data-close-modal]", modal).forEach(
+    (element) => {
+      element.addEventListener(
+        "click",
+        (event) => {
+          event.preventDefault();
+          closeProductModal();
+        }
+      );
+    }
+  );
+
+  document.addEventListener(
+    "keydown",
+    (event) => {
+      if (event.key === "Escape") {
+        closeProductModal();
+      }
+    }
+  );
+
+
+  /* =========================================================
+     18. ENQUIRY -> WHATSAPP
+  ========================================================= */
+
+  const enquiryForm =
+    $("#enquiryForm");
+
+  if (enquiryForm) {
+    enquiryForm.addEventListener(
+      "submit",
+      (event) => {
+        event.preventDefault();
+
+        const getValue = (name) => {
+          const field =
+            enquiryForm.elements[name];
+
+          return field
+            ? field.value.trim()
+            : "";
+        };
+
+        const name =
+          getValue("name");
+
+        const phone =
+          getValue("phone");
+
+        const email =
+          getValue("email");
+
+        const company =
+          getValue("company");
+
+        const requirement =
+          getValue("requirement");
+
+        const product =
+          getValue("product");
+
+        const message =
+          getValue("message");
+
+
+        const whatsappText =
+`Hello Infinity Granites,
+
+I would like to enquire about your granite.
+
+Name: ${name}
+Phone: ${phone}
+Email: ${email}
+Company: ${company}
+Requirement: ${requirement}
+Granite / Product: ${product}
+Message: ${message}`;
+
+        /*
+          Infinity Granites phone from website details
+        */
+        const whatsappNumber =
+          "919462761833";
+
+        const whatsappURL =
+          `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+            whatsappText
+          )}`;
+
+        window.open(
+          whatsappURL,
+          "_blank",
+          "noopener,noreferrer"
+        );
+      }
+    );
+  }
+
+
+  /* =========================================================
+     19. SCROLL PROGRESS
+  ========================================================= */
+
+  const scrollProgress =
+    $("#scrollProgress");
+
+  function updateScrollProgress() {
+    if (!scrollProgress) return;
+
+    const documentHeight =
+      document.documentElement.scrollHeight -
+      window.innerHeight;
+
+    if (documentHeight <= 0) {
+      scrollProgress.style.width = "0%";
+      return;
+    }
+
+    const percent =
+      (window.scrollY / documentHeight) * 100;
+
+    scrollProgress.style.width =
+      `${Math.min(100, Math.max(0, percent))}%`;
+  }
+
+  window.addEventListener(
+    "scroll",
+    updateScrollProgress,
+    { passive: true }
+  );
+
+  updateScrollProgress();
+
+
+  /* =========================================================
+     20. LIGHTWEIGHT CURSOR EFFECT
+  ========================================================= */
+
+  if (
+    !reduceMotion &&
+    window.innerWidth > 1000
+  ) {
+    const interactive =
+      $$(".product-card, .application-card, .why-item, .circle-link");
+
+    interactive.forEach((item) => {
+      item.addEventListener(
+        "mousemove",
+        (event) => {
+          const rect =
+            item.getBoundingClientRect();
+
+          const x =
+            ((event.clientX - rect.left) /
+              rect.width) *
+            100;
+
+          const y =
+            ((event.clientY - rect.top) /
+              rect.height) *
+            100;
+
+          item.style.setProperty(
+            "--mouse-x",
+            `${x}%`
+          );
+
+          item.style.setProperty(
+            "--mouse-y",
+            `${y}%`
+          );
+        },
+        { passive: true }
+      );
+    });
+  }
+
+
+  /* =========================================================
+     21. LIGHTWEIGHT IMAGE PARALLAX
+  ========================================================= */
+
+  const parallaxImages =
+    $$(".vision-image img, .story-image img");
+
+  if (
+    !reduceMotion &&
+    window.innerWidth > 900 &&
+    parallaxImages.length
+  ) {
+    let rafID = null;
+
+    function updateImageParallax() {
+      const viewport =
+        window.innerHeight;
+
+      parallaxImages.forEach((image) => {
+        const rect =
+          image.getBoundingClientRect();
+
+        if (
+          rect.bottom < 0 ||
+          rect.top > viewport
+        ) {
+          return;
+        }
+
+        const center =
+          rect.top +
+          rect.height / 2;
+
+        const delta =
+          (viewport / 2 - center) * 0.025;
+
+        image.style.transform =
+          `translate3d(0, ${delta}px, 0)`;
+      });
+
+      rafID = null;
+    }
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (rafID !== null) return;
+
+        rafID =
+          requestAnimationFrame(
+            updateImageParallax
+          );
+      },
+      { passive: true }
+    );
+  }
+
+
+  /* =========================================================
+     22. MAGNETIC BUTTONS
+  ========================================================= */
+
+  if (
+    !reduceMotion &&
+    window.innerWidth > 1100
+  ) {
+    $$(".magnetic").forEach((button) => {
+      button.addEventListener(
+        "mousemove",
+        (event) => {
+          const rect =
+            button.getBoundingClientRect();
+
+          const x =
+            event.clientX -
+            rect.left -
+            rect.width / 2;
+
+          const y =
+            event.clientY -
+            rect.top -
+            rect.height / 2;
+
+          button.style.transform =
+            `translate(${x * 0.08}px, ${y * 0.08}px)`;
+        }
+      );
+
+      button.addEventListener(
+        "mouseleave",
+        () => {
+          button.style.transform = "";
+        }
+      );
+    });
+  }
+
+
+  /* =========================================================
+     23. ACTIVE NAVIGATION
+  ========================================================= */
+
+  const sections =
+    $$("main section[id]");
+
+  const navLinks =
+    $$(".desktop-nav a, .mobile-nav a");
+
+  if (
+    sections.length &&
+    "IntersectionObserver" in window
+  ) {
+    const navObserver =
+      new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+            const id =
+              `#${entry.target.id}`;
+
+            navLinks.forEach((link) => {
+              link.classList.toggle(
+                "active",
+                link.getAttribute("href") === id
+              );
+            });
+          });
+        },
+        {
+          threshold: 0.2,
+          rootMargin:
+            "-20% 0px -65% 0px"
+        }
+      );
+
+    sections.forEach((section) => {
+      navObserver.observe(section);
+    });
+  }
+
+
+  /* =========================================================
+     24. RESIZE SAFETY
+  ========================================================= */
+
+  let resizeTimer;
+
+  window.addEventListener(
+    "resize",
+    () => {
+      clearTimeout(resizeTimer);
+
+      resizeTimer = setTimeout(() => {
+        // Close menu if switching to desktop
+        if (
+          window.innerWidth > 900 &&
+          mobileMenu?.classList.contains("open")
+        ) {
+          closeMobileMenu();
+        }
+
+        // Fix FAQ opened heights
+        faqItems.forEach((item) => {
+          if (!item.classList.contains("active")) {
+            return;
+          }
+
+          const answer =
+            $(".faq-answer", item);
+
+          if (answer) {
+            answer.style.maxHeight =
+              `${answer.scrollHeight}px`;
+          }
+        });
+      }, 120);
+    },
+    { passive: true }
+  );
+
+
+  /* =========================================================
+     25. CURRENT YEAR
+  ========================================================= */
+
+  const year =
+    $("#year");
+
+  if (year) {
+    year.textContent =
+      new Date().getFullYear();
+  }
+
+
+  /* =========================================================
+     26. TAB VISIBILITY
+     
+     Pause only timer-based effects.
   ========================================================= */
 
   document.addEventListener(
@@ -1299,24 +1491,112 @@ Requirement: ${message}`;
       if (document.hidden) {
         clearInterval(heroTimer);
       } else {
-        startHeroAuto();
+        startHeroSlider();
       }
     }
   );
 
 
   /* =========================================================
-     CONSOLE BRAND
+     27. REMOVE OLD LAZY-LOADER ARTIFACTS
+     
+     If old code left classes/attributes,
+     clear them here.
+  ========================================================= */
+
+  $$(
+    '[loading="lazy"], [data-src], [data-srcset]'
+  ).forEach((element) => {
+    if (element.tagName === "IMG") {
+      element.loading = "eager";
+      element.removeAttribute("data-src");
+      element.removeAttribute("data-srcset");
+    }
+  });
+
+
+  /* =========================================================
+     28. INITIAL IMAGE REQUEST
+     
+     Force browser to request all known images immediately.
+  ========================================================= */
+
+  const knownImages = [
+    "logo.png",
+
+    "h1.png",
+    "h2.png",
+    "h3.png",
+    "h4.png",
+    "h5.png",
+    "h6.png",
+
+    "owner.jpeg",
+    "about.jpeg",
+
+    "maj.jpeg",
+    "fis.jpeg",
+    "pea.jpeg",
+    "pbl.jpeg",
+    "asi.jpeg",
+
+    "par.jpeg",
+    "tig.jpeg",
+    "mat.jpeg",
+    "bag.jpeg",
+    "him.jpeg",
+
+    "pwh.jpeg",
+    "ice.jpeg",
+    "bij.jpeg",
+    "mark.jpeg",
+    "mar.jpeg",
+
+    "jam.jpeg",
+    "chi.jpeg",
+    "app.jpeg",
+    "coi.jpeg",
+    "raj.jpeg",
+
+    "pp.jpg",
+
+    "project1.jpeg",
+    "project2.jpeg",
+    "project3.jpeg",
+    "project4.jpeg"
+  ];
+
+  /*
+     IMPORTANT:
+     We create Image objects, but NEVER wait for them.
+     They begin downloading immediately.
+  */
+
+  knownImages.forEach((src, index) => {
+    const img = new Image();
+
+    img.decoding = "async";
+
+    if (index < 6) {
+      img.fetchPriority = "high";
+    }
+
+    img.src = src;
+  });
+
+
+  /* =========================================================
+     29. CONSOLE
   ========================================================= */
 
   console.log(
     "%c INFINITY GRANITES ",
-    "font-size:18px;font-weight:bold;"
+    "background:#2b1f15;color:#e5c77f;font-size:16px;padding:7px 12px;border-radius:4px;"
   );
 
   console.log(
-    "%c Premium Natural Stone Experience",
-    "font-size:12px;"
+    "%c Fast premium site initialized ",
+    "color:#806044;font-size:11px;"
   );
 
 });
