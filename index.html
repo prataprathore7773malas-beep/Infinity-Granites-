@@ -20,33 +20,12 @@
   >
 
   <link rel="stylesheet" href="style.css">
-  
-  <!-- Added Smooth Section Scroll Motion Styling -->
-  <style>
-    section, .intro-section, .vision-section, .story-section, .collection-section, .discover-section, .why-section, .material-section, .projects-section, .reviews-section, .faq-section, .contact-section, .location-section {
-      opacity: 0;
-      transform: translateY(50px);
-      transition: opacity 1.0s cubic-bezier(0.16, 1, 0.3, 1), transform 1.0s cubic-bezier(0.16, 1, 0.3, 1);
-      will-change: opacity, transform;
-    }
-    
-    section.section-visible, .intro-section.section-visible, .vision-section.section-visible, .story-section.section-visible, .collection-section.section-visible, .discover-section.section-visible, .why-section.section-visible, .material-section.section-visible, .projects-section.section-visible, .reviews-section.section-visible, .faq-section.section-visible, .contact-section.section-visible, .location-section.section-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Hero section should be immediately visible without waiting for scroll */
-    .hero {
-      opacity: 1 !important;
-      transform: translateY(0) !important;
-    }
-  </style>
 </head>
 
 <body>
 
   <!-- =========================================================
-        PAGE LOADER
+       PAGE LOADER
   ========================================================== -->
   <div class="page-loader" id="pageLoader">
     <div class="loader-mark">∞</div>
@@ -59,7 +38,7 @@
 
 
   <!-- =========================================================
-        HEADER
+       HEADER
   ========================================================== -->
   <header class="site-header" id="siteHeader">
 
@@ -333,7 +312,7 @@
     <!-- =========================================================
          INTRO / BRAND STATEMENT
     ========================================================== -->
-    <section class="intro-section">
+    <section class="intro-section scroll-reveal">
 
       <div class="section-number">01</div>
 
@@ -378,7 +357,7 @@
     <!-- =========================================================
          BEHIND THE VISION
     ========================================================== -->
-    <section class="vision-section" id="vision">
+    <section class="vision-section scroll-reveal" id="vision">
 
       <div class="vision-image reveal">
 
@@ -440,7 +419,7 @@
     <!-- =========================================================
          OUR STORY
     ========================================================== -->
-    <section class="story-section" id="story">
+    <section class="story-section scroll-reveal" id="story">
 
       <div class="story-content">
 
@@ -488,7 +467,7 @@
     <!-- =========================================================
          COLLECTION
     ========================================================== -->
-    <section class="collection-section" id="collection">
+    <section class="collection-section scroll-reveal" id="collection">
 
       <div class="collection-head">
 
@@ -1195,7 +1174,7 @@
     <!-- =========================================================
          DISCOVER YOUR STONE + APPLICATIONS
     ========================================================== -->
-    <section class="discover-section" id="discover">
+    <section class="discover-section scroll-reveal" id="discover">
 
       <div class="section-number">03</div>
 
@@ -1589,7 +1568,7 @@
          WHY INFINITY
     ========================================================== -->
     <section
-      class="why-section"
+      class="why-section scroll-reveal"
       id="why-infinity"
     >
 
@@ -1699,7 +1678,7 @@
          SELECTION + PROFESSIONALS + COMPARISON
     ========================================================== -->
     <section
-      class="material-section"
+      class="material-section scroll-reveal"
       id="professionals"
     >
 
@@ -1885,11 +1864,11 @@
             <strong>Natural character</strong>
           </div>
 
-        </div>
-
       </div>
 
-    </section>
+    </div>
+
+  </section>
 
 
 
@@ -1897,7 +1876,7 @@
          PROJECTS
     ========================================================== -->
     <section
-      class="projects-section"
+      class="projects-section scroll-reveal"
       id="projects"
     >
 
@@ -1994,7 +1973,7 @@
          REVIEWS
     ========================================================== -->
     <section
-      class="reviews-section"
+      class="reviews-section scroll-reveal"
       id="reviews"
     >
 
@@ -2142,424 +2121,422 @@
             data-review="2"
           ></button>
 
-        </div>
+      </div>
 
+
+      <button
+        type="button"
+        id="reviewNext"
+        aria-label="Next review"
+      >
+        →
+      </button>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================================
+       FAQ
+  ========================================================== -->
+  <section
+    class="faq-section scroll-reveal"
+    id="faq"
+  >
+
+    <div class="faq-intro">
+
+      <div class="eyebrow">
+        <span></span>
+        Frequently Asked
+      </div>
+
+
+      <h2>
+        Questions,
+        <br>
+        <em>answered simply.</em>
+      </h2>
+
+
+      <p>
+        Have something specific in mind?
+        Start a conversation with our team.
+      </p>
+
+
+      <a
+        href="#contact"
+        class="text-link dark-link"
+      >
+        Ask Infinity
+        <span>↗</span>
+      </a>
+
+    </div>
+
+
+    <div class="faq-list">
+
+
+      <div class="faq-item active">
 
         <button
           type="button"
-          id="reviewNext"
-          aria-label="Next review"
+          class="faq-question"
         >
-          →
+          <span>01</span>
+          <strong>
+            How do I select the right granite?
+          </strong>
+          <i>+</i>
         </button>
+
+
+        <div class="faq-answer">
+          <p>
+            Consider the application, colour direction,
+            desired character and finish. Our Stone Finder
+            can help narrow down the right direction.
+          </p>
+        </div>
 
       </div>
 
-    </section>
+
+
+      <div class="faq-item">
+
+        <button
+          type="button"
+          class="faq-question"
+        >
+          <span>02</span>
+          <strong>
+            Is wholesale supply available?
+          </strong>
+          <i>+</i>
+        </button>
+
+
+        <div class="faq-answer">
+          <p>
+            Infinity Granites is positioned around
+            wholesale and project-focused granite sourcing.
+            Contact us with your requirement.
+          </p>
+        </div>
+
+      </div>
 
 
 
-    <!-- =========================================================
-         FAQ
-    ========================================================== -->
-    <section
-      class="faq-section"
-      id="faq"
-    >
+      <div class="faq-item">
 
-      <div class="faq-intro">
+        <button
+          type="button"
+          class="faq-question"
+        >
+          <span>03</span>
+          <strong>
+            Do you supply across India?
+          </strong>
+          <i>+</i>
+        </button>
+
+
+        <div class="faq-answer">
+          <p>
+            Nationwide supply is available for suitable
+            requirements. Share your project and delivery
+            details with the team.
+          </p>
+        </div>
+
+      </div>
+
+
+
+      <div class="faq-item">
+
+        <button
+          type="button"
+          class="faq-question"
+        >
+          <span>04</span>
+          <strong>
+            What finishes are available?
+          </strong>
+          <i>+</i>
+        </button>
+
+
+        <div class="faq-answer">
+          <p>
+            The collection includes polished, lappatro and
+            natural granite options. Availability can vary
+            by product.
+          </p>
+        </div>
+
+      </div>
+
+
+
+      <div class="faq-item">
+
+        <button
+          type="button"
+          class="faq-question"
+        >
+          <span>05</span>
+          <strong>
+            Can architects and contractors enquire?
+          </strong>
+          <i>+</i>
+        </button>
+
+
+        <div class="faq-answer">
+          <p>
+            Yes. Architects, interior designers, contractors,
+            builders and developers can discuss project and
+            bulk requirements with Infinity Granites.
+          </p>
+        </div>
+
+      </div>
+
+
+
+      <div class="faq-item">
+
+        <button
+          type="button"
+          class="faq-question"
+        >
+          <span>06</span>
+          <strong>
+            Where is Infinity Granites located?
+          </strong>
+          <i>+</i>
+        </button>
+
+
+        <div class="faq-answer">
+          <p>
+            Plot 206A, Lane 4, Mangal Murti Katla,
+            Khatoli, Kishangarh, Rajasthan 305801.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================================
+       START A CONVERSATION
+  ========================================================== -->
+  <section
+    class="contact-section scroll-reveal"
+    id="contact"
+  >
+
+    <div class="contact-background-text">
+      LET'S TALK
+    </div>
+
+
+    <div class="contact-inner">
+
+
+      <div class="contact-intro">
 
         <div class="eyebrow">
           <span></span>
-          Frequently Asked
+          Start a Conversation
         </div>
 
 
         <h2>
-          Questions,
+          Tell us what
           <br>
-          <em>answered simply.</em>
+          you're <em>building.</em>
         </h2>
 
 
         <p>
-          Have something specific in mind?
-          Start a conversation with our team.
+          Whether you're sourcing for a home, a commercial
+          project or a larger requirement, let's find the
+          right stone together.
         </p>
 
 
-        <a
-          href="#contact"
-          class="text-link dark-link"
+        <div class="contact-details">
+
+          <a href="tel:+919462761833">
+            <span>Call</span>
+            <strong>+91 94627 61833</strong>
+          </a>
+
+
+          <a href="mailto:granitesinfinity@gmail.com">
+            <span>Email</span>
+            <strong>granitesinfinity@gmail.com</strong>
+          </a>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- ENQUIRY FORM -->
+      <form
+        class="enquiry-form"
+        id="enquiryForm"
+      >
+
+        <div class="form-top">
+          <span>ENQUIRY</span>
+          <span>∞</span>
+        </div>
+
+
+        <div class="form-grid">
+
+
+          <label>
+            <span>Your Name</span>
+
+            <input
+              type="text"
+              name="name"
+              placeholder="Enter your name"
+              required
+            >
+          </label>
+
+
+          <label>
+            <span>Phone</span>
+
+            <input
+              type="tel"
+              name="phone"
+              placeholder="+91"
+              required
+            >
+          </label>
+
+
+          <label>
+            <span>Email</span>
+
+            <input
+              type="email"
+              name="email"
+              placeholder="you@example.com"
+            >
+          </label>
+
+
+          <label>
+            <span>Company</span>
+
+            <input
+              type="text"
+              name="company"
+              placeholder="Company / Studio"
+            >
+          </label>
+
+
+          <label>
+
+            <span>Requirement</span>
+
+            <select name="requirement">
+
+              <option value="">
+                Select requirement
+              </option>
+
+              <option value="Residential">
+                Residential
+              </option>
+
+              <option value="Commercial">
+                Commercial
+              </option>
+
+              <option value="Architect">
+                Architect / Designer
+              </option>
+
+              <option value="Contractor">
+                Contractor
+              </option>
+
+              <option value="Bulk">
+                Bulk / Wholesale
+              </option>
+
+              <option value="Other">
+                Other
+              </option>
+
+            </select>
+
+          </label>
+
+
+          <label>
+
+            <span>Granite / Product</span>
+
+            <input
+              type="text"
+              name="product"
+              placeholder="Product name if known"
+            >
+
+          </label>
+
+
+          <label class="form-full">
+
+            <span>Message</span>
+
+            <textarea
+              name="message"
+              rows="5"
+              placeholder="Tell us about your project..."
+            ></textarea>
+
+          </label>
+
+        </div>
+
+
+        <button
+          type="submit"
+          class="form-submit"
         >
-          Ask Infinity
-          <span>↗</span>
-        </a>
+          <span>Send Enquiry</span>
+          <b>↗</b>
+        </button>
 
-      </div>
 
-
-      <div class="faq-list">
-
-
-        <div class="faq-item active">
-
-          <button
-            type="button"
-            class="faq-question"
-          >
-            <span>01</span>
-            <strong>
-              How do I select the right granite?
-            </strong>
-            <i>+</i>
-          </button>
-
-
-          <div class="faq-answer">
-            <p>
-              Consider the application, colour direction,
-              desired character and finish. Our Stone Finder
-              can help narrow down the right direction.
-            </p>
-          </div>
-
-        </div>
-
-
-
-        <div class="faq-item">
-
-          <button
-            type="button"
-            class="faq-question"
-          >
-            <span>02</span>
-            <strong>
-              Is wholesale supply available?
-            </strong>
-            <i>+</i>
-          </button>
-
-
-          <div class="faq-answer">
-            <p>
-              Infinity Granites is positioned around
-              wholesale and project-focused granite sourcing.
-              Contact us with your requirement.
-            </p>
-          </div>
-
-        </div>
-
-
-
-        <div class="faq-item">
-
-          <button
-            type="button"
-            class="faq-question"
-          >
-            <span>03</span>
-            <strong>
-              Do you supply across India?
-            </strong>
-            <i>+</i>
-          </button>
-
-
-          <div class="faq-answer">
-            <p>
-              Nationwide supply is available for suitable
-              requirements. Share your project and delivery
-              details with the team.
-            </p>
-          </div>
-
-        </div>
-
-
-
-        <div class="faq-item">
-
-          <button
-            type="button"
-            class="faq-question"
-          >
-            <span>04</span>
-            <strong>
-              What finishes are available?
-            </strong>
-            <i>+</i>
-          </button>
-
-
-          <div class="faq-answer">
-            <p>
-              The collection includes polished, lappatro and
-              natural granite options. Availability can vary
-              by product.
-            </p>
-          </div>
-
-        </div>
-
-
-
-        <div class="faq-item">
-
-          <button
-            type="button"
-            class="faq-question"
-          >
-            <span>05</span>
-            <strong>
-              Can architects and contractors enquire?
-            </strong>
-            <i>+</i>
-          </button>
-
-
-          <div class="faq-answer">
-            <p>
-              Yes. Architects, interior designers, contractors,
-              builders and developers can discuss project and
-              bulk requirements with Infinity Granites.
-            </p>
-          </div>
-
-        </div>
-
-
-
-        <div class="faq-item">
-
-          <button
-            type="button"
-            class="faq-question"
-          >
-            <span>06</span>
-            <strong>
-              Where is Infinity Granites located?
-            </strong>
-            <i>+</i>
-          </button>
-
-
-          <div class="faq-answer">
-            <p>
-              Plot 206A, Lane 4, Mangal Murti Katla,
-              Khatoli, Kishangarh, Rajasthan 305801.
-            </p>
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- =========================================================
-         START A CONVERSATION
-    ========================================================== -->
-    <section
-      class="contact-section"
-      id="contact"
-    >
-
-      <div class="contact-background-text">
-        LET'S TALK
-      </div>
-
-
-      <div class="contact-inner">
-
-
-        <div class="contact-intro">
-
-          <div class="eyebrow">
-            <span></span>
-            Start a Conversation
-          </div>
-
-
-          <h2>
-            Tell us what
-            <br>
-            you're <em>building.</em>
-          </h2>
-
-
-          <p>
-            Whether you're sourcing for a home, a commercial
-            project or a larger requirement, let's find the
-            right stone together.
-          </p>
-
-
-          <div class="contact-details">
-
-            <a href="tel:+919462761833">
-              <span>Call</span>
-              <strong>+91 94627 61833</strong>
-            </a>
-
-
-            <a href="mailto:granitesinfinity@gmail.com">
-              <span>Email</span>
-              <strong>granitesinfinity@gmail.com</strong>
-            </a>
-
-          </div>
-
-        </div>
-
-
-
-        <!-- ENQUIRY FORM -->
-        <form
-          class="enquiry-form"
-          id="enquiryForm"
-        >
-
-          <div class="form-top">
-            <span>ENQUIRY</span>
-            <span>∞</span>
-          </div>
-
-
-          <div class="form-grid">
-
-
-            <label>
-              <span>Your Name</span>
-
-              <input
-                type="text"
-                name="name"
-                placeholder="Enter your name"
-                required
-              >
-            </label>
-
-
-            <label>
-              <span>Phone</span>
-
-              <input
-                type="tel"
-                name="phone"
-                placeholder="+91"
-                required
-              >
-            </label>
-
-
-            <label>
-              <span>Email</span>
-
-              <input
-                type="email"
-                name="email"
-                placeholder="you@example.com"
-              >
-            </label>
-
-
-            <label>
-              <span>Company</span>
-
-              <input
-                type="text"
-                name="company"
-                placeholder="Company / Studio"
-              >
-            </label>
-
-
-            <label>
-
-              <span>Requirement</span>
-
-              <select name="requirement">
-
-                <option value="">
-                  Select requirement
-                </option>
-
-                <option value="Residential">
-                  Residential
-                </option>
-
-                <option value="Commercial">
-                  Commercial
-                </option>
-
-                <option value="Architect">
-                  Architect / Designer
-                </option>
-
-                <option value="Contractor">
-                  Contractor
-                </option>
-
-                <option value="Bulk">
-                  Bulk / Wholesale
-                </option>
-
-                <option value="Other">
-                  Other
-                </option>
-
-              </select>
-
-            </label>
-
-
-            <label>
-
-              <span>Granite / Product</span>
-
-              <input
-                type="text"
-                name="product"
-                placeholder="Product name if known"
-              >
-
-            </label>
-
-
-            <label class="form-full">
-
-              <span>Message</span>
-
-              <textarea
-                name="message"
-                rows="5"
-                placeholder="Tell us about your project..."
-              ></textarea>
-
-            </label>
-
-          </div>
-
-
-          <button
-            type="submit"
-            class="form-submit"
-          >
-            <span>Send Enquiry</span>
-            <b>↗</b>
-          </button>
-
-
-          <p class="form-note">
-            Your enquiry will open directly in WhatsApp.
-          </p>
-
-        </form>
+        <p class="form-note">
+          Your enquiry will open directly in WhatsApp.
+        </p>
 
       </div>
 
@@ -2570,7 +2547,7 @@
     <!-- =========================================================
          LOCATION / GOOGLE MAPS
     ========================================================== -->
-    <section class="location-section">
+    <section class="location-section scroll-reveal">
 
       <div class="location-copy">
 
@@ -2647,7 +2624,7 @@
 
 
   <!-- =========================================================
-        PREMIUM FOOTER
+       PREMIUM FOOTER
   ========================================================== -->
   <footer class="site-footer">
 
@@ -3088,14 +3065,14 @@
 
       </div>
 
-    </div>
+  </div>
 
   </footer>
 
 
 
   <!-- =========================================================
-        FLOATING CONTACT BUTTONS
+       FLOATING CONTACT BUTTONS
   ========================================================== -->
   <div class="floating-actions">
 
@@ -3149,14 +3126,14 @@
 
       </svg>
 
-    </a>
+  </a>
 
   </div>
 
 
 
   <!-- =========================================================
-        PRODUCT QUICK VIEW
+      PRODUCT QUICK VIEW
   ========================================================== -->
   <div
     class="product-modal"
@@ -3229,7 +3206,7 @@
 
 
   <!-- =========================================================
-        SCROLL PROGRESS
+      SCROLL PROGRESS
   ========================================================== -->
   <div
     class="scroll-progress"
@@ -3239,35 +3216,9 @@
 
 
   <!-- =========================================================
-        JAVASCRIPT
+      JAVASCRIPT
   ========================================================== -->
   <script src="script.js"></script>
-
-  <!-- Added Intersection Observer Script to trigger the section motion reveal -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const observerOptions = {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.15
-      };
-
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("section-visible");
-          }
-        });
-      }, observerOptions);
-
-      const sections = document.querySelectorAll("section, .intro-section, .vision-section, .story-section, .collection-section, .discover-section, .why-section, .material-section, .projects-section, .reviews-section, .faq-section, .contact-section, .location-section");
-      sections.forEach(section => {
-        if(section.id !== 'home') {
-          observer.observe(section);
-        }
-      });
-    });
-  </script>
 
 </body>
 </html>
