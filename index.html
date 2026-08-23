@@ -20,12 +20,33 @@
   >
 
   <link rel="stylesheet" href="style.css">
+  
+  <!-- Added Smooth Section Scroll Motion Styling -->
+  <style>
+    section, .intro-section, .vision-section, .story-section, .collection-section, .discover-section, .why-section, .material-section, .projects-section, .reviews-section, .faq-section, .contact-section, .location-section {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 1.0s cubic-bezier(0.16, 1, 0.3, 1), transform 1.0s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+    
+    section.section-visible, .intro-section.section-visible, .vision-section.section-visible, .story-section.section-visible, .collection-section.section-visible, .discover-section.section-visible, .why-section.section-visible, .material-section.section-visible, .projects-section.section-visible, .reviews-section.section-visible, .faq-section.section-visible, .contact-section.section-visible, .location-section.section-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Hero section should be immediately visible without waiting for scroll */
+    .hero {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+  </style>
 </head>
 
 <body>
 
   <!-- =========================================================
-       PAGE LOADER
+        PAGE LOADER
   ========================================================== -->
   <div class="page-loader" id="pageLoader">
     <div class="loader-mark">∞</div>
@@ -38,7 +59,7 @@
 
 
   <!-- =========================================================
-       HEADER
+        HEADER
   ========================================================== -->
   <header class="site-header" id="siteHeader">
 
@@ -2626,7 +2647,7 @@
 
 
   <!-- =========================================================
-       PREMIUM FOOTER
+        PREMIUM FOOTER
   ========================================================== -->
   <footer class="site-footer">
 
@@ -3074,7 +3095,7 @@
 
 
   <!-- =========================================================
-       FLOATING CONTACT BUTTONS
+        FLOATING CONTACT BUTTONS
   ========================================================== -->
   <div class="floating-actions">
 
@@ -3135,7 +3156,7 @@
 
 
   <!-- =========================================================
-       PRODUCT QUICK VIEW
+        PRODUCT QUICK VIEW
   ========================================================== -->
   <div
     class="product-modal"
@@ -3208,7 +3229,7 @@
 
 
   <!-- =========================================================
-       SCROLL PROGRESS
+        SCROLL PROGRESS
   ========================================================== -->
   <div
     class="scroll-progress"
@@ -3218,9 +3239,35 @@
 
 
   <!-- =========================================================
-       JAVASCRIPT
+        JAVASCRIPT
   ========================================================== -->
   <script src="script.js"></script>
+
+  <!-- Added Intersection Observer Script to trigger the section motion reveal -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.15
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("section-visible");
+          }
+        });
+      }, observerOptions);
+
+      const sections = document.querySelectorAll("section, .intro-section, .vision-section, .story-section, .collection-section, .discover-section, .why-section, .material-section, .projects-section, .reviews-section, .faq-section, .contact-section, .location-section");
+      sections.forEach(section => {
+        if(section.id !== 'home') {
+          observer.observe(section);
+        }
+      });
+    });
+  </script>
 
 </body>
 </html>
